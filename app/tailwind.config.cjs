@@ -6,7 +6,13 @@ module.exports = {
     "./src/**/*.tsx",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        slideIn: {
+          '0%': {transform: 'translateY(-5%)', opacity: '0%'},
+          '100%': {transform: 'none', opacity: '100%'}
+        }
+    },
     colors: {
       'ghost-white': '#F8F7FB',
       'eerie-black': '#262626',
@@ -15,4 +21,4 @@ module.exports = {
     }
   },
   plugins: [],
-}
+}}

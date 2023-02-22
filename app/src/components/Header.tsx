@@ -11,11 +11,16 @@ export default function Header() {
 
     return (
         <>
-            {isOpen && <Overlay />}
-            <header className='h-20 flex justify-between items-center mb-5 px-[10vw] border-b-2 border-b-black'>
+            <header className={'h-20 flex justify-between items-center mb-5 px-[10vw] border-b-2 border-b-black'}>
                 <img src="/wms_logo.svg" alt="Logo for the workshop management system" className='w-28' />
-                <button onClick={toggleOverlay}><img src="/icons/menu.svg" alt="" className='h-8' /></button>
+                <button onClick={toggleOverlay}><img src="/icons/menu.svg" alt="" className='h-8 md:hidden' /></button>
+                <ul className='hidden md:flex [&>*]:mx-2'>
+                    <li>Home</li>
+                    <li>Tools</li>
+                    <li>About</li>
+                </ul>
             </header>
+            {isOpen && <Overlay />}
         </>
     )
 }
