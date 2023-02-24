@@ -1,25 +1,17 @@
 import React from 'react'
-import './Button.css';
 
 type ButtonProps = {
     text?: String,
     showicon?: Boolean
 }
 
-export default function Button(props: ButtonProps) {
+export default function Button(props: ButtonProps){
   return (
-    <button className="button-2">
-      <div className="button-text">{props.text}</div>
-      {props.showicon == true ? <div className="button-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>: null}
+      <button type="button" className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 transition-all duration-500">
+        <div className="flex align-middle justify-center">        
+          {props.text}
+          {props.showicon == true ? <img src="icons/arrow-right.svg" className="h-9"/>: null}
+        </div>
       </button>
   )
 }
-
-// export default function Button(props: ButtonProps) {
-//   return (
-//     <button className="bg-shark-900 text-shark-50 text-xl font-bold py-2 px-4 rounded-lg font-sans flex p-8">
-//       {props.text} 
-//       <div className="bg-gradient-to-r from-pelorous-400 to-ripe-lemon-400 flex align-middle justify-center rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-//       </button>
-//   )
-// }
