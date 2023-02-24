@@ -15,9 +15,9 @@ export default function Header() {
 
                 <nav className='hidden md:flex'>
                     <ul className='flex justify-center flex-row [&>*]:px-4'>
-                        <li className='hover:underline'>Home</li>
-                        <li className='hover:underline'>About</li>
-                        <li className='hover:underline'>Tools</li>
+                        <li className=' transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>Home</li>
+                        <li className='transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline  underline-offset-8'>About</li>
+                        <li className=' transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>Tools</li>
                     </ul>
                 </nav>
                 
