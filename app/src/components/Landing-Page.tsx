@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from './Button'
 
 type LandingProps = {
     heading?: String,
@@ -13,6 +14,7 @@ export default function Landing({heading, paragraph}: LandingProps) {
     <img src="../../public/WMS_image_logo.svg" alt="logo" className="col-span-1 justify-self-end" />
     {/* </div> */}
     <p className="text-lg w-80 font-bold m-5">{paragraph}</p>
+    <Button text="Start booking" showicon={true}/>
     </div>
   )
 }
