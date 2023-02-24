@@ -11,8 +11,9 @@ function App() {
   return (
     <div className="App bg-ghost-white">
       <Header />
-
-      <Landing heading="Workshop Management System" paragraph="The place where you can view, find, and book all the tools you need. All from the same web-page" />
+      <Landing heading="Workshop Management System" paragraph="The place where you can view, find, and book all the tools you need. All from the same web-page"/>
+      <Button/>
+      <Footer />
     </div>
   )
 }
