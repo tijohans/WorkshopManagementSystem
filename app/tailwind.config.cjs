@@ -17,7 +17,8 @@ module.exports = {
       'ghost-white': '#F8F7FB',
       'eerie-black': '#262626',
       'robin-egg-blue': '#3CBFBE',
-      'gold': '#F7D019'
+      'gold': '#F7D019',
+      'plum': '#9C528B'
     }
   },
   plugins: [],
