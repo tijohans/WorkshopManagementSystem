@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import Button from './components/Button'
+import { Route, Routes } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Landing from './components/Landing-Page'
+import ToolsPage from './components/ToolsPage'
+import Tool from './components/Tool'
 
 
 function App() {
@@ -11,8 +13,16 @@ function App() {
   return (
     <div className="App bg-ghost-white">
       <Header />
-      <Landing heading="Workshop Management System" paragraph="The place where you can view, find, and book all the tools you need. All from the same web-page"/>
-      <Button/>
+
+      <Routes>
+        <Route path='/' element={<Landing heading="Workshop Management System" paragraph="The place where you can view, find, and book all the tools you need. All from the same web-page"/>} />
+        <Route path='/tools'>
+          <Route index element={<ToolsPage />} />
+          <Route path=':id' element={<Tool />} />
+        </Route>
+
+      </Routes>
+
       <Footer />
     </div>
   )
