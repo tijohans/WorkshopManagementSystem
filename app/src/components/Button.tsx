@@ -1,10 +1,11 @@
 import React from 'react'
 
-type buttonrops = {
-    text?: String
+type ButtonProps = {
+    text?: String,
+    showicon?: Boolean
 }
 
-export default function Button(props: buttonrops) {
+export default function Button(props: ButtonProps) {
   return (
     <button>{props.text}</button>
   )
