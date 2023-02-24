@@ -10,7 +10,7 @@ export default function Header() {
 
     return (
         <>
-            <header className={'h-20 flex justify-between px-[5vw] items-center mb-5 border-b-2 border-b-black'}>
+            <header className={'h-20 flex justify-between px-[5vw] items-center mb-5 border-b border-b-black'}>
                 <img src="/wms_logo.svg" alt="Logo for the workshop management system" className='w-28' />
 
                 <nav className='hidden md:flex'>
