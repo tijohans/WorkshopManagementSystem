@@ -1,7 +1,15 @@
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
+
+function listItems(): any {
+    const pages: String[] = ['Home', 'About', 'Tools']
+
+    pages.map((page) => {
+        <li>{page}</li>
+    })
+}
 
 export default function Header() {
-    const [nav, setNav] = useState(false)
+    const [nav, setNav] = useState(true)
 
     const toggleNav = () => {
         setNav(!nav)
@@ -27,9 +35,8 @@ export default function Header() {
 
                 <nav className={!nav ? 'md:hidden fixed top-20 left-0 w-full h-full bg-ghost-white ease-in-out duration-500' : 'fixed left-[-100%] top-20 md:hidden' }>
                     <ul className='uppercase text-4xl font-bold [&>*]:m-5 [&>*]:my-10'>
-                        <li>Home</li>
-                        <li>About</li>
-                        <li>Tools</li>
+                        <li>test li</li>
+                        {listItems()}
                     </ul>
                 </nav>
             </header>
