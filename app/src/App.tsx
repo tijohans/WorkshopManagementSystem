@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Landing from './components/Landing-Page'
 import ToolsPage from './components/ToolsPage'
 import Tool from './components/Tool'
+import ToolCard from './components/ToolCard'
 
 
 function App() {
@@ -17,11 +18,12 @@ function App() {
       <Routes>
         <Route path='/' element={<Landing heading="Workshop Management System" paragraph="The place where you can view, find, and book all the tools you need. All from the same web-page"/>} />
         <Route path='/tools'>
-          <Route index element={<ToolsPage />} />
+          <Route index element={<ToolsPage /> } />
           <Route path=':id' element={<Tool />} />
         </Route>
 
       </Routes>
+
 
       <Footer />
     </div>
