@@ -11,8 +11,6 @@ const supabaseKey = String(process.env.ANON_KEY)
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-// const { data: tools, error } = await supabase.from('tools').select('*')
-
 // Middleware
 app.use(express.json())
 
@@ -24,7 +22,6 @@ app.use(cors())
 app.use('/api/tools', toolRouter)
 
 
-// ! Cannot fetch env variables properly
 const PORT: Number = Number(process.env.PORT) || 6969
 
 app.listen(PORT, () => {
