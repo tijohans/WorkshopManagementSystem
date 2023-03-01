@@ -6,6 +6,7 @@ import Landing from './pages/Landing-Page'
 import Tool from './components/Tool'
 import ToolCard from './components/ToolCard'
 import Table from './components/Table'
+import Button from './components/Button'
 import ToolsOverview from './pages/ToolsOverview'
 import ToolPage from './pages/ToolPage'
 
@@ -27,7 +28,7 @@ function App() {
       </Routes>
 
 
-      <Footer />
+      <Footer/>
     </div>
   )
 }
