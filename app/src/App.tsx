@@ -21,7 +21,7 @@ function App() {
         <Route path='/tools'>
           <Route index element={<ToolsOverview /> } />
           
-          {/* <Route path=':id' element={<Tool />} /> */}
+          <Route path=':halla' element={<ToolPage />} />
         </Route>
 
       </Routes>
