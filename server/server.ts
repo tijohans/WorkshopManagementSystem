@@ -1,6 +1,7 @@
 import 'dotenv/config'
-import express, {Express} from 'express'
+import express, {Express, Router} from 'express'
 import { createClient } from '@supabase/supabase-js'
+import { toolRouter } from './routes/toolRouter.js'
 
 const app: Express = express()
 
@@ -11,9 +12,12 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 // const { data: tools, error } = await supabase.from('tools').select('*')
 
+// Middleware 
+app.use(express.json())
 
 
-
+// Routes
+app.use('/api/tools', toolRouter)
 
 
 // ! Cannot fetch env variables properly
