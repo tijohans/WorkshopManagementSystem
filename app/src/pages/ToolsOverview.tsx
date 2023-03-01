@@ -1,7 +1,7 @@
 import React from 'react'
 import ToolCard from '../components/ToolCard'
 
-export default function ToolsPage() {
+export default function ToolsOverview() {
   return (
     //!IMAGES ARE TEMPORARY
     <div className="flex flex-wrap justify-center items-center gap-4 min-h-full ">
