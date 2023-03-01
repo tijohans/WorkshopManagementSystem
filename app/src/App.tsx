@@ -6,6 +6,8 @@ import Landing from './pages/Landing-Page'
 import ToolsPage from './components/ToolsPage'
 import Tool from './components/Tool'
 import ToolCard from './components/ToolCard'
+import Table from './components/Table'
+import Button from './components/Button'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,7 +26,7 @@ function App() {
       </Routes>
 
 
-      <Footer />
+      <Footer/>
     </div>
   )
 }
