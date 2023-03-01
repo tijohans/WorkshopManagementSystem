@@ -6,7 +6,7 @@ import { supabase } from '../server.js'
     @desc   getting all tools
 */
 const getTools = async (req: Request, res: Response) => {
-    const {data: tools, error} = await supabase.from('tools').select('*')
+    const {data: data, error} = await supabase.from('tools').select('*')
 
     if(error) {
         res.json(error)
@@ -14,7 +14,7 @@ const getTools = async (req: Request, res: Response) => {
     }
         
 
-    res.json(tools)
+    res.json(data)
 }
 
 /* 
@@ -23,11 +23,14 @@ const getTools = async (req: Request, res: Response) => {
 */
 const createTools = async (req: Request, res: Response) => {
 
-    const {data, error} = await supabase.from('tools').insert([{
-        name: req.body.name,
-        imageurl: req.body.imageurl,
-        description: req.body.description,
-    }]).select()
+    const {data, error} = await supabase
+        .from('tools')
+        .insert([{
+            name: req.body.name,
+            imageurl: req.body.imageurl,
+            description: req.body.description,
+        }])
+        .select()
 
     if(error) {
         res.json(error)
@@ -45,14 +48,17 @@ const createTools = async (req: Request, res: Response) => {
 const getTool = async (req: Request, res: Response) => {
     const id = req.params.id
 
-    const {data: tool, error} = await supabase.from('tools').select('*').eq('id', id)
+    const {data: data, error} = await supabase
+        .from('tools')
+        .select('*')
+        .eq('id', id)
 
     if(error) {
         res.json(error)
         return
     }
 
-    res.json(tool)
+    res.json(data)
 }
 
 
@@ -61,7 +67,28 @@ const getTool = async (req: Request, res: Response) => {
     @desc   creating a new tool
 */
 const updateTools = async (req: Request, res: Response) => {
-    res.json({msg: 'updating a tool'})
+    
+    const id = req.params.id
+    const field = req.body.field
+    const value = req.body.value
+
+    if(!field || !value) {
+        res.json("Missing of incorrect field name/value")
+        return
+    }
+    
+    const { data, error } = await supabase
+        .from('tools')
+        .update({ [field]: value })
+        .eq('id', id)
+        .select()
+
+    if(error) {
+        res.json(error)
+        return
+    }
+
+    res.json(data)
 }
 
 /* 
@@ -69,7 +96,20 @@ const updateTools = async (req: Request, res: Response) => {
     @desc   deleting a tool
 */
 const deleteTools = async (req: Request, res: Response) => {
-    res.json({msg: 'deleting a tool test'})
+    const id = req.params.id
+
+    const { data, error } = await supabase
+        .from('tools')
+        .delete()
+        .eq('id', id)
+        .select()
+    
+    if(error) {
+        res.json(error)
+        return
+    }
+
+    res.json(data)
 }
 
 export {
