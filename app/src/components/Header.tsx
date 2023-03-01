@@ -20,7 +20,7 @@ export default function Header() {
 
     // Generates all the list items
     const generateListItems = () => {
-        return pages.map(elem => <li className='hover:underline'>{elem}</li>)
+        return pages.map(elem => <li className='hover:underline transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>{elem}</li>)
     }
 
 
