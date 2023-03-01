@@ -5,9 +5,7 @@ import Header from './components/Header'
 import Landing from './pages/Landing-Page'
 import Tool from './components/Tool'
 import ToolCard from './components/ToolCard'
-import ToolsOverview from './pages/ToolsOverview'
-import ToolPage from './pages/ToolPage'
-
+import Table from './components/Table'
 
 function App() {
   const [count, setCount] = useState(0)

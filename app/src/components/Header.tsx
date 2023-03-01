@@ -20,12 +20,12 @@ export default function Header() {
 
     // Generates all the list items
     const generateListItems = () => {
-        return pages.map(elem => <li className='hover:underline transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>{elem}</li>)
+        return pages.map(elem => <li className=' transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>{elem}</li>)
     }
 
 
     return (
-        <header className={'h-20 flex justify-between px-[5vw] items-center mb-5 border-b border-b-black'}>
+        <header className={'h-20 flex justify-between px-[5vw] items-center mb-5 border-b border-b-slate-300'}>
             <img src="/wms_logo.svg" alt="Logo for the workshop management system" className='w-28' />
 
             <nav className='hidden md:flex'>
