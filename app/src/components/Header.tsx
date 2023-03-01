@@ -1,18 +1,9 @@
 import React, { ReactNode, useState } from 'react'
-
-function listItems(): any {
-    const pages: String[] = ['Home', 'About', 'Tools']
-
-    return (
-        // <ul className='flex justify-center flex-row [&>*]:px-4'>
-        pages.map(elem => {<li className='hover:underline'>{elem}</li>})
-        // </ul>
-    )
-}
+import { Link } from 'react-router-dom'
 
 export default function Header() {
     const [nav, setNav] = useState(true)
-    const [pages, setPages] = useState(['home', 'about', 'tools'])
+    const [pages, setPages] = useState(['home', 'tools'])
 
     const toggleNav = () => {
         setNav(!nav)
@@ -20,7 +11,13 @@ export default function Header() {
 
     // Generates all the list items
     const generateListItems = () => {
-        return pages.map((elem, key) => <li key={key} className=' transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>{elem}</li>)
+        return pages.map((elem, key) => <li 
+            key={key} 
+            className=' transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>
+
+                {/* Legit jalla script det her ass */}
+                {elem == "home" ? <Link to='/'>{elem}</Link> : <Link to={'/' + elem}>{elem}</Link>}
+            </li>)
     }
 
 
