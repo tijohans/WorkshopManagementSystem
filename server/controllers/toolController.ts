@@ -73,7 +73,7 @@ const updateTools = async (req: Request, res: Response) => {
     const value = req.body.value
 
     if(!field || !value) {
-        res.json("Missing of incorrect field name/value")
+        res.json("Missing or incorrect field name/value")
         return
     }
     
