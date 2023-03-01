@@ -8,8 +8,11 @@ import { supabase } from '../server.js'
 const getTools = async (req: Request, res: Response) => {
     const {data: tools, error} = await supabase.from('tools').select('*')
 
-    if(error) 
+    if(error) {
         res.json(error)
+        return
+    }
+        
 
     res.json(tools)
 }
@@ -19,7 +22,20 @@ const getTools = async (req: Request, res: Response) => {
     @desc   creating new tool
 */
 const createTools = async (req: Request, res: Response) => {
-    
+
+    const {data, error} = await supabase.from('tools').insert([{
+        name: req.body.name,
+        imageurl: req.body.imageurl,
+        description: req.body.description,
+    }]).select()
+
+    if(error) {
+        res.json(error)
+        return
+    }
+
+
+    res.json(data)
 }
 
 
