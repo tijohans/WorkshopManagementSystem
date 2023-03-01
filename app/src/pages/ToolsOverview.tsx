@@ -1,5 +1,5 @@
 import React from 'react'
-import ToolCard from './ToolCard'
+import ToolCard from '../components/ToolCard'
 
 export default function ToolsPage() {
   return (
