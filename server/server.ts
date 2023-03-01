@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express, {Express, Router} from 'express'
+import cors from 'cors'
 import { createClient } from '@supabase/supabase-js'
 import { toolRouter } from './routes/toolRouter.js'
 
@@ -12,8 +13,11 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 // const { data: tools, error } = await supabase.from('tools').select('*')
 
-// Middleware 
+// Middleware
 app.use(express.json())
+
+// ! Enabling all cors requests
+app.use(cors())
 
 
 // Routes
