@@ -34,7 +34,6 @@ const createTools = async (req: Request, res: Response) => {
         return
     }
 
-
     res.json(data)
 }
 
@@ -44,7 +43,16 @@ const createTools = async (req: Request, res: Response) => {
     @desc   getting a single tool
 */
 const getTool = async (req: Request, res: Response) => {
-    res.json({msg: 'get a single tool test'})
+    const id = req.params.id
+
+    const {data: tool, error} = await supabase.from('tools').select('*').eq('id', id)
+
+    if(error) {
+        res.json(error)
+        return
+    }
+
+    res.json(tool)
 }
 
 
