@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '../components/Button'
+import Footer from '../components/Footer'
 
 type LandingProps = {
     heading?: String,
@@ -8,6 +9,7 @@ type LandingProps = {
 
 export default function Landing({heading, paragraph}: LandingProps) {
   return (
+<body className="bg-ghost-white h-screen">
     <div className="grid grid-cols-2 gap-30 m-0 h-[30vh]">
         {/* <div> */}
       <h1 className="text-4xl font-bold m-5">{heading}</h1>
@@ -16,7 +18,14 @@ export default function Landing({heading, paragraph}: LandingProps) {
       
       {/* </div> */}
       <p className="text-lg w-80 font-bold m-5">{paragraph}</p>
-      <Button text="Start booking" showicon={true}/>
-    </div>
+
+    <Button text="Start booking" showicon={true}/>
+     </div>
+    
+
+    
+     </body>
+
+    
   )
 }
