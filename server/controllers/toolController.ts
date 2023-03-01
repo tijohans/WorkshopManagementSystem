@@ -1,11 +1,17 @@
 import { Request, Response } from "express"
+import { supabase } from '../server.js'
 
 /* 
     @route  GET /api/tools
     @desc   getting all tools
 */
 const getTools = async (req: Request, res: Response) => {
-    res.json({msg: 'get tools route test'})
+    const {data: tools, error} = await supabase.from('tools').select('*')
+
+    if(error) 
+        res.json(error)
+
+    res.json(tools)
 }
 
 /* 
@@ -13,7 +19,7 @@ const getTools = async (req: Request, res: Response) => {
     @desc   creating new tool
 */
 const createTools = async (req: Request, res: Response) => {
-    res.json({msg: 'create tool route test'})
+    
 }
 
 
