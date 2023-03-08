@@ -15,12 +15,11 @@ export default function Table(props: tableProps) {
     }, []);
 
     const getTable = () => {
-        // ! Fetch table from locally hosted server (change later!)
         axios.get(`https://wms-api-ps1s.onrender.com/api/${props.name}`)
             .then((response) => {
                 setData(response.data)
             })
-            .catch(error => console.error("HJELP!! Error: " + error))
+            .catch(error => console.error("Error: " + error))
     }
 
     console.log(data)

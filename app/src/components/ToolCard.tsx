@@ -1,6 +1,8 @@
-import React from 'react'
-import Button from './Button'
+import SmallButton from './SmallButton'
+
+
 type toolcardProps = {
+  id: string,
   src: string,
   alt?: string,
   name: string,
@@ -15,6 +17,7 @@ export default function ToolCard(props: toolcardProps) {
       <h1 className='text-4xl font-bold ml-3'>{props.name}</h1>
       <p className='ml-3'>{props.paragraph}</p>
       </div>
+      <SmallButton text='view' toolId={props.id} />
     </div>
   )
 }
