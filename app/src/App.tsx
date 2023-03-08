@@ -22,9 +22,9 @@ function App() {
         <Route path='/tools'>
           <Route index element={<ToolsOverview /> } />
           
-          <Route path=':halla' element={<ToolPage />} />
+          <Route path=':tool' element={<ToolPage />} />
         </Route>
-
+      
       </Routes>
 
 
