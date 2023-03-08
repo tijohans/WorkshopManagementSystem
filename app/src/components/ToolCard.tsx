@@ -2,9 +2,9 @@ import React from 'react'
 import Button from './Button'
 type toolcardProps = {
   src: string,
-  alt: string,
-  name?: string,
-  paragraph?: string
+  alt?: string,
+  name: string,
+  paragraph: string
 }
 
 export default function ToolCard(props: toolcardProps) {
