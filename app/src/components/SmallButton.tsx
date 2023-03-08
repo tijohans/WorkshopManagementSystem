@@ -15,7 +15,6 @@ export default function Button(props: SmallButtonProps){
       if (props.onClick) {
         props.onClick()
       }
-      // Navigate to ToolPage with 'halla' parameter
       navigate(`/tools/:tool`)
     }
   return (
