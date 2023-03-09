@@ -15,7 +15,7 @@ type ToolType = {
     dangerous: boolean
 }
 
-const loading: ToolType = {
+const defaultTool: ToolType = {
     id: 'loading',
     name: 'name',
     imageurl: 'imageurl',
@@ -24,27 +24,32 @@ const loading: ToolType = {
     dangerous: false
 }
 
-
 export default function ToolPage(props: toolid) {
-    const [tool, setTool] = useState<ToolType>(loading)
+    const [tool, setTool] = useState<ToolType>(defaultTool)
+    const [loading, setLoading] = useState<Boolean>(true)
 
     useEffect(() => {
         getTool()
     }, []);
 
-    const getTool = () => {
-        axios.get(`https://wms-api-ps1s.onrender.com/api/tools/2`)
+    const getTool = async () => {
+        await axios.get(`http://localhost:9003/api/tools/2`)
             .then((response) => {
-                setTool(response.data)
+                setTool(response.data[0])
+                console.log(response.data)
+                setLoading(false)
             })
             .catch(error => console.error("Error: " + error))
+        
     }
-
 
     return (
         <div>
-            <h1>{tool.name}</h1>
-            <p>{tool.description}</p>
-            </div>
+            {loading ? <h1>Loading...</h1> : 
+            <div>
+                <h1>{tool.name}</h1>
+                <p>{tool.description}</p>
+            </div>}
+        </div>
     )
 }

@@ -11,7 +11,7 @@ export default function ToolsOverview() {
   }, []);
 
   const getTools = () => {
-    axios.get(`https://wms-api-ps1s.onrender.com/api/tools`)
+    axios.get(`http://localhost:9003/api/tools`)
       .then((response) => {
         setTools(response.data)
       })
