@@ -23,7 +23,7 @@ function App() {
           <Route index element={<ToolsOverview /> } />
           <Route path=':id' element={<ToolPage />} />
         </Route>
-
+      
       </Routes>
 
 
