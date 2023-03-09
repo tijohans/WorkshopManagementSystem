@@ -13,7 +13,8 @@ export default function Header() {
     const generateListItems = () => {
         return pages.map((elem, key) => <li 
             key={key} 
-            className=' transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>
+            className=' transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'
+            onClick={toggleNav}>
 
                 {/* Could probably find a more elegant solution to this */}
                 {elem == "home" ? <Link to='/'>{elem}</Link> : <Link to={'/' + elem}>{elem}</Link>}
