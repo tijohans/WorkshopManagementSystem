@@ -11,14 +11,14 @@ export default function ToolsOverview() {
   }, []);
 
   const getTools = () => {
-    axios.get(`http://localhost:9003/api/tools`)
+    axios.get(`https://wms-api-ps1s.onrender.com/api/tools`)
       .then((response) => {
         setTools(response.data)
       })
       .catch(error => console.error("Error: " + error))
   }
 
-  const toolCards = tools.map(tool => <ToolCard key={tool.id} id={tool.id} src={tool.imageUrl} name={tool.name} paragraph={tool.description} />)
+  const toolCards = tools.map((tool, key) => <ToolCard key={key} id={tool.id} src={tool.imageUrl} name={tool.name} paragraph={tool.description} />)
 
   return (
       <div className="flex flex-wrap justify-center items-center gap-4 min-h-full ">

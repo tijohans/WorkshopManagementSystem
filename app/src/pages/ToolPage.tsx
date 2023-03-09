@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Tool from '../components/Tool'
 import axios from 'axios'
-
-type toolid = {
-    id?: string
-}
+import { useParams } from 'react-router-dom'
 
 type ToolType = {
     id: string, 
@@ -24,20 +21,20 @@ const defaultTool: ToolType = {
     dangerous: false
 }
 
-export default function ToolPage(props: toolid) {
+export default function ToolPage() {
     const [tool, setTool] = useState<ToolType>(defaultTool)
     const [loading, setLoading] = useState<Boolean>(true)
+    let { id } = useParams()
 
     useEffect(() => {
-        getTool()
+        getTool(id)
     }, []);
 
-    const getTool = async () => {
-        await axios.get(`http://localhost:9003/api/tools/2`)
+    const getTool = async (id: any) => {
+        await axios.get(`https://wms-api-ps1s.onrender.com/api/tools/${id}`)
             .then((response) => {
-                setTool(response.data[0])
-                console.log(response.data)
                 setLoading(false)
+                setTool(response.data[0])
             })
             .catch(error => console.error("Error: " + error))
         
