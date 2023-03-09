@@ -15,7 +15,7 @@ export default function Header() {
             key={key} 
             className=' transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8'>
 
-                {/* Legit jalla script det her ass */}
+                {/* Could probably find a more elegant solution to this */}
                 {elem == "home" ? <Link to='/'>{elem}</Link> : <Link to={'/' + elem}>{elem}</Link>}
             </li>)
     }
