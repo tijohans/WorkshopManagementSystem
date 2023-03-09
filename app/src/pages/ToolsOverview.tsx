@@ -18,7 +18,7 @@ export default function ToolsOverview() {
       .catch(error => console.error("Error: " + error))
   }
 
-  const toolCards = tools.map((tool, key) => <ToolCard key={key} id={tool.id} src={tool.imageUrl} name={tool.name} paragraph={tool.description} />)
+  const toolCards = tools.map((tool, key) => <ToolCard key={key} id={tool.id} src={tool.imageurl} name={tool.name} paragraph={tool.description} />)
 
   return (
       <div className="flex flex-wrap justify-center items-center gap-4 min-h-full ">

@@ -8,7 +8,7 @@ type LandingProps = {
 
 export default function Landing({ heading, paragraph }: LandingProps) {
   return (
-    <body className="bg-ghost-white h-screen">
+    <body className="bg-ghost-white m-h-screen">
       <div className="grid grid-cols-2 gap-30 m-0">
         {/* <div> */}
         <h1 className="text-4xl font-bold m-5">{heading}</h1> 
