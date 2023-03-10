@@ -5,7 +5,7 @@ import SmallButton from './SmallButton'
 export default function LoginForm() {
 
     return (
-        <body className="min-h-screen">
+       
  
 <form className="top-1 h-200 flex flex-col justify-center items-center space-y-10 ">
 <h2 className="uppercase text-3xl font-bold text-eerie-black md:text-4xl ">User login</h2>
@@ -27,7 +27,7 @@ export default function LoginForm() {
  <p className="">Need help? Contact us blablabla.</p>
 </form>
    
-    </body>
+    
     )
 
 }
