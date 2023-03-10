@@ -8,7 +8,7 @@ type LandingProps = {
 
 export default function Landing({ heading, paragraph }: LandingProps) {
   return (
-    <body className="bg-ghost-white m-h-screen">
+    <body className="bg-ghost-white min-h-screen">
       <div className="grid grid-cols-2 gap-30 m-0">
         {/* <div> */}
         <h1 className="text-4xl font-bold m-5">{heading}</h1> 
@@ -20,8 +20,6 @@ export default function Landing({ heading, paragraph }: LandingProps) {
 
         <Button text="Start booking" showicon={true} />
       </div>
-
-      <Table name="tools" />
     </body>
   )
 }

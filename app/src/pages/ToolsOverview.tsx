@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ToolCard from '../components/ToolCard'
 import axios from 'axios'
+import Table from '../components/Table'
+import Button from '../components/Button'
 
 export default function ToolsOverview() {
 
   const [tools, setTools] = useState<any[]>([])
+  const [toggleView, setToggleView] = useState<boolean>(false)
 
   useEffect(() => {
     getTools()
@@ -21,8 +24,17 @@ export default function ToolsOverview() {
   const toolCards = tools.map((tool, key) => <ToolCard key={key} id={tool.id} src={tool.imageurl} name={tool.name} paragraph={tool.description} />)
 
   return (
-      <div className="flex flex-wrap justify-center items-center gap-4 min-h-full ">
-        {toolCards}
-      </div>
+    <div className="flex flex-wrap flex-col justify-center items-center gap-4 min-h-full">
+
+      {/* // ? Jallascript???? */}
+      <span onClick={() => setToggleView(!toggleView)} ><Button text='toggle view' /></span>
+
+      {toggleView ? <Table name="tools" /> :
+        <div className='flex flex-wrap justify-center gap-6 mx-6'>
+          {toolCards}
+        </div>
+      }
+
+    </div>
   )
 }
