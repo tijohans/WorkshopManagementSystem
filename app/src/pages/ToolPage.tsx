@@ -1,12 +1,54 @@
-import React from 'react'
+
+import React, { useState, useEffect } from 'react'
 import Tool from '../components/Tool'
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
+
+type ToolType = {
+    id: string, 
+    name: string,
+    imageurl: string,
+    description: string,
+    broken: boolean,
+    dangerous: boolean
+}
+
+const defaultTool: ToolType = {
+    id: 'loading',
+    name: 'name',
+    imageurl: 'imageurl',
+    description: 'description',
+    broken: false,
+    dangerous: false
+}
 
 export default function ToolPage() {
+    const [tool, setTool] = useState<ToolType>(defaultTool)
+    const [loading, setLoading] = useState<Boolean>(true)
+    let { id } = useParams()
+
+    useEffect(() => {
+        getTool(id)
+    }, []);
+
+    const getTool = async (id: any) => {
+        await axios.get(`https://wms-api-ps1s.onrender.com/api/tools/${id}`)
+            .then((response) => {
+                setLoading(false)
+                setTool(response.data[0])
+            })
+            .catch(error => console.error("Error: " + error))
+        
+    }
+
     return (
-        <body>
         <div>
-            <Tool src="https://ucarecdn.com/3c7da40c-940a-4ac0-844d-b23b149cb0b6/-/format/auto/-/preview/3000x3000/-/quality/lighter/" alt="placeholder" name="Jesus" paragraph="ajhsubajojdi ndxjbcjbbc" other="Other" otherParagraph="Other paragraph" />
+            {loading ? <h1>Loading...</h1> : 
+            <div>
+                <h1>{tool.name}</h1>
+                <p>{tool.description}</p>
+            </div>}
         </div>
-        </body>
     )
-  }
+}
+

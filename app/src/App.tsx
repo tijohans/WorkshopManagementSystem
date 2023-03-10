@@ -21,8 +21,7 @@ function App() {
         <Route path='/' element={<Landing heading="Workshop Management System" paragraph="The place where you can view, find, and book all the tools you need. All from the same web-page"/>} />
         <Route path='/tools'>
           <Route index element={<ToolsOverview /> } />
-          
-          <Route path=':tool' element={<ToolPage />} />
+          <Route path=':id' element={<ToolPage />} />
         </Route>
       
       </Routes>

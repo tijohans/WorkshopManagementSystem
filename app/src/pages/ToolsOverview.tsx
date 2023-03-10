@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ToolCard from '../components/ToolCard'
+import axios from 'axios'
 
 export default function ToolsOverview() {
+
+  const [tools, setTools] = useState<any[]>([])
+
+  useEffect(() => {
+    getTools()
+  }, []);
+
+  const getTools = () => {
+    axios.get(`https://wms-api-ps1s.onrender.com/api/tools`)
+      .then((response) => {
+        setTools(response.data)
+      })
+      .catch(error => console.error("Error: " + error))
+  }
+
+  const toolCards = tools.map((tool, key) => <ToolCard key={key} id={tool.id} src={tool.imageurl} name={tool.name} paragraph={tool.description} />)
+
   return (
-    <body>
-    <div className="flex flex-wrap justify-center items-center gap-4 min-h-full ">
-      {<ToolCard src="https://picsum.photos/id/237/200/300" alt="Pikk" name="Brosjan" paragraph="ajhsubajojdi ndxjbcjbbc" />}
-      {<ToolCard src="https://ucarecdn.com/3c7da40c-940a-4ac0-844d-b23b149cb0b6/-/format/auto/-/preview/3000x3000/-/quality/lighter/" alt="test" name="Jesus" paragraph="ajhsubajojdi ndxjbcjbbc" />}
-      {<ToolCard src="https://ucarecdn.com/3c7da40c-940a-4ac0-844d-b23b149cb0b6/-/format/auto/-/preview/3000x3000/-/quality/lighter/" alt="test" name="Jesus" paragraph="ajhsubajojdi ndxjbcjbbc" />}
-      {<ToolCard src="https://ucarecdn.com/3c7da40c-940a-4ac0-844d-b23b149cb0b6/-/format/auto/-/preview/3000x3000/-/quality/lighter/" alt="test" name="Jesus" paragraph="ajhsubajojdi ndxjbcjbbc" />}
-    </div>
-    </body>
+      <div className="flex flex-wrap justify-center items-center gap-4 min-h-full ">
+        {toolCards}
+      </div>
   )
 }

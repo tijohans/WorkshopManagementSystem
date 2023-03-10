@@ -15,12 +15,11 @@ export default function Table(props: tableProps) {
     }, []);
 
     const getTable = () => {
-        // ! Fetch table from locally hosted server (change later!)
         axios.get(`https://wms-api-ps1s.onrender.com/api/${props.name}`)
             .then((response) => {
                 setData(response.data)
             })
-            .catch(error => console.error("HJELP!! Error: " + error))
+            .catch(error => console.error("Error: " + error))
     }
 
     console.log(data)
@@ -68,7 +67,7 @@ export default function Table(props: tableProps) {
     headers.push(<th scope="col" className="px-6 py-3">Action</th>)
 
     return (
-        <div className="relative overflow-x-auto border shadow-md sm:rounded-lg md:w-5/6 justify-center m-auto">
+        <div className="overflow-x-auto mx-auto my-10 shadow-md sm:rounded-lg md:w-5/6">
             <table className="w-full text-sm text-left text-gray-500 ">
                 <thead className="text-xs text-white uppercase bg-plum ">
                     <tr>

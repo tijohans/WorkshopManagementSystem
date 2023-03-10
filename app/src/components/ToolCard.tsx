@@ -1,10 +1,10 @@
-import React from 'react'
 import SmallButton from './SmallButton'
 type toolcardProps = {
+  id: string,
   src: string,
-  alt: string,
-  name?: string,
-  paragraph?: string
+  alt?: string,
+  name: string,
+  paragraph: string
 }
 
 export default function ToolCard(props: toolcardProps) {
@@ -15,7 +15,7 @@ export default function ToolCard(props: toolcardProps) {
       <h1 className='text-3xl font-bold ml-3'>{props.name}</h1>
       <p className='ml-3'>{props.paragraph}</p>
       </div>
-      <SmallButton text="Book" showicon={false} />
+      <SmallButton text='view' toolId={props.id} />
     </div>
   )
 }
