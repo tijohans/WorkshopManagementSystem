@@ -6,7 +6,6 @@ export default function LoginForm() {
 
     return (
        
- 
 <form className="top-1 h-200 flex flex-col justify-center items-center space-y-10 ">
 <h2 className="uppercase text-3xl font-bold text-eerie-black md:text-4xl ">User login</h2>
   <div className="mb-6 w-11/12 md:w-4/12 ">
