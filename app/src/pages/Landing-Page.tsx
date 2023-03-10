@@ -1,6 +1,5 @@
 import Button from '../components/Button'
 import Table from '../components/Table'
-import ButtonLink from '../components/ButtonLink'
 
 type LandingProps = {
   heading?: String,
@@ -19,7 +18,7 @@ export default function Landing({ heading, paragraph }: LandingProps) {
         {/* </div> */}
         <p className="text-lg max-w-full font-bold m-5">{paragraph}</p>
 
-        <ButtonLink link="/tools" text="Start booking" showicon={true} />
+        <Button link="/tools" text="Start booking" showicon={true} />
       </div>
     </body>
   )
