@@ -10,6 +10,7 @@ import Button from './components/Button'
 import ToolsOverview from './pages/ToolsOverview'
 import ToolPage from './pages/ToolPage'
 import LoginPage from './pages/LoginPage'
+import UserPage from './pages/UserPage'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -25,9 +26,10 @@ function App() {
           <Route path=':id' element={<ToolPage />} />
           
         </Route>
-
         <Route element={<LoginPage /> } path='/login'>
-        
+        </Route>
+
+        <Route element={<UserPage />} path='/userpage'>
         </Route>
       
       </Routes>
