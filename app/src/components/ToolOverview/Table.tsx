@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import ReactLoading from 'react-loading'
 
 type tableProps = {
     name: string
@@ -70,7 +71,7 @@ export default function Table(props: tableProps) {
 
     return (
         <div className="overflow-x-auto mx-auto my-10 shadow-md sm:rounded-lg md:w-5/6">
-            {loading ? <h1>Loading....</h1> :
+            {loading ? <ReactLoading type='spin' color='#9C528B'/> :
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-white uppercase bg-plum ">
                         <tr>
