@@ -21,7 +21,7 @@ export default function Button(props: SmallButtonProps){
 
   return (
       <button type="button" 
-        className="group shadow-lg h-10  px-5 m-2 rounded-full transition-colors duration-500 ease-in-out text-ghost-white bg-plum hover:delay-50  hover:bg-robin-egg-blue  hover:text-eerie-black  focus:outline-none font-medium text-xl md:text-2xl w-50 md:w-80 text-center mr-2 mb-2"
+        className="group shadow-lg h-10 max-w-fit px-5 m-2 rounded-full transition-colors duration-500 ease-in-out text-ghost-white bg-plum hover:delay-50  hover:bg-robin-egg-blue  hover:text-eerie-black  focus:outline-none font-medium text-xl md:text-2xl w-50 md:w-80 text-center mr-2 mb-2"
         onClick={handleClick}>
         <div className="flex align-middle justify-center">        
           {props.text}
