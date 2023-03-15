@@ -7,6 +7,7 @@ import ToolsOverview from './pages/ToolsOverview'
 import ToolPage from './pages/ToolPage'
 import LoginPage from './pages/LoginPage'
 import UserPage from './pages/UserPage'
+import ToS from './pages/ToS'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,11 +23,12 @@ function App() {
           <Route path=':id' element={<ToolPage />} />
           
         </Route>
-        <Route element={<LoginPage /> } path='/login'>
-        </Route>
 
-        <Route element={<UserPage />} path='/userpage'>
-        </Route>
+        <Route element={<LoginPage /> } path='/login' />
+
+        <Route element={<UserPage />} path='/userpage' />
+
+        <Route element={<ToS />} path='/termsofservice' />
       
       </Routes>
 
