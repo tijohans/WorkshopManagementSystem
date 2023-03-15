@@ -8,6 +8,8 @@ import ToolPage from './pages/ToolPage'
 import LoginPage from './pages/LoginPage'
 import UserPage from './pages/UserPage'
 import ToS from './pages/ToS'
+import AdminDashboard from './pages/AdminDashboard'
+import AdminUserEdit from './pages/AdminUserEdit'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -29,6 +31,13 @@ function App() {
         <Route element={<UserPage />} path='/userpage' />
 
         <Route element={<ToS />} path='/termsofservice' />
+        
+        <Route element={<AdminDashboard />} path='/admin' />
+
+        <Route path='/admin/user'>
+          <Route index element={<AdminUserEdit/>} />
+          <Route path=':id' element={<AdminUserEdit edit="true"/>} />
+        </Route>
       
       </Routes>
 
