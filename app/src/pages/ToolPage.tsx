@@ -47,18 +47,19 @@ export default function ToolPage() {
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        <div>
           <div className="flex justify-center flex-col items-center border-2">
-            <img className="w-64 h-48 p-2" src={tool.imageurl} />
+            <img className="w-64 h-48 p-2 rounded-2xl" src={tool.imageurl} />
             <h1 className="text-3xl font-bold ">{tool.name}</h1>
             <p>{tool.description}</p>
 
+            <form action="POST" className="flex justify-center flex-col items-center mt-4">
             <label>Start date:</label>
-            <input type="date" name="start" min="2023-01-01" max="2024-12-31" />
+            <input type="date" name="start" min="2023-01-01" max="2024-12-31" className="border-2 border-gray-300 rounded-lg p-2" />
             <label>End date:</label>
-            <input type="date" name="end" min="2023-01-01" max="2024-12-31" />
+            <input type="date" name="end" min="2023-01-01" max="2024-12-31" className="border-2 border-gray-300 rounded-lg p-2" />
+            <input type="submit" value="book" className="cursor-pointer group shadow-lg h-10 max-w-fit px-5 m-2 rounded-full transition-colors duration-500 ease-in-out text-ghost-white bg-plum hover:delay-50  hover:bg-robin-egg-blue  hover:text-eerie-black  focus:outline-none font-medium text-xl md:text-2xl w-50 md:w-80 text-center "/>
+            </form>         
           </div>
-        </div>
       )}
     </div>
   );
