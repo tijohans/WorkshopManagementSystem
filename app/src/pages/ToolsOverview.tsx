@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Table from '../components/ToolOverview/Table'
+import Table from '../components/Table'
 import Button from '../components/Button'
 import ToolCards from '../components/ToolOverview/ToolCards'
 
