@@ -1,15 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-type SmallButtonProps = {
-    text?: String,
-    showicon?: Boolean,
-    toolId: string,
-    onClick?: () => void
-
-}
-
-export default function Button(props: SmallButtonProps){
+export default function Button(props){
     const navigate = useNavigate()
 
     const handleClick = () => {

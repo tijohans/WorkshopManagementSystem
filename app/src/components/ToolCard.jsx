@@ -1,13 +1,6 @@
 import SmallButton from './SmallButton'
-type toolcardProps = {
-  id: string,
-  src: string,
-  alt?: string,
-  name: string,
-  paragraph: string
-}
 
-export default function ToolCard(props: toolcardProps) {
+export default function ToolCard(props) {
   return (
     <div className='flex flex-col justify-center items-center border-2 h-72 md:flex-row md:w-80 md:h-52'>
       <img className='w-52 h-32 p-2' src={props.src} alt={props.alt} />

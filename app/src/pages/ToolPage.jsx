@@ -3,17 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Tool from '../components/Tool'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-
-type ToolType = {
-    id: string, 
-    name: string,
-    imageurl: string,
-    description: string,
-    broken: boolean,
-    dangerous: boolean
-}
-
-const defaultTool: ToolType = {
+const defaultTool = {
     id: 'loading',
     name: 'name',
     imageurl: 'imageurl',
@@ -23,15 +13,15 @@ const defaultTool: ToolType = {
 }
 
 export default function ToolPage() {
-    const [tool, setTool] = useState<ToolType>(defaultTool)
-    const [loading, setLoading] = useState<Boolean>(true)
+    const [tool, setTool] = useState(defaultTool)
+    const [loading, setLoading] = useState(true)
     let { id } = useParams()
 
     useEffect(() => {
         getTool(id)
     }, []);
 
-    const getTool = async (id: any) => {
+    const getTool = async (id) => {
         await axios.get(`https://wms-api-ps1s.onrender.com/api/tools/${id}`)
             .then((response) => {
                 setLoading(false)

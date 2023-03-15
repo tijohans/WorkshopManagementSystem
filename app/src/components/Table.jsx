@@ -2,14 +2,11 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-type tableProps = {
-    name: string
-}
 
-export default function Table(props: tableProps) {
+export default function Table(props) {
 
-    const [data, setData] = useState<any[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         getTable()
@@ -26,8 +23,8 @@ export default function Table(props: tableProps) {
 
     console.log(data)
 
-    const items: any = []
-    const headers: any = []
+    const items = []
+    const headers = []
 
     data.map((item, key) => {
         if (key === 0) {

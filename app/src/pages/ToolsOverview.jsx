@@ -6,8 +6,8 @@ import Button from '../components/Button'
 
 export default function ToolsOverview() {
 
-  const [tools, setTools] = useState<any[]>([])
-  const [toggleView, setToggleView] = useState<boolean>(false)
+  const [tools, setTools] = useState([])
+  const [toggleView, setToggleView] = useState(false)
 
   useEffect(() => {
     getTools()

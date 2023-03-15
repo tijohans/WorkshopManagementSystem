@@ -1,8 +1,4 @@
-import { HTMLProps } from 'react';
-import cn from 'classnames';
-
-
-export type Props = HTMLProps<HTMLAnchorElement> & { active?: boolean };
+/* import cn from 'classnames';
 
 export default function PageLink({
   className,
@@ -29,4 +25,4 @@ export default function PageLink({
       {children}
     </a>
   );
-}
+} */
