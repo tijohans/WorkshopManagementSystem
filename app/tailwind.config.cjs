@@ -2,8 +2,8 @@
 module.exports = {
   mode: "jit",
   content: [
-    ".index.html",
-    "./src/**/*.jsx",
+    "./index.html",
+    "./src/**/*.{js,jsx}",
   ],
   theme: {
     extend: {
