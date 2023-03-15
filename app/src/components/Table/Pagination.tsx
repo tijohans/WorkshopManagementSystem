@@ -1,5 +1,5 @@
 import React from 'react'
-import Table from '../ToolOverview/Table'
+import Table from '../Table'
 import PageLink from './PageLink'
 
 

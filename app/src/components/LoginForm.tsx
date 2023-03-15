@@ -4,6 +4,8 @@ import SmallButton from './SmallButton'
 
 export default function LoginForm() {
 
+
+  
     return (
        
 <form className="top-1 h-200 flex flex-col justify-center items-center space-y-10 ">
@@ -22,7 +24,7 @@ export default function LoginForm() {
     </div>
     <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-900 ">Remember me</label>
   </div>
- <Button text="Login"/>
+ <Button text="Login" link="../userpage"/>
  <p className="">Need help? Contact us blablabla.</p>
 </form>
    

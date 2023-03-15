@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App bg-ghost-white ">
       <Header />
-
+<body className="min-h-screen h-full">
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='/tools'>
@@ -30,8 +30,9 @@ function App() {
       
       </Routes>
 
-
+      </body>
       <Footer/>
+      
     </div>
   )
 }
