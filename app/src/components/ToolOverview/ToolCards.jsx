@@ -5,7 +5,7 @@ import ToolCard from '../ToolCard';
 
 export default function ToolCards() {
     const [loading, setLoading] = useState(true)
-    const [tools, setTools] = useState<any[]>([])
+    const [tools, setTools] = useState([])
   
   
     useEffect(() => {

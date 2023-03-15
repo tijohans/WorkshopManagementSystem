@@ -1,14 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-type ButtonProps = {
-    text?: String,
-    showicon?: Boolean
-    function?: any
-    link?: string
-}
-
-export default function Button(props: ButtonProps){
+export default function Button(props){
   if (props.link){
     return <Link to={props.link}><button 
         type="button" 

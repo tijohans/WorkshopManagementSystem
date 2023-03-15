@@ -3,7 +3,7 @@ module.exports = {
   mode: "jit",
   content: [
     ".index.html",
-    "./src/**/*.tsx",
+    "./src/**/*.jsx",
   ],
   theme: {
     extend: {

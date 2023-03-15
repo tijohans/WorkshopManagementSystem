@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function Header() {
     const [nav, setNav] = useState(true)
-    const [pages, setPages] = useState(['home', 'tools', 'Login', ])
+    const [pages, setPages] = useState(['home', 'tools', 'login', ])
 
     const toggleNav = () => {
         setNav(!nav)

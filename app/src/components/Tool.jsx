@@ -1,20 +1,6 @@
 import React from 'react'
 
-
-
-type toolsPageProps = {
-  src: string,
-  alt: string,
-  name?: string,
-  paragraph?: string,
-  other?: string,
-  otherParagraph?: string,
-  startDate?: Date,
-  endDate?: Date
-
-}
-
-export default function Tool(props: toolsPageProps) {
+export default function Tool(props) {
   return (
     <body>
     <div className='flex justify-center flex-col items-center'>
