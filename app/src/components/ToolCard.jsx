@@ -1,13 +1,6 @@
 import SmallButton from "./SmallButton";
-type toolcardProps = {
-  id: string;
-  src: string;
-  alt?: string;
-  name: string;
-  paragraph: string;
-};
 
-export default function ToolCard(props: toolcardProps) {
+export default function ToolCard(props) {
   return (
     <div className=" bg-white flex flex-col justify-center items-center border-2 h-96 md:flex-row md:w-96 md:h-60">
         <div className="w-52 h-72 md:w-auto md:h-52">

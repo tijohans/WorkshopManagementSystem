@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import Table from '../Table'
 import PageLink from './PageLink'
 
@@ -44,4 +44,4 @@ export type Props = {
         </PageLink>
       </nav>
     );
-  }
+  } */

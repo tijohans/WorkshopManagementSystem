@@ -6,7 +6,7 @@ import ToolCards from '../components/ToolOverview/ToolCards'
 
 export default function ToolsOverview() {
 
-  const [toggleView, setToggleView] = useState<boolean>(false)
+  const [toggleView, setToggleView] = useState(false)
 
   return (
     <div className="flex flex-wrap flex-col justify-center items-center gap-4 min-h-full">

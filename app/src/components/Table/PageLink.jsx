@@ -1,4 +1,4 @@
-import { HTMLProps } from 'react';
+/* import { HTMLProps } from 'react';
 import cn from 'classnames';
 
 
@@ -29,4 +29,4 @@ export default function PageLink({
       {children}
     </a>
   );
-}
+} */

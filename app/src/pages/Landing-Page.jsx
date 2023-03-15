@@ -2,12 +2,7 @@ import Button from '../components/Button'
 import Hero from '../components/Hero'
 import InfoSection from '../components/InfoSection'
 
-type LandingProps = {
-    heading?: String,
-    paragraph?: String
-}
-
-export default function Landing({ heading, paragraph }: LandingProps) {
+export default function Landing(props) {
     return (
         <main className="bg-ghost-white min-h-[90vh] flex flex-col justify-evenly">
 
