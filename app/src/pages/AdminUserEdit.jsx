@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Button from "../components/Button"
+import ReactLoading from 'react-loading'
 
 const defaultUser = {
   id: "loading",
@@ -31,9 +32,7 @@ export default function AdminUserEdit(props) {
 
   return (
     <div>
-      {loading ? (
-        <h1>Loading...</h1>
-      ) : (
+      {loading ? <ReactLoading type='spin' color='#9C528B'/> : 
         <form className="flex flex-col justify-center items-center mb-16">
           <div>
             {props.edit ? <h1>Edit user:</h1> : <h1>Create a new user:</h1>}
@@ -60,11 +59,12 @@ export default function AdminUserEdit(props) {
 
           <div className="flex flex-col justify-center items-center">
             <Button text="Submit"></Button>
-            <Button text="Delete User"></Button>
+            <Button text="Cancel" link="/admin"></Button>
+            {props.edit ? <Button text="Delete User"></Button> : null}
           </div>
 
         </form>
-      )}
+      }
     </div>
   );
 }

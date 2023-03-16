@@ -8,14 +8,14 @@ export default function ToolsOverview() {
 
   const [toggleView, setToggleView] = useState(false)
 
+  const toggle = () => {
+    setToggleView(!toggleView)
+  }
+
   return (
     <div className="flex flex-wrap flex-col justify-center items-center gap-4 min-h-full">
-
-      {/* // ? Jallascript???? */}
-      <span onClick={() => setToggleView(!toggleView)} ><Button text='toggle view' /></span>
-
+      <Button text='toggle view' clickFunction={toggle}/>
       {toggleView ? <Table name="tools" /> : <ToolCards />}
-
     </div>
   )
 }
