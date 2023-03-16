@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Tool from "../components/Tool";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import SmallButton from '../components/SmallButton';
-import Button from '../components/Button'
 
 const defaultTool = {
   id: "loading",
