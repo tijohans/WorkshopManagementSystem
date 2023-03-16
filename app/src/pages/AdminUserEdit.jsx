@@ -60,7 +60,7 @@ export default function AdminUserEdit(props) {
           <div className="flex flex-col justify-center items-center">
             <Button text="Submit"></Button>
             <Button text="Cancel" link="/admin"></Button>
-            {props.edit ? <Button text="Delete User"></Button> : null}
+            {props.edit ? <Button text="Delete User" warning={true}></Button> : null}
           </div>
 
         </form>
