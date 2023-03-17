@@ -120,6 +120,8 @@ export default function AdminUserEdit(props) {
           </div>
 
           <div className="flex flex-col justify-center items-center">
+
+            {/* Må disable knapp på onclick, for å unngå at en bruker kan sende flere request med samme data 🔥 */}
             <Button text="Submit" clickFunction={props.edit ? updateUser : createUser}></Button>
             <Button text="Cancel" link="/admin"></Button>
             {props.edit ? <Button text="Delete User" warning={true} clickFunction={deleteUser}></Button> : null}
