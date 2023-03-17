@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ReactLoading from 'react-loading'
 
-
-
 export default function Table(props) {
 
     const [data, setData] = useState([])
@@ -24,6 +22,7 @@ export default function Table(props) {
     }
 
     console.log(data)
+    console.log(props.name)
 
     const items = []
     const headers = []
@@ -31,38 +30,60 @@ export default function Table(props) {
     data.map((item, key) => {
         if (key === 0) {
             for (const key in item) {
-                if (key === "id" || key === "imageurl" || key === 'visible' || key === 'bookable') continue
+                if (key === "id" || key === "imageurl" || key === 'visible' || key === 'bookable' || key === 'course_id' || key === 'password') continue
                 headers.push(<th scope="col" className="px-6 py-3 ">{key}</th>)
             }
         }
 
-        items.push(
-            <tr className="bg-white border-b hover:bg-ghost-white  ">
+        switch(props.name){
+            case "tools":
+                items.push(
+                    <tr className="bg-white border-b hover:bg-ghost-white  ">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
+                            {item.name}
+                        </th>
+        
+                        <td className="px-6 py-4">
+                            {item.description}
+                        </td>
+        
+                        <td className="px-6 py-4">
+                            {String(item.broken)}
+                        </td>
+        
+                        <td className="px-6 py-4">
+                            {String(item.dangerous)}
+                        </td>
+        
+                        <td className="px-6 py-4">
+                            <Link className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4" to={"/tools/" + item.id}>Book</Link>
+                        </td>
+                    </tr>
+                )
+                break
+            
+            case "users":
+                items.push(
+                <tr className="bg-white border-b hover:bg-ghost-white  ">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
-                    {item.name}
+                    {item.first_name}
                 </th>
 
                 <td className="px-6 py-4">
-                    {item.description}
+                    {item.last_name}
                 </td>
 
                 <td className="px-6 py-4">
-                    {String(item.broken)}
+                    {item.email}
                 </td>
 
                 <td className="px-6 py-4">
-                    {String(item.dangerous)}
-                </td>
-
-                <td className="px-6 py-4">
-                    <Link className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4" to={"/tools/" + item.id}>Book</Link>
+                    <Link className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4" to={"/admin/user/" + item.id}>Edit</Link>
                 </td>
             </tr>
-
-
-
-
-        )
+            )
+                break
+        }
     })
 
     headers.push(<th scope="col" className="px-6 py-3">Action</th>)

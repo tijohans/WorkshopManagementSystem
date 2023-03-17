@@ -9,7 +9,6 @@ export default function Tool(props) {
       <p>{props.paragraph}</p>
       <h2 className='text-4xl font-bold'>{props.other}</h2>
       <p>{props.otherParagraph}</p>
-    
       
       <label>Start date:</label>
       <input type="date" name="start" min="2023-01-01" max="2024-12-31"/>

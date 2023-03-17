@@ -5,11 +5,8 @@ import InfoSection from '../components/InfoSection'
 export default function Landing(props) {
     return (
         <main className="bg-ghost-white min-h-[90vh] flex flex-col justify-evenly">
-
             <Hero />
-
-            <InfoSection />
-            
+            <InfoSection />   
         </main>
     )
 }

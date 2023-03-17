@@ -8,6 +8,8 @@ import ToolPage from './pages/ToolPage'
 import LoginPage from './pages/LoginPage'
 import UserPage from './pages/UserPage'
 import ToS from './pages/ToS'
+import AdminDashboard from './pages/AdminDashboard'
+import AdminUserEdit from './pages/AdminUserEdit'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,26 +17,34 @@ function App() {
   return (
     <div className="App bg-ghost-white ">
       <Header />
-<body className="min-h-screen h-full">
-      <Routes>
-        <Route path='/' element={<Landing />} />
-        <Route path='/tools'>
-          <Route index element={<ToolsOverview /> } />
-          <Route path=':id' element={<ToolPage />} />
-          
-        </Route>
 
-        <Route element={<LoginPage /> } path='/login' />
+      <div className="min-h-screen h-full">
+        <Routes>
+          <Route path='/' element={<Landing />} />
+          <Route path='/tools'>
+            <Route index element={<ToolsOverview />} />
+            <Route path=':id' element={<ToolPage />} />
 
-        <Route element={<UserPage />} path='/userpage' />
+          </Route>
 
-        <Route element={<ToS />} path='/termsofservice' />
-      
-      </Routes>
+          <Route element={<LoginPage />} path='/login' />
 
-      </body>
-      <Footer/>
-      
+          <Route element={<UserPage />} path='/userpage' />
+
+          <Route element={<ToS />} path='/termsofservice' />
+
+          <Route element={<AdminDashboard />} path='/admin' />
+
+          <Route path='/admin/user'>
+            <Route index element={<AdminUserEdit />} />
+            <Route path=':id' element={<AdminUserEdit edit="true" />} />
+          </Route>
+
+        </Routes>
+
+      </div>
+
+      <Footer />
     </div>
   )
 }

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Tool from "../components/Tool";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import SmallButton from '../components/SmallButton';
-import Button from '../components/Button'
 
 const defaultTool = {
   id: "loading",
@@ -13,6 +10,15 @@ const defaultTool = {
   broken: false,
   dangerous: false,
 };
+
+const DangerWarning = () => {
+  return (
+    <section className="flex bg-yellow-100 p-4 border-2 border-spacing-2 border-yellow-300 rounded-lg my-5">
+      <img src="/icons/alert-triangle.svg" alt="" className="mx-2" />
+      <h2 className="underline underline-offset-4">Potentially dangerous tool, use caution</h2>
+    </section>
+  )
+}
 
 export default function ToolPage() {
   const [tool, setTool] = useState(defaultTool);
@@ -33,6 +39,8 @@ export default function ToolPage() {
       .catch((error) => console.error("Error: " + error));
   };
 
+  console.log(tool.dangerous)
+
   return (
     <div>
       {loading ? (
@@ -42,6 +50,8 @@ export default function ToolPage() {
             <img className="w-64 h-48 p-2 rounded-2xl" src={tool.imageurl} />
             <h1 className="text-3xl font-bold ">{tool.name}</h1>
             <p>{tool.description}</p>
+
+            {tool.dangerous ? <DangerWarning /> : ''}
 
             <form action="POST" className="flex justify-center flex-col items-center mt-4">
             <label>Start date:</label>
