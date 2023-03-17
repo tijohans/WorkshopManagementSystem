@@ -89,7 +89,7 @@ export default function Table(props) {
     headers.push(<th scope="col" className="px-6 py-3">Action</th>)
 
     return (
-        <div className="overflow-x-auto mx-auto my-10 shadow-md sm:rounded-lg md:w-5/6">
+        <div className="overflow-x-scroll w-full mx-auto my-10 shadow-md sm:rounded-lg md:w-5/6">
             {loading ? <ReactLoading type='spin' color='#9C528B'/> :
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-white uppercase bg-plum ">
