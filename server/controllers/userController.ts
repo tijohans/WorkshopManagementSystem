@@ -7,13 +7,13 @@ import bcrypt from 'bcryptjs'
     @desc   getting all users
 */
 const getUsers = async (req: Request, res: Response) => {
-    const {data: data, error} = await supabase.from('users').select('*')
+    const { data: data, error } = await supabase.from('users').select('*')
 
-    if(error) {
+    if (error) {
         res.json(error)
         return
     }
-        
+
 
     res.json(data)
 }
@@ -25,13 +25,13 @@ const getUsers = async (req: Request, res: Response) => {
 const createUsers = async (req: Request, res: Response) => {
 
     const password = await bcrypt
-                            .genSalt(10)
-                            .then((salt: string) => {
-                                return bcrypt.hash(req.body.password, salt)
-                            })
-                            .catch((err: { message: any }) => console.error(err.message))
+        .genSalt(10)
+        .then((salt: string) => {
+            return bcrypt.hash(req.body.password, salt)
+        })
+        .catch((err: { message: any }) => console.error(err.message))
 
-    const {data, error} = await supabase
+    const { data, error } = await supabase
         .from('users')
         .insert([{
             first_name: req.body.first_name,
@@ -41,7 +41,7 @@ const createUsers = async (req: Request, res: Response) => {
         }])
         .select()
 
-    if(error) {
+    if (error) {
         res.json(error)
         return
     }
@@ -57,12 +57,12 @@ const createUsers = async (req: Request, res: Response) => {
 const getUser = async (req: Request, res: Response) => {
     const id = req.params.id
 
-    const {data: data, error} = await supabase
+    const { data: data, error } = await supabase
         .from('users')
         .select('*')
         .eq('id', id)
 
-    if(error) {
+    if (error) {
         res.json(error)
         return
     }
@@ -76,23 +76,28 @@ const getUser = async (req: Request, res: Response) => {
     @desc   Updating a user
 */
 const updateUser = async (req: Request, res: Response) => {
-    
-    const id = req.params.id
-    const field = req.body.field
-    const value = req.body.value
 
-    if(!field || !value) {
-        res.json("Missing or incorrect field name/value")
+    const id = req.params.id
+    //const field = req.body.field
+    //const value = req.body.value
+
+    // Siden .update tar inn et objekt, har jeg en ide at vi bare henter body som et objekt, også oppdaterer den fieldsa funnet i body ? 
+
+    if (!req.body) {
+        res.json("Missing input")
         return
     }
-    
+
     const { data, error } = await supabase
         .from('users')
-        .update({ [field]: value })
+        .update(req.body)
         .eq('id', id)
+        // .match isteden kanskje ?
+        //.match({ id: id })
+
         .select()
 
-    if(error) {
+    if (error) {
         res.json(error)
         return
     }
@@ -112,8 +117,8 @@ const deleteUser = async (req: Request, res: Response) => {
         .delete()
         .eq('id', id)
         .select()
-    
-    if(error) {
+
+    if (error) {
         res.json(error)
         return
     }
