@@ -46,7 +46,7 @@ export default function ToolPage() {
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-          <div className="flex justify-center flex-col items-center border-2">
+          <div className="flex justify-center flex-col items-center">
             <img className="w-64 h-48 p-2 rounded-2xl" src={tool.imageurl} />
             <h1 className="text-3xl font-bold ">{tool.name}</h1>
             <p>{tool.description}</p>
