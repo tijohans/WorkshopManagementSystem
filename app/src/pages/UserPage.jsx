@@ -2,17 +2,22 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Button from '../components/Button'
 import UserInfo from '../components/UserInfo'
-import Table from '../components/Table'
+
+import UserTable from '../components/UserTable'
 
 export default function UserPage() {
 
     return (
-
-        <div className="md:flex  md:flex-column justify-center items-center md:space-x-4">
+        <>
+           <h1 className="flex  md:flex-column justify-center items-center text-4xl md:text-5xl font-bold text-eerie-black mb-20">Account information</h1>
+        <div className="md:flex  md:flex-column justify-center items-center md:space-x-16">
+           
             <UserInfo />
-            <UserInfo /> {/*Denne UserInfo taggen skal erstattes med Table */}
-        </div>
 
+          
+            <UserTable /> {/*Denne UserInfo taggen skal erstattes med Table */}
+        </div>
+</>
 
     )
 }
