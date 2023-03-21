@@ -44,12 +44,20 @@ export default function AdminUserEdit(props) {
   };
 
   const updateUser = () => {
-    console.log("test")
-    // nothing
-  }
+    axios
+    .patch(`https://wms-api-ps1s.onrender.com/api/users/${id}`, {
+      first_name: firstName,
+      last_name: lastName,
+      email: email
+    })
+    .then((response) => {
+      console.log(response.data[0])
+      alert(`User ${response.data[0].first_name} updated.`)
+      navigate(`/admin/user/${id}`) 
+  })}
 
-  const deleteUser = async () => {
-    await axios
+  const deleteUser = () => {
+     axios
     .delete(`https://wms-api-ps1s.onrender.com/api/users/${id}`)
     .then((response) => {
       alert(`User ${response.data[0].first_name} deleted.`)
@@ -58,8 +66,8 @@ export default function AdminUserEdit(props) {
     .catch((error) => console.error("Error: " + error));
   }
 
-  const createUser = async () => {
-    await axios
+  const createUser = () => {
+     axios
     .post(`https://wms-api-ps1s.onrender.com/api/users/`, {
       first_name: firstName,
       last_name: lastName,
@@ -120,7 +128,7 @@ export default function AdminUserEdit(props) {
           </div>
 
           <div className="flex flex-col justify-center items-center">
-            <Button text="Submit" clickFunction={props.edit ? updateUser : createUser}></Button>
+            <Button text={props.edit ? "Edit" : "Create User"} clickFunction={props.edit ? updateUser : createUser}></Button>
             <Button text="Cancel" link="/admin"></Button>
             {props.edit ? <Button text="Delete User" warning={true} clickFunction={deleteUser}></Button> : null}
           </div>
