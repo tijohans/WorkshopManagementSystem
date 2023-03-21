@@ -30,6 +30,7 @@ export default function UserInfo() {
         <input type="email" id="email" className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue w-full p-2.5 cursor-not-allowed block"  disabled readonly placeholder="karinordmann@stud.ntnu.no" required />
       </div>
 
+    
     </form>
 
   )
