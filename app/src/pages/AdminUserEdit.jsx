@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/Button"
 import ReactLoading from 'react-loading'
-// !
 
 const defaultUser = {
   id: "loading",
@@ -30,15 +29,21 @@ export default function AdminUserEdit(props) {
     { props.edit ? getUser(id) : setLoading(false) }
   }, []);
 
-  const getUser = async (id) => {
-    await axios
+  const getUser = (id) => {
+    // Setting loading to true when button is clicked
+    setLoading(true)
+
+
+    axios
       .get(`https://wms-api-ps1s.onrender.com/api/users/${id}`)
       .then((response) => {
-        setLoading(false);
         setUser(response.data[0]);
         setFirstName(response.data[0].first_name)
         setLastName(response.data[0].last_name)
         setEmail(response.data[0].email)
+
+        // Setting loading to false when request is read
+        setLoading(false);
       })
       .catch((error) => console.error("Error: " + error));
   };
@@ -56,18 +61,22 @@ export default function AdminUserEdit(props) {
       navigate(`/admin/user/${id}`) 
   })}
 
+
   const deleteUser = () => {
+    setLoading(true)
      axios
     .delete(`https://wms-api-ps1s.onrender.com/api/users/${id}`)
     .then((response) => {
       alert(`User ${response.data[0].first_name} deleted.`)
       navigate("/admin")
+      setLoading(false)
     })
     .catch((error) => console.error("Error: " + error));
   }
 
   const createUser = () => {
-     axios
+  setLoading(true)
+  axios
     .post(`https://wms-api-ps1s.onrender.com/api/users/`, {
       first_name: firstName,
       last_name: lastName,
@@ -81,6 +90,8 @@ export default function AdminUserEdit(props) {
       // navigate(`/admin/user/${response.data[0].id}`)
       // Chose to direct back to the admins instead to see the updated list.
       navigate("/admin")
+
+      setLoading(false)
     })
     .catch((error) => console.error("Error: " + error));
   }
