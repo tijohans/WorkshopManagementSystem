@@ -6,7 +6,11 @@ import ReactLoading from 'react-loading'
 export default function Table(props) {
 
     const [data, setData] = useState([])
+    const [locations, setLocations] = useState([])
     const [loading, setLoading] = useState(true)
+
+    let tempData
+    let tempLocations
 
     useEffect(() => {
         getTable()
@@ -15,73 +19,94 @@ export default function Table(props) {
     const getTable = () => {
         axios.get(`https://wms-api-ps1s.onrender.com/api/${props.name}`)
             .then((response) => {
-                setData(response.data)
-                setLoading(false)
+                tempData=response.data
+                axios.get(`https://wms-api-ps1s.onrender.com/api/locations`)
+                    .then((response) => {
+                        tempLocations=response.data
+                        setData(tempData)
+                        setLocations(tempLocations)
+                        setLoading(false)
+                    })
+                    .catch(error => console.error("Error: " + error))
+                
             })
             .catch(error => console.error("Error: " + error))
     }
 
-    console.log(data)
-    console.log(props.name)
-
     const items = []
     const headers = []
+
+    
+    // Check if location_id matches, if so add the location as a name to the data array
+    for (let i = 0; i < data.length; i++) {
+        for (let z = 0; z < locations.length; z++){
+            if (data[i].location_id===locations[z].location_id){
+                data[i].location=locations[z].location
+            }
+        }
+    }
 
     data.map((item, key) => {
         if (key === 0) {
             for (const key in item) {
-                if (key === "id" || key === "imageurl" || key === 'visible' || key === 'bookable' || key === 'course_id' || key === 'password') continue
-                headers.push(<th scope="col" className="px-6 py-3 ">{key}</th>)
+                if (key === "id" || key === "imageurl" || key === 'visible' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
+
+                headers.push(<th scope="col" key={key} className="px-6 py-3 ">{key}</th>)
+
             }
         }
 
-        switch(props.name){
+        switch (props.name) {
             case "tools":
                 items.push(
                     <tr className="bg-white border-b hover:bg-ghost-white  ">
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
+                        <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
                             {item.name}
-                        </th>
-        
+                        </td>
+
                         <td className="px-6 py-4">
                             {item.description}
                         </td>
-        
+
                         <td className="px-6 py-4">
                             {String(item.broken)}
                         </td>
-        
+
                         <td className="px-6 py-4">
                             {String(item.dangerous)}
                         </td>
-        
+
+                        <td className="px-6 py-4">
+                            {item.location ? item.location : "N/A"}
+                        </td>
+
                         <td className="px-6 py-4">
                             <Link className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4" to={"/tools/" + item.id}>Book</Link>
                         </td>
                     </tr>
                 )
                 break
-            
+
             case "users":
                 items.push(
-                <tr className="bg-white border-b hover:bg-ghost-white  ">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
-                    {item.first_name}
-                </th>
+                    <tr className="bg-white border-b hover:bg-ghost-white  ">
+                        <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
+                            {item.first_name}
+                        </td>
 
-                <td className="px-6 py-4">
-                    {item.last_name}
-                </td>
+                        <td className="px-6 py-4">
+                            {item.last_name}
+                        </td>
 
-                <td className="px-6 py-4">
-                    {item.email}
-                </td>
+                        <td className="px-6 py-4">
+                            {item.email}
+                        </td>
 
-                <td className="px-6 py-4">
-                    <Link className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4" to={"/admin/user/" + item.id}>Edit</Link>
-                </td>
-            </tr>
-            )
+                        <td className="px-6 py-4">
+                            <Link className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4" to={"/admin/user/" + item.id}>Edit</Link>
+                        </td>
+                    </tr>
+                )
                 break
         }
     })
@@ -89,8 +114,8 @@ export default function Table(props) {
     headers.push(<th scope="col" className="px-6 py-3">Action</th>)
 
     return (
-        <div className="overflow-x-scroll w-full mx-auto my-10 shadow-md sm:rounded-lg md:w-5/6">
-            {loading ? <ReactLoading type='spin' color='#9C528B'/> :
+        <div className="overflow-x-auto mx-auto my-10 shadow-md sm:rounded-lg md:w-5/6">
+            {loading ? <ReactLoading type='spin' color='#9C528B' /> :
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-white uppercase bg-plum ">
                         <tr>
