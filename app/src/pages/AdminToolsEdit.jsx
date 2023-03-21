@@ -147,17 +147,17 @@ export default function AdminToolEdit(props) {
             <div className="flex justify-center items-center flex-col">
               <label htmlFor="broken">
                 <input type="checkbox" name="broken" />
-                mark tool as broken
+                mark tool as Broken
               </label>
 
               <label htmlFor="dangerous">
                 <input type="checkbox" name="dangerous" />
-                mark tool as dangerous
+                mark tool as Dangerous
               </label>
 
               <label htmlFor="disabled">
                 <input type="checkbox" name="disabled" />
-                mark tool as disabled
+                mark tool as Disabled
               </label>
             </div>
           </div>
