@@ -17,6 +17,10 @@ export default function UserPage() {
           
             <UserTable /> {/*Denne UserInfo taggen skal erstattes med Table */}
         </div>
+
+        <p className="italic flex justify-center" >If your account information is incorrect, please contact the page manager. </p>
+
+       
 </>
 
     )
