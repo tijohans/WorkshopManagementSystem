@@ -4,6 +4,7 @@ import cors from 'cors'
 import { createClient } from '@supabase/supabase-js'
 import { toolRouter } from './routes/toolRouter.js'
 import { userRouter } from './routes/userRouter.js'
+import { locationRouter } from './routes/locationRouter.js'
 
 const app: Express = express()
 
@@ -22,6 +23,7 @@ app.use(cors())
 // Routes
 app.use('/api/tools', toolRouter)
 app.use('/api/users', userRouter)
+app.use('/api/locations', locationRouter)
 
 
 const PORT: Number = Number(process.env.PORT) || 6969
