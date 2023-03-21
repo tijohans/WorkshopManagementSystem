@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import { supabase } from '../server.js'
-import { uploadSingleFile } from '../middleware/multerMiddleware.js'
 import multer from "multer"
 
 /* 
