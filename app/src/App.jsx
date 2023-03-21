@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -12,8 +11,6 @@ import AdminDashboard from './pages/AdminDashboard'
 import AdminUserEdit from './pages/AdminUserEdit'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App bg-ghost-white ">
       <Header />
@@ -41,7 +38,6 @@ function App() {
           </Route>
 
         </Routes>
-
       </div>
 
       <Footer />

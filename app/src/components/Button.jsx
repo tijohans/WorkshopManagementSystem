@@ -25,10 +25,11 @@ export default function Button(props) {
 
   return (
       LinkWrapper(<button
+        disabled={props.disabled}
         type="button"
         className={props.warning 
-          ? "w-40 group shadow-lg h-14  px-5 m-2 rounded-full transition-colors duration-300 ease-in-out  text-black bg-yellow-100 hover:border-4 border-spacing-2 border-yellow-300 hover:delay-50  hover:bg-red-200 hover:border-red-400  hover:text-eerie-black  focus:outline-none font-medium text-s md:text-2xl w-50 md:w-60 text-center mr-2 mb-2" 
-          : "w-40 group shadow-lg h-14  px-5 m-2 rounded-full transition-colors duration-300 ease-in-out  text-ghost-white bg-plum hover:delay-50  hover:bg-robin-egg-blue  hover:text-eerie-black  focus:outline-none font-medium text-s md:text-2xl w-50 md:w-60 text-center mr-2 mb-2"  }
+          ? "w-40 group shadow-lg h-14  px-5 m-2 rounded-full transition-colors duration-300 ease-in-out  text-black bg-yellow-100 hover:border-4 border-spacing-2 border-yellow-300 hover:delay-50  hover:bg-red-200 hover:border-red-400  hover:text-eerie-black  focus:outline-none font-medium text-s md:text-2xl w-50 md:w-60 text-center mr-2 mb-2 disabled:bg-slate-400" 
+          : "w-40 group shadow-lg h-14  px-5 m-2 rounded-full transition-colors duration-300 ease-in-out  text-ghost-white bg-plum hover:delay-50  hover:bg-robin-egg-blue  hover:text-eerie-black  focus:outline-none font-medium text-s md:text-2xl w-50 md:w-60 text-center mr-2 mb-2 disabled:bg-slate-400"  }
         onClick={submit}>
         <div className="flex align-middle justify-center">
           {props.text}
