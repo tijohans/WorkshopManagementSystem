@@ -9,6 +9,7 @@ import UserPage from './pages/UserPage'
 import ToS from './pages/ToS'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminUserEdit from './pages/AdminUserEdit'
+import AdminToolEdit from './pages/AdminToolsEdit'
 
 function App() {
   return (
@@ -35,6 +36,11 @@ function App() {
           <Route path='/admin/user'>
             <Route index element={<AdminUserEdit />} />
             <Route path=':id' element={<AdminUserEdit edit="true" />} />
+          </Route>
+
+          <Route path='/admin/tool'>
+            <Route index element={<AdminToolEdit />} />
+            <Route path=':id' element={<AdminToolEdit edit="true" />} />
           </Route>
 
         </Routes>
