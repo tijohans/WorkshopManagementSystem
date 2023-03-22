@@ -135,6 +135,7 @@ export default function AdminToolEdit(props) {
               required
             />
             
+            <div className="mb-6 w-96">
             <label for="location" className="block mb-2 text-sm font-medium text-eerie-black ">Location:</label>
             <select name="location" id="location" className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5">
                 <option value="verksted1">verksted1</option>
@@ -142,8 +143,9 @@ export default function AdminToolEdit(props) {
                 <option value="verksted3">verksted3</option>
                 <option value="verksted4">verksted4</option>
             </select>
+            </div>
 
-
+            
             <div className="flex justify-center items-center flex-col">
               <label htmlFor="broken">
                 <input type="checkbox" name="broken" />
