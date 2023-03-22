@@ -157,10 +157,10 @@ export default function AdminToolEdit(props) {
             >
               Description
             </label>
-            <input
+            <textarea
               name="description"
               type="text"
-              className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5"
+              className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 max-h-48"
               placeholder={props.edit ? tool.description : "description"}
               defaultValue={props.edit ? tool.description : ""}
               onChange={(event)=>setDescription(event.target.value)}
