@@ -73,7 +73,7 @@ export default function Table(props) {
                         </td>
 
                         <td className="px-6 py-4">
-                            {String(item.dangerous)}
+                            {item.dangerous ? <><img className='inline' src='/icons/alert-triangle.svg' /><p>Yes</p></> : ''}
                         </td>
 
                         <td className="px-6 py-4">
@@ -122,7 +122,7 @@ export default function Table(props) {
                             {headers}
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='[&>*:nth-child(even)]:bg-purple-50'>
                         {items}
                     </tbody>
                 </table>
