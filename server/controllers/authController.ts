@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs'
 import { Request, Response } from 'express'
-import { supabase } from '../server'
+import { supabase } from '../server.js'
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 /* 
     @route  POST /api/users/register
@@ -38,7 +40,31 @@ const registerUser = async (req: Request, res: Response) => {
     @desc   Route for loggin in users
 */
 const loginUser = async (req: Request, res: Response) => {
-    res.json({msg: 'Login route'})
+    const {email, password} = req.body
+
+    const {data, error} = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email)
+    
+    if(error) {
+        res.json({err: error})
+        return
+    }
+
+    const user = data[0]
+
+    const correctPassword = await bcrypt.compare(password, user.password)
+
+    if(!user || !correctPassword) {
+        res.status(400).json({msg: 'Username of password incorrect'})
+        return
+    }
+
+    const token = jwt.sign({sub: user.id}, String(process.env.JWT_SECRET), {expiresIn: '7d'})
+    
+
+    res.status(200).send({userId: user.id, token})
 }
 
 export {
