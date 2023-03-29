@@ -15,7 +15,7 @@ export default function ToolsOverview() {
   return (
     <div className="flex flex-wrap flex-col justify-center items-center gap-4 min-h-full">
       <Button text='Toggle View' clickFunction={toggle} />
-      {toggleView ? <Table name="tools" /> : <ToolCards />}
+      {toggleView ? <Table name="tools" rowsPerPage={4}/> : <ToolCards />}
     </div>
   )
 }
