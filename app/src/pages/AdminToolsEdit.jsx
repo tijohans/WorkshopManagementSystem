@@ -93,7 +93,7 @@ export default function AdminToolEdit(props) {
       .post(`https://wms-api-ps1s.onrender.com/api/tools/`, {
         name: name,
         description: description,
-        location_id: location_id,
+        location_id: location,
         broken: broken,
         dangerous: dangerous,
         visible: visible
@@ -178,17 +178,17 @@ export default function AdminToolEdit(props) {
             <div className="flex justify-center items-center flex-col">
               <label htmlFor="broken">
                 <input type="checkbox" name="broken" onChange={(event)=>setBroken(event.target.value)}/>
-                mark tool as Broken
+                Broken
               </label>
 
               <label htmlFor="dangerous">
                 <input type="checkbox" name="dangerous" onChange={(event)=>setDangerous(event.target.value)} />
-                mark tool as Dangerous
+                Dangerous
               </label>
 
               <label htmlFor="visible">
                 <input type="checkbox" name="visible" checked={true} onChange={(event)=>setVisible(event.target.value)} />
-                mark tool as Visible
+                Visible
               </label>
             </div>
           </div>
