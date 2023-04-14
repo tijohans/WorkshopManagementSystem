@@ -21,6 +21,11 @@ export default function AdminToolEdit(props) {
   const [dangerous, setDangerous] = useState("");
   const [visible, setVisible] = useState("");
   const [file, setFile] = useState("");
+  const [image, setImage] = useState(null);
+
+  const handleFileChange = (e) => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+  }
 
   let navigate = useNavigate();
   let { id } = useParams();
@@ -121,18 +126,42 @@ export default function AdminToolEdit(props) {
             {props.edit ? <h1>Edit tool:</h1> : <h1>Create a new tool:</h1>}
           </div>
           <label
-            htmlFor="file"
-            className="block mb-2 text-sm font-medium text-eerie-black cursor-pointer"
+      htmlFor="file"
+      className="block mb-2 text-sm font-medium text-eerie-black cursor-pointer"
+    >
+      Upload image here
+      <div className="h-40 w-40 rounded overflow-hidden bg-gray-200 flex justify-center items-center">
+        {image ? (
+          <img
+            src={image}
+            alt="Selected image"
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <svg
+            className="h-16 w-16 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            Upload image here
-            <input
-              type="file"
-              name="file"
-              className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5"
-              accept="image/png, image/gif, image/jpeg"
-              onChange={(event)=>setFile(event.target.value)}
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
             />
-          </label>
+          </svg>
+        )}
+      </div>
+      <input
+        type="file"
+        id="file"
+        name="file"
+        className="sr-only"
+        accept="image/png, image/gif, image/jpeg"
+        onChange={handleFileChange}
+      />
+    </label>
           <div className="mb-6 w-96">
             <label
               htmlFor="name"
