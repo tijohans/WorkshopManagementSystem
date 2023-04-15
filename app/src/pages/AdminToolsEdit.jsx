@@ -21,11 +21,19 @@ export default function AdminToolEdit(props) {
   const [dangerous, setDangerous] = useState("");
   const [visible, setVisible] = useState("");
   const [file, setFile] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
+  const [imageSrc, setImageSrc] = useState("");
+  const [allLocations, setAllLocations] = useState([])
 
   const handleFileChange = (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-  }
+    const selectedFile = e.target.files[0];
+  setFile(selectedFile);
+  const reader = new FileReader();
+  reader.onload = () => {
+    setImage(reader.result);
+  };
+  reader.readAsDataURL(selectedFile);
+};
 
   let navigate = useNavigate();
   let { id } = useParams();
@@ -43,6 +51,9 @@ export default function AdminToolEdit(props) {
     axios
       .get(`https://wms-api-ps1s.onrender.com/api/tools/${id}`)
       .then((response) => {
+        axios
+        .get(`https://wms-api-ps1s.onrender.com/api/locations`)
+        .then((response2) => {
         setTool(response.data[0]);
         setName(response.data[0].name);
         setDescription(response.data[0].description);
@@ -50,12 +61,18 @@ export default function AdminToolEdit(props) {
         setBroken(response.data[0].broken);
         setDangerous(response.data[0].dangerous);
         setVisible(response.data[0].visible);
+        setImageSrc(response.data[0].current_image);
+        setAllLocations(response2.data);
 
         // Setting loading to false when request is read
         setLoading(false);
+        })
+        .catch((error) => console.error("Error: " + error));
       })
       .catch((error) => console.error("Error: " + error));
   };
+
+
 
   const updateTool = () => {
     axios
@@ -65,7 +82,8 @@ export default function AdminToolEdit(props) {
       location_id: location,
       broken: broken,
       dangerous: dangerous,
-      visible: visible
+      visible: visible,
+      current_image: imageSrc,
     })
     .then((response) => {
       console.log(response.data[0])
@@ -101,7 +119,8 @@ export default function AdminToolEdit(props) {
         location_id: location,
         broken: broken,
         dangerous: dangerous,
-        visible: visible
+        visible: visible,
+        current_image: imageSrc,
       })
       .then((response) => {
         console.log(response.data[0]);
@@ -127,31 +146,23 @@ export default function AdminToolEdit(props) {
           </div>
           <label
       htmlFor="file"
-      className="block mb-2 text-sm font-medium text-eerie-black cursor-pointer"
+      className="flex flex-col justify-center mb-2 text-sm font-medium text-eerie-black cursor-pointer"
     >
       Upload image here
-      <div className="h-40 w-40 rounded overflow-hidden bg-gray-200 flex justify-center items-center">
-        {image ? (
-          <img
-            src={image}
-            alt="Selected image"
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <svg
-            className="h-16 w-16 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-        )}
+      <div className="h-40 w-40 rounded overflow-hidden bg-gray-200 flex justify-center items-center mt-7">
+      {image ? (
+    <img
+      src={image}
+      alt={"Selected image"}
+      className="h-full w-full object-cover"
+    />
+  ) : (
+    <img
+      src={tool.imageurl}
+      alt={tool.alt}
+      className="h-full w-full object-cover"
+    />
+  )}
       </div>
       <input
         type="file"
@@ -197,21 +208,19 @@ export default function AdminToolEdit(props) {
             />
 
             <label htmlFor="location" className="block mb-2 text-sm font-medium text-eerie-black ">Location:</label>
-            <select name="location" id="location" className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5" onChange={(event)=>setLocation(event.target.value)}>
-              <option value="1">Verkstedet</option>
-              <option value="2">Mesaninstedet</option>
-              <option value="3">Katedralstedet</option>
+            <select name="location" id="location" className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5" onChange={(event)=>setLocation(event.target.value)} value={location} >
+              {allLocations.map(loc => <option value={loc.location_id}>{loc.location}</option>)}
             </select>
 
 
             <div className="flex justify-center items-center flex-col">
               <label htmlFor="broken">
-                <input type="checkbox" name="broken" onChange={(event)=>setBroken(event.target.value)}/>
+                <input type="checkbox" checked={broken} name="broken" onChange={(event)=>setBroken(event.target.value)}/>
                 Broken
               </label>
 
               <label htmlFor="dangerous">
-                <input type="checkbox" name="dangerous" onChange={(event)=>setDangerous(event.target.value)} />
+                <input type="checkbox" checked={dangerous} name="dangerous" onChange={(event)=>setDangerous(event.target.value)} />
                 Dangerous
               </label>
 
