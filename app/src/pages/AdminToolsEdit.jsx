@@ -104,6 +104,7 @@ export default function AdminToolEdit(props) {
       .catch((error) => console.error("Error: " + error));
   };
 
+
   const createTool = () => {
     setLoading(true);
 
@@ -140,40 +141,48 @@ export default function AdminToolEdit(props) {
       {loading ? (
         <ReactLoading type="spin" color="#9C528B" />
       ) : (
-        <form className="flex flex-col justify-center items-center mb-16">
+        <form className="flex flex-col justify-center items-center mb-16 max-w-full">
           <div>
             {props.edit ? <h1>Edit tool:</h1> : <h1>Create a new tool:</h1>}
           </div>
           <label
-      htmlFor="file"
-      className="flex flex-col justify-center mb-2 text-sm font-medium text-eerie-black cursor-pointer"
-    >
-      Upload image here
-      <div className="h-40 w-40 rounded overflow-hidden bg-gray-200 flex justify-center items-center mt-7">
-      {image ? (
-    <img
-      src={image}
-      alt={"Selected image"}
-      className="h-full w-full object-cover"
-    />
-  ) : (
-    <img
-      src={tool.imageurl}
-      alt={tool.alt}
-      className="h-full w-full object-cover"
-    />
-  )}
-      </div>
-      <input
-        type="file"
-        id="file"
-        name="file"
-        className="sr-only"
-        accept="image/png, image/gif, image/jpeg"
-        onChange={handleFileChange}
+  htmlFor="file"
+  className="flex flex-col justify-center mb-2 text-sm font-medium text-eerie-black cursor-pointer"
+>
+  <div className="h-40 w-40 rounded overflow-hidden bg-gray-200 flex justify-center items-center mt-7">
+    {image ? (
+      <img
+        src={image}
+        alt={"Selected image"}
+        className="h-full w-full object-cover"
       />
+    ) : (
+      <img
+        src={tool.imageurl}
+        alt={tool.alt}
+        className="h-full w-full object-cover"
+      />
+    )}
+  </div>
+  <div className="mt-2">
+    <input
+      type="file"
+      id="file"
+      name="file"
+      className="sr-only"
+      accept="image/png, image/gif, image/jpeg"
+      onChange={handleFileChange}
+    />
+    <label
+      htmlFor="file"
+      className="px-4 py-2 flex justify-center bg-gray-200 text-sm font-medium text-eerie-black rounded-md cursor-pointer hover:bg-gray-300"
+    >
+      Choose image
     </label>
-          <div className="mb-6 w-96">
+  </div>
+</label>
+
+          <div className="mb-6 max-w-full md:w-96">
             <label
               htmlFor="name"
               className="block mb-2 text-sm font-medium text-eerie-black "
@@ -190,7 +199,7 @@ export default function AdminToolEdit(props) {
               required
             />
           </div>
-          <div className="mb-6 w-96">
+          <div className="mb-6 max-w-full md:w-96">
             <label
               htmlFor="description"
               className="block mb-2 text-sm font-medium text-eerie-black "
