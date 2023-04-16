@@ -113,7 +113,10 @@ const deleteTools = async (req: Request, res: Response) => {
     res.json(data)
 }
 
-
+/* 
+    @route  /api/tools/upload
+    @desc   For uploading a photo to the storage bucket
+*/
 const uploadImage = async (req: Request, res: Response) => {
 
     // Get the uploaded file
