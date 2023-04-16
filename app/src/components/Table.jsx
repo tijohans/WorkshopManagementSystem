@@ -124,6 +124,14 @@ export default function Table({ name, rowsPerPage }) {
 
 headers.push(<th scope="col" className="px-6 py-3">Action</th>)
 
+    if (!page || page < 1){
+        setPage(1)
+    } else {
+        //console.log(page)
+    }
+        
+    
+
 return (
     <div className="overflow-x-auto mx-auto my-10 shadow-md sm:rounded-lg md:w-5/6">
         {loading ? <ReactLoading type='spin' color='#9C528B' /> :
