@@ -83,7 +83,7 @@ export default function AdminToolEdit(props) {
       broken: broken,
       dangerous: dangerous,
       visible: visible,
-      current_image: imageSrc,
+      imageurl: imageSrc,
     })
     .then((response) => {
       console.log(response.data[0])
@@ -121,7 +121,7 @@ export default function AdminToolEdit(props) {
         broken: broken,
         dangerous: dangerous,
         visible: visible,
-        current_image: imageSrc,
+        imageurl: imageSrc,
       })
       .then((response) => {
         console.log(response.data[0]);
