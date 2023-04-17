@@ -3,10 +3,10 @@ import EditButton from "./EditButton";
 
 export default function ToolCard(props) {
   return (
-    <div className=" bg-white flex flex-col rounded-sm justify-evenly items-center border-2 h-auto md:flex-row md:w-96 md:h-60">
+    <div className=" bg-white flex flex-col rounded-2xl justify-evenly border-2 h-auto md:flex-row md:w-96 md:h-80">
         <div className="w-52 h-72 md:w-auto md:h-52">
         <img
-          className="w-52 h-40 mt-1 object-cover rounded-2xl aspect-square"
+          className="w-52 h-40 mt-1 m-1.5 object-cover rounded-2xl aspect-square justify-center"
           src={props.src}
           alt={props.alt}
         />
