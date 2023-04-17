@@ -71,10 +71,9 @@ const updateTools = async (req: Request, res: Response) => {
 
     const id = req.params.id
 
-    if (!req.body) {
-        res.json("Missing input")
-        return
-    }
+    if (!req.body) 
+        return res.json("Missing input")
+    
 
     const { data, error } = await supabase
         .from('tools')
