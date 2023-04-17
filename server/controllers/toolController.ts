@@ -70,17 +70,15 @@ const getTool = async (req: Request, res: Response) => {
 const updateTools = async (req: Request, res: Response) => {
 
     const id = req.params.id
-    const field = req.body.field
-    const value = req.body.value
 
-    if (!field || !value) {
-        res.json("Missing or incorrect field name/value")
+    if (!req.body) {
+        res.json("Missing input")
         return
     }
 
     const { data, error } = await supabase
         .from('tools')
-        .update({ [field]: value })
+        .update(req.body)
         .eq('id', id)
         .select()
 
@@ -113,8 +111,11 @@ const deleteTools = async (req: Request, res: Response) => {
     res.json(data)
 }
 
+interface requestWithFile extends Request {
+    file?: any
+}
 
-const uploadImage = async (req: Request, res: Response) => {
+const uploadImage = async (req: requestWithFile, res: Response) => {
 
     // Get the uploaded file
     const file: any = req.file;
