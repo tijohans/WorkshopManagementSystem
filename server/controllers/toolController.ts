@@ -111,7 +111,7 @@ const deleteTools = async (req: Request, res: Response) => {
     res.json(data)
 }
 
-interface requestWithFile extends Request {
+interface RequestWithFile extends Request {
     file?: any
 }
 
