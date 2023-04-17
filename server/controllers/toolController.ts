@@ -114,7 +114,7 @@ interface RequestWithFile extends Request {
     file?: any
 }
 
-const uploadImage = async (req: requestWithFile, res: Response) => {
+const uploadImage = async (req: RequestWithFile, res: Response) => {
 
     // Get the uploaded file
     const file: any = req.file;
