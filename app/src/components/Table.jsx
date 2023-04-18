@@ -37,6 +37,14 @@ export default function Table({ name, rowsPerPage }) {
             .catch(error => console.error("Error: " + error))
     }
 
+    const returnRole = (role) => {
+        if (role===1){
+            return "Admin"
+        } else {
+            return "Maker"
+        }
+    }
+
 
     const items = []
     const headers = []
@@ -108,6 +116,10 @@ export default function Table({ name, rowsPerPage }) {
 
                         <td className="px-6 py-4">
                             {item.email}
+                        </td>
+
+                        <td className="px-6 py-4">
+                            {returnRole(item.role)}
                         </td>
 
                         <td className="px-6 py-4">
