@@ -84,7 +84,6 @@ const createBooking = async (req: Request, res: Response) => {
         }])
         .select()
         
-    // TODO: Need to add the timestamp of creation for the booking, also should have the same id as the original booking
     const { data: log_data, error: log_error } = await supabase
         .from('booking_log')
         .insert([{
