@@ -71,17 +71,14 @@ const getTool = async (req: Request, res: Response) => {
 const updateTools = async (req: Request, res: Response) => {
 
     const id = req.params.id
-    const field = req.body.field
-    const value = req.body.value
 
-    if (!field || !value) {
-        res.status(422).json("Missing or incorrect field name/value")
-        return
-    }
+    if (!req.body) 
+        return res.json("Missing input")
+    
 
     const { data, error } = await supabase
         .from('tools')
-        .update({ [field]: value })
+        .update(req.body)
         .eq('id', id)
         .select()
 
@@ -114,27 +111,32 @@ const deleteTools = async (req: Request, res: Response) => {
     res.json(data)
 }
 
-/* 
-    @route  /api/tools/upload
-    @desc   For uploading a photo to the storage bucket
-*/
-const uploadImage = async (req: Request, res: Response) => {
+interface RequestWithFile extends Request {
+    file?: any
+}
+
+const uploadImage = async (req: RequestWithFile, res: Response) => {
 
     // Get the uploaded file
     const file: any = req.file;
 
+    const filename: string = Date.now() + '-' + file.originalname
+
     // Upload the file to Supabase storage
-    supabase.storage.from('images').upload(Date.now() + '-' + file.originalname, file.buffer)
+    supabase.storage.from('images').upload(filename, file.buffer)
         .then(response => {
             // File uploaded successfully, do something with the response
             console.log(response);
-            res.status(200).send('File upload successfull');
+            const url = supabase.storage.from('images').getPublicUrl(filename)
+            res.json({url})
         })
         .catch(error => {
             // Handle error
             console.error(error);
             res.status(500).send('Failed to upload file');
         });
+
+    
 }
 
 export {
