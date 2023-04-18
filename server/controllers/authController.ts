@@ -42,7 +42,7 @@ const registerUser = async (req: Request, res: Response) => {
         return
     }
 
-    res.json(data)
+    res.json(data).status(200)
 }
 
 /*  

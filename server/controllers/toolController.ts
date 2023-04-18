@@ -24,6 +24,7 @@ const getTools = async (req: Request, res: Response) => {
 */
 const createTools = async (req: Request, res: Response) => {
 
+    // ! Needs update
     const { data, error } = await supabase
         .from('tools')
         .insert([{
@@ -74,7 +75,7 @@ const updateTools = async (req: Request, res: Response) => {
     const value = req.body.value
 
     if (!field || !value) {
-        res.json("Missing or incorrect field name/value")
+        res.status(422).json("Missing or incorrect field name/value")
         return
     }
 
@@ -127,7 +128,7 @@ const uploadImage = async (req: Request, res: Response) => {
         .then(response => {
             // File uploaded successfully, do something with the response
             console.log(response);
-            res.send('File uploaded successfully');
+            res.status(200).send('File upload successfull');
         })
         .catch(error => {
             // Handle error
