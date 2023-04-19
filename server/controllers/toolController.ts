@@ -24,6 +24,7 @@ const getTools = async (req: Request, res: Response) => {
 */
 const createTools = async (req: Request, res: Response) => {
 
+    // ! Needs update
     const { data, error } = await supabase
         .from('tools')
         .insert([{
@@ -115,7 +116,6 @@ interface RequestWithFile extends Request {
 }
 
 const uploadImage = async (req: RequestWithFile, res: Response) => {
-
     // Get the uploaded file
     const file: any = req.file;
 

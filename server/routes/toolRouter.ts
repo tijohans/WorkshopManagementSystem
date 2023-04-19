@@ -7,6 +7,7 @@ import {
     updateTools, 
     deleteTools,
     uploadImage } from '../controllers/toolController.js'
+import authMiddleware from '../middleware/authMiddleware.js'
 
 const toolRouter = express()
 

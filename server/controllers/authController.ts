@@ -17,6 +17,16 @@ const registerUser = async (req: Request, res: Response) => {
         })
         .catch((err: { message: any }) => console.error(err.message))
 
+    const oldUser = await supabase
+        .from('users')
+        .select('email')
+        .eq('email', req.body.email)
+    
+    console.log(oldUser)
+
+    if(oldUser)
+        return res.status(400).json({error: 'User already registered with that email'})
+
     const { data, error } = await supabase
         .from('users')
         .insert([{
@@ -32,7 +42,7 @@ const registerUser = async (req: Request, res: Response) => {
         return
     }
 
-    res.json(data)
+    res.json(data).status(200)
 }
 
 /*  
@@ -71,8 +81,8 @@ const loginUser = async (req: Request, res: Response) => {
     // Signing a JWT with the user id, JWT_SECRET, and that it expires in 7 days
     const token = jwt.sign({sub: user.id}, String(process.env.JWT_SECRET), {expiresIn: '7d'})
     
-    // Finally sending the user id and the token back to the request origin
-    res.status(200).send({userId: user.id, token})
+    // Finally sending the token back to the request origin
+    res.status(200).send({token})
 }
 
 export {
