@@ -19,10 +19,7 @@ export default function LoginForm() {
 
     const onSubmit = async (userData) => {
         setLogin(true)
-        console.log('onsubmit')
-        console.log(userData)
         try {
-            console.log('try')
             const response = await axios.post('http://localhost:9003/api/login', {
               email: userData.email,
               password: userData.password
@@ -90,29 +87,3 @@ export default function LoginForm() {
         </form>
     )
 }
-
-
-
-/* 
-    HOok form examplke
-*/
-
-// export function example() {
-//     const { register, handleSubmit } = useForm();
-//     const [data, setData] = useState("");
-
-//     return (
-//         <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
-//             <Header />
-//             <input {...register("firstName")} placeholder="First name" />
-//             <select {...register("category", { required: true })}>
-//                 <option value="">Select...</option>
-//                 <option value="A">Option A</option>
-//                 <option value="B">Option B</option>
-//             </select>
-//             <textarea {...register("aboutYou")} placeholder="About you" />
-//             <p>{data}</p>
-//             <input type="submit" />
-//         </form>
-//     );
-// }
