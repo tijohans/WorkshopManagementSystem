@@ -13,7 +13,6 @@ const getUsers = async (req: Request, res: Response) => {
         return
     }
 
-
     res.json(data)
 }
 
@@ -47,9 +46,7 @@ const updateUser = async (req: Request, res: Response) => {
     const id = req.params.id
     //const field = req.body.field
     //const value = req.body.value
-
-    // Siden .update tar inn et objekt, har jeg en ide at vi bare henter body som et objekt, også oppdaterer den fieldsa funnet i body ? 
-
+    
     if (!req.body) {
         res.json("Missing input")
         return
