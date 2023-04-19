@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import DangerWarning from '../components/DangerWarning.jsx'
+import DangerWarning from '../components/Errors/DangerWarning.jsx'
 
 const defaultTool = {
   id: "loading",

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookie from 'universal-cookie'
-import DangerWarning from '../components/DangerWarning.jsx'
+import DangerWarning from './Errors/DangerWarning.jsx'
 
 
 export default function LoginForm() {
