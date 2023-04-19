@@ -119,18 +119,23 @@ const uploadImage = async (req: RequestWithFile, res: Response) => {
     // Get the uploaded file
     const file: any = req.file;
 
+    const filename: string = Date.now() + '-' + file.originalname
+
     // Upload the file to Supabase storage
-    supabase.storage.from('images').upload(Date.now() + '-' + file.originalname, file.buffer)
+    supabase.storage.from('images').upload(filename, file.buffer)
         .then(response => {
             // File uploaded successfully, do something with the response
             console.log(response);
-            res.send('File uploaded successfully');
+            const url = supabase.storage.from('images').getPublicUrl(filename)
+            res.json({url})
         })
         .catch(error => {
             // Handle error
             console.error(error);
             res.status(500).send('Failed to upload file');
         });
+
+    
 }
 
 export {
