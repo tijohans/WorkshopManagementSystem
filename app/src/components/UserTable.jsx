@@ -8,8 +8,8 @@ export default function UserTable() {
 
     return (
        
-<div className="relative overflow-x-auto md:bottom-36 ">
-<h2 className="text-2xl font-bold text-eerie-black flex flex-col justify-center items-center md:mt-40">Current bookings</h2>
+<div className="relative overflow-x-auto  ">
+<h2 className="text-2xl font-bold text-eerie-black flex flex-col justify-center items-center">My bookings</h2>
 <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
     <table className="w-full text-sm text-left text-gray-500  ">
         <thead className="text-xs text-white uppercase bg-plum ">
@@ -18,11 +18,15 @@ export default function UserTable() {
                     Booked tools
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Start
+                    Date
                 </th>
 
                 <th scope="col" class="px-6 py-3">
-                    End
+                    Start time
+                </th>
+
+                <th scope="col" class="px-6 py-3">
+                    End time
                 </th>
               
                 <th scope="col" class="px-6 py-3">
@@ -40,7 +44,12 @@ export default function UserTable() {
                 </td>
 
                 <td class="px-6 py-4">
-                  22.03.23
+                 12:00
+                </td>
+
+
+                <td class="px-6 py-4">
+                  17:00
                 </td>
               
                 <td class="px-6 py-4">
@@ -49,7 +58,11 @@ export default function UserTable() {
             </tr>
         </tbody>
     </table>
-</div></div>
+</div>
+
+
+
+</div>
 
     );
 
