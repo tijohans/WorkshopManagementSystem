@@ -10,6 +10,9 @@ import ToS from './pages/ToS'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminUserEdit from './pages/AdminUserEdit'
 import AdminToolEdit from './pages/AdminToolsEdit'
+import PrivateRoutes from "./PrivateRoutes";
+
+
 
 function App() {
   return (
@@ -18,21 +21,12 @@ function App() {
 
       <div className="min-h-screen h-full">
         <Routes>
-          <Route path='/' element={<Landing />} />
-          <Route path='/tools'>
-            <Route index element={<ToolsOverview />} />
-            <Route path=':id' element={<ToolPage />} />
-          </Route>
 
-          <Route element={<LoginPage />} path='/login' />
+        <Route element={<PrivateRoutes />}>
+              <Route element={<UserPage />} path="/userpage"/>
+              <Route element={<AdminDashboard />} path='/admin' />
 
-          <Route element={<UserPage />} path='/userpage' />
-
-          <Route element={<ToS />} path='/termsofservice' />
-
-          <Route element={<AdminDashboard />} path='/admin' />
-
-          <Route path='/admin/user'>
+              <Route path='/admin/user'>
             <Route index element={<AdminUserEdit />} />
             <Route path=':id' element={<AdminUserEdit edit="true" />} />
           </Route>
@@ -41,6 +35,22 @@ function App() {
             <Route index element={<AdminToolEdit />} />
             <Route path=':id' element={<AdminToolEdit edit="true" />} />
           </Route>
+            </Route>
+
+
+          <Route path='/' element={<Landing />} />
+
+          <Route path='/tools'>
+            <Route index element={<ToolsOverview />} />
+            <Route path=':id' element={<ToolPage />} />
+          </Route>
+          
+          <Route element={<LoginPage />} path='/login' />
+          <Route element={<ToS />} path='/termsofservice' />
+
+
+  
+  
 
         </Routes>
       </div>
