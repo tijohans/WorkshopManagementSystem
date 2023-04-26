@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookie from 'universal-cookie'
 import DangerWarning from './Errors/DangerWarning.jsx'
+import { AuthContext } from '../context/authContext.jsx'
 
 
 export default function LoginForm() {
 
+    const { setToken } = useContext(AuthContext)
     const [login, setLogin] = useState(true)
 
     const navigate = useNavigate()
@@ -26,6 +28,8 @@ export default function LoginForm() {
             })
 
             const token = response.data.token.split(' ')[1]
+
+            setToken(token)
 
             const cookie = new Cookie()
             cookie.set('token', token)
