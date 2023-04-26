@@ -10,15 +10,16 @@ import ToS from './pages/ToS'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminUserEdit from './pages/AdminUserEdit'
 import AdminToolEdit from './pages/AdminToolsEdit'
-import PrivateRoutes from "./PrivateRoutes";
 
+import PrivateRoutes from "./PrivateRoutes";
+import Unauthorized from './components/Errors/Unauthorized'
+import NotFound from './components/Errors/NotFound'
 
 
 function App() {
-  return (
-    <div className="App bg-ghost-white ">
-      <Header />
-
+	return (
+		<div className="App bg-ghost-white ">
+			<Header />
       <div className="min-h-screen h-full">
         <Routes>
 
@@ -47,17 +48,34 @@ function App() {
           
           <Route element={<LoginPage />} path='/login' />
           <Route element={<ToS />} path='/termsofservice' />
+          <Route path='/unauthorized' element={<Unauthorized />}></Route>
+
+                    {/* Login Protected Routes */}
+					<Route element={<UserPage />} path='/userpage' />
 
 
-  
-  
+                    {/* Admin Protected Routes */}
+					<Route element={<AdminDashboard />} path='/admin' />;
 
-        </Routes>
-      </div>
+					<Route path='/admin/user'>
+						<Route index element={<AdminUserEdit />} />
+						<Route path=':id' element={<AdminUserEdit edit="true" />} />
+					</Route>
 
-      <Footer />
-    </div>
-  )
+					<Route path='/admin/tool'>
+						<Route index element={<AdminToolEdit />} />
+						<Route path=':id' element={<AdminToolEdit edit="true" />} />
+					</Route>
+
+                    {/* 404 Route */}
+                    <Route path='*' element={<NotFound />}></Route>
+                     <Route path='/unauthorized' element={<Unauthorized />}></Route>
+				</Routes>
+			</div>
+
+			<Footer />
+		</div>
+	)
 }
 
 export default App
