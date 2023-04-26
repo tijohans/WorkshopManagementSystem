@@ -1,9 +1,19 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Cookies from 'universal-cookie'
 
 export default function Header() {
+
+    const cookie = new Cookies()
+
     const [nav, setNav] = useState(true)
     const [pages, setPages] = useState(['home', 'tools', 'login', 'admin'])
+    const [loggedIn, setLoggedIn] = useState()
+
+    useEffect(() => {
+      setLoggedIn(!!cookie.get('token'))
+    }, [])
+    
 
     const toggleNav = () => {
         setNav(!nav)
