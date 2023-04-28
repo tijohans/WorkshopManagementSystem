@@ -14,10 +14,10 @@ export default function CourseTable() {
                 <table className="md:w-64 text-sm text-left    ">
                     <thead className="text-xs text-white uppercase bg-plum ">
                         <tr >
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" className="px-6 py-3">
                                 Title
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" className="px-6 py-3">
                                 Status
                             </th>
                         </tr>
@@ -30,7 +30,7 @@ export default function CourseTable() {
                                 HMS 1
                             </th>
 
-                            <td class="px-6 py-4 text-green-600 font-bold" >
+                            <td className="px-6 py-4 text-green-600 font-bold" >
                                 Completed
                             </td>
                         </tr>
@@ -40,7 +40,7 @@ export default function CourseTable() {
                                 HMS 2
                             </th>
 
-                            <td class="px-6 py-4 text-green-600 font-bold">
+                            <td className="px-6 py-4 text-green-600 font-bold">
                                 Completed
                             </td>
                         </tr>
@@ -50,7 +50,7 @@ export default function CourseTable() {
                                 HMS 3
                             </th>
 
-                            <td class="px-6 py-4 text-red-600 font-bold">
+                            <td className="px-6 py-4 text-red-600 font-bold">
                                 Not complete
                             </td>
                         </tr>
@@ -60,7 +60,7 @@ export default function CourseTable() {
                                 HMS 4
                             </th>
 
-                            <td class="px-6 py-4 text-green-600 font-bold">
+                            <td className="px-6 py-4 text-green-600 font-bold">
                                 Completed
                             </td>
                         </tr>
@@ -70,7 +70,7 @@ export default function CourseTable() {
                                 HMS 5
                             </th>
 
-                            <td class="px-6 py-4 text-red-600 font-bold">
+                            <td className="px-6 py-4 text-red-600 font-bold">
                                 Not complete
                             </td>
                         </tr>
@@ -80,7 +80,7 @@ export default function CourseTable() {
                                 HMS 6
                             </th>
 
-                            <td class="px-6 py-4 text-red-600 font-bold">
+                            <td className="px-6 py-4 text-red-600 font-bold">
                                 Not complete
                             </td>
                         </tr>
@@ -90,7 +90,7 @@ export default function CourseTable() {
                                 HMS 7
                             </th>
 
-                            <td class="px-6 py-4 text-green-600 font-bold">
+                            <td className="px-6 py-4 text-green-600 font-bold">
                                 Completed
                             </td>
                         </tr>

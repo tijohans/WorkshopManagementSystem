@@ -29,10 +29,21 @@ export default function LoginForm() {
             const cookie = new Cookie()
             cookie.set('token', token)
 
-            // Need to have this here to get enough time for the cookie to set before redirecting
             window.alert('You have successfully been logged in!')
+            
+            // Making sure the cookie is set before redirecting
+            // ! Not prod safe
+            let isCookieSetYet = false
+            while(!isCookieSetYet) {
+                console.log(isCookieSetYet)
 
-            navigate('/userpage')
+                isCookieSetYet = cookie.get('token')
+
+                if(isCookieSetYet) {
+                    navigate('/userpage')
+                }
+            }
+            
         } catch (error) {
             setLogin(false)
 

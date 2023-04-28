@@ -7,10 +7,6 @@ const AuthProvider = ({children}) => {
     const cookie = new Cookie()
     const token = cookie.get('token')
 
-    useEffect(() => {
-
-    }, [])
-
     return (
         <AuthContext.Provider value={{token}}>
             {children}
