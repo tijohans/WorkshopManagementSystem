@@ -1,12 +1,18 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
+import Cookie from "universal-cookie"
 
 const AuthContext = createContext()
 
 const AuthProvider = ({children}) => {
-    const [token, setToken] = useState(null)
+    const cookie = new Cookie()
+    const token = cookie.get('token')
+
+    useEffect(() => {
+
+    }, [])
 
     return (
-        <AuthContext.Provider value={{token, setToken}}>
+        <AuthContext.Provider value={{token}}>
             {children}
         </AuthContext.Provider>
     )
