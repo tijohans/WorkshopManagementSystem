@@ -14,7 +14,7 @@ export default function LoginForm() {
     const {
         register,
         handleSubmit,
-        setError
+        formState: {errors}
     } = useForm();
 
     const onSubmit = async (userData) => {
@@ -64,9 +64,10 @@ export default function LoginForm() {
                     id="email"
                     className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
                     placeholder="name@stud.ntnu.no"
-                    required
                     {...register("email", { required: true })} />
+                
             </div>
+                    {errors.email && <span className="m-3 bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Email is missing</span>}
             <div className="mb-6 w-11/12 md:w-4/12">
                 <label
                     htmlFor="password"
@@ -77,9 +78,10 @@ export default function LoginForm() {
                     type="password"
                     id="password"
                     className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
-                    required
                     {...register("password", { required: true })} />
             </div>
+            {errors.password && <span className="m-3 bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Password is missing</span>}
+
             {!login ? <DangerWarning text="Wrong username or password" /> : ''}
             <div className="flex items-start mb-6">
                 <div className="flex items-center h-5">
