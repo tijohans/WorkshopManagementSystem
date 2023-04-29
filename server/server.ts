@@ -22,12 +22,13 @@ app.use(express.json())
 app.use(cors())
 
 
+
 // Routes
+app.use('/api', authRouter)
 app.use('/api/tools', toolRouter)
 app.use('/api/users', userRouter)
 app.use('/api/locations', locationRouter)
 app.use('/api/bookings', bookingRouter)
-app.use('/api', authRouter)
 
 
 const PORT: Number = Number(process.env.PORT) || 6969

@@ -1,15 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookie from 'universal-cookie'
 import DangerWarning from './Errors/DangerWarning.jsx'
-import { AuthContext } from '../context/authContext.jsx'
-
 
 export default function LoginForm() {
-
-    const { setToken } = useContext(AuthContext)
     const [login, setLogin] = useState(true)
 
     const navigate = useNavigate()
@@ -21,40 +17,56 @@ export default function LoginForm() {
 
     const onSubmit = async (userData) => {
         setLogin(true)
+
         try {
             const response = await axios.post('http://localhost:9003/api/login', {
-              email: userData.email,
-              password: userData.password
+                email: userData.email,
+                password: userData.password
             })
 
             const token = response.data.token.split(' ')[1]
 
-            setToken(token)
-
             const cookie = new Cookie()
             cookie.set('token', token)
 
-            navigate('/userpage')
-          } catch (error) {
-            setLogin(false)
-            if (error.response) {
-              const { status, data } = error.response;
-              if (status === 400 && data && data.err) {
-                setError("email", { type: "manual", message: data.err });
-              } else if (status === 401) {
-                setError("email", { type: "manual", message: "Invalid email or password" });
-              }
+            window.alert('You have successfully been logged in!')
+            
+            // Making sure the cookie is set before redirecting
+            // ! Not prod safe
+            let isCookieSetYet = false
+            while(!isCookieSetYet) {
+                console.log(isCookieSetYet)
+
+                isCookieSetYet = cookie.get('token')
+
+                if(isCookieSetYet) {
+                    navigate('/userpage')
+                }
             }
+            
+        } catch (error) {
+            setLogin(false)
+
+
+            if (error.response) {
+                const { status, data } = error.response;
+                if (status === 400 && data && data.err) {
+                    setError("email", { type: "manual", message: data.err });
+                } else if (status === 401) {
+                    setError("email", { type: "manual", message: "Invalid email or password" });
+                }
+            }
+
             console.error(error);
-          }
+        }
     }
 
     return (
 
-        <form 
+        <form
             onSubmit={handleSubmit(onSubmit)}
-            className="top-1 h-200 flex flex-col justify-center items-center space-y-10" 
-            >
+            className="top-1 h-200 flex flex-col justify-center items-center space-y-10"
+        >
             <h2 className="text-3xl font-bold text-eerie-black md:text-5xl ">User Login</h2>
             <div className="mb-6 w-11/12 md:w-4/12 ">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-eerie-black ">Your email</label>
@@ -63,7 +75,7 @@ export default function LoginForm() {
                     id="email"
                     className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
                     placeholder="name@stud.ntnu.no"
-                    required 
+                    required
                     {...register("email", { required: true })} />
             </div>
             <div className="mb-6 w-11/12 md:w-4/12">

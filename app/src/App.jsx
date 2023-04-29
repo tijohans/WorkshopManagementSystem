@@ -17,65 +17,68 @@ import NotFound from './components/Errors/NotFound'
 
 
 function App() {
-	return (
-		<div className="App bg-ghost-white ">
-			<Header />
-      <div className="min-h-screen h-full">
-        <Routes>
+    return (
+        <div className="App bg-ghost-white ">
 
-        <Route element={<PrivateRoutes />}>
-              <Route element={<UserPage />} path="/userpage"/>
-              <Route element={<AdminDashboard />} path='/admin' />
-
-              <Route path='/admin/user'>
-            <Route index element={<AdminUserEdit />} />
-            <Route path=':id' element={<AdminUserEdit edit="true" />} />
-          </Route>
-
-          <Route path='/admin/tool'>
-            <Route index element={<AdminToolEdit />} />
-            <Route path=':id' element={<AdminToolEdit edit="true" />} />
-          </Route>
-            </Route>
+            {/* To display on all sites */}
+            <Header />
+            <div className="min-h-screen h-full">
 
 
-          <Route path='/' element={<Landing />} />
+                <Routes>
+                    <Route element={<PrivateRoutes />}>
+                        <Route element={<UserPage />} path="/userpage" />
+                        <Route element={<AdminDashboard />} path='/admin' />
 
-          <Route path='/tools'>
-            <Route index element={<ToolsOverview />} />
-            <Route path=':id' element={<ToolPage />} />
-          </Route>
-          
-          <Route element={<LoginPage />} path='/login' />
-          <Route element={<ToS />} path='/termsofservice' />
-          <Route path='/unauthorized' element={<Unauthorized />}></Route>
+                        <Route path='/admin/user'>
+                            <Route index element={<AdminUserEdit />} />
+                            <Route path=':id' element={<AdminUserEdit edit="true" />} />
+                        </Route>
+
+                        <Route path='/admin/tool'>
+                            <Route index element={<AdminToolEdit />} />
+                            <Route path=':id' element={<AdminToolEdit edit="true" />} />
+                        </Route>
+                    </Route>
+
+
+                    <Route path='/' element={<Landing />} />
+
+                    <Route path='/tools'>
+                        <Route index element={<ToolsOverview />} />
+                        <Route path=':id' element={<ToolPage />} />
+                    </Route>
+
+                    <Route element={<LoginPage />} path='/login' />
+                    <Route element={<ToS />} path='/termsofservice' />
+                    <Route path='/unauthorized' element={<Unauthorized />}></Route>
 
                     {/* Login Protected Routes */}
-					<Route element={<UserPage />} path='/userpage' />
+                    <Route element={<UserPage />} path='/userpage' />
 
 
                     {/* Admin Protected Routes */}
-					<Route element={<AdminDashboard />} path='/admin' />;
+                    <Route element={<AdminDashboard />} path='/admin' />;
 
-					<Route path='/admin/user'>
-						<Route index element={<AdminUserEdit />} />
-						<Route path=':id' element={<AdminUserEdit edit="true" />} />
-					</Route>
+                    <Route path='/admin/user'>
+                        <Route index element={<AdminUserEdit />} />
+                        <Route path=':id' element={<AdminUserEdit edit="true" />} />
+                    </Route>
 
-					<Route path='/admin/tool'>
-						<Route index element={<AdminToolEdit />} />
-						<Route path=':id' element={<AdminToolEdit edit="true" />} />
-					</Route>
+                    <Route path='/admin/tool'>
+                        <Route index element={<AdminToolEdit />} />
+                        <Route path=':id' element={<AdminToolEdit edit="true" />} />
+                    </Route>
 
-                    {/* 404 Route */}
+                    {/* Error Routes */}
                     <Route path='*' element={<NotFound />}></Route>
-                     <Route path='/unauthorized' element={<Unauthorized />}></Route>
-				</Routes>
-			</div>
+                    <Route path='/unauthorized' element={<Unauthorized />}></Route>
+                </Routes>
+            </div>
 
-			<Footer />
-		</div>
-	)
+            <Footer />
+        </div>
+    )
 }
 
 export default App
