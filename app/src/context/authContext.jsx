@@ -1,12 +1,25 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
+import Cookie from "universal-cookie"
+import jwt_decode from 'jwt-decode'
 
 const AuthContext = createContext()
 
 const AuthProvider = ({children}) => {
-    const [token, setToken] = useState(null)
+    const cookie = new Cookie()
+    const token = cookie.get('token')
+    const [userRole, setUserRole] = useState(NaN)
+
+    useEffect(() => {
+        if(!token)
+            return 
+            
+        const decodedToken = jwt_decode(token)
+        
+        setUserRole(decodedToken.role)
+    }, [token])
 
     return (
-        <AuthContext.Provider value={{token, setToken}}>
+        <AuthContext.Provider value={{token, userRole}}>
             {children}
         </AuthContext.Provider>
     )

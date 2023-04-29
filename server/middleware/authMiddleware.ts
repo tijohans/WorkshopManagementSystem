@@ -25,9 +25,9 @@ const verifyToken = (req: RequestWithToken, res: Response, next: NextFunction) =
         return res.status(401).json(errorMessage)
 
     try {
-        const decoded = jwt.verify(String(token), String(process.env.JWT_SECRET));
-        req.verified = decoded;
-        next();
+        const decoded = jwt.verify(String(token), String(process.env.JWT_SECRET))
+        req.verified = decoded
+        next()
     } catch (err) {
         return res.status(401).json(errorMessage)
     }
