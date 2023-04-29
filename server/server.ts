@@ -7,6 +7,7 @@ import { userRouter } from './routes/userRouter.js'
 import { locationRouter } from './routes/locationRouter.js'
 import { authRouter } from './routes/authRouter.js'
 import { bookingRouter } from './routes/bookingRouter.js'
+import {reportRouter } from './routes/reportRouter.js'
 
 const app: Express = express()
 
@@ -28,7 +29,7 @@ app.use('/api/users', userRouter)
 app.use('/api/locations', locationRouter)
 app.use('/api/bookings', bookingRouter)
 app.use('/api', authRouter)
-
+app.use('/api/report', reportRouter)
 
 const PORT: Number = Number(process.env.PORT) || 6969
 
