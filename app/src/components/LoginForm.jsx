@@ -4,9 +4,11 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookie from 'universal-cookie'
 import DangerWarning from './Errors/DangerWarning.jsx'
+import { AuthContext } from '../context/authContext.jsx'
 
 export default function LoginForm() {
     const [login, setLogin] = useState(true)
+    const {token, setToken} = useContext(AuthContext)
 
     const navigate = useNavigate()
     const {
@@ -24,26 +26,13 @@ export default function LoginForm() {
                 password: userData.password
             })
 
-            const token = response.data.token.split(' ')[1]
+            const responseToken = response.data.token.split(' ')[1]
 
-            const cookie = new Cookie()
-            cookie.set('token', token)
+            setToken(responseToken)
 
             window.alert('You have successfully been logged in!')
             
-            // Making sure the cookie is set before redirecting
-            // ! Not prod safe
-            let isCookieSetYet = false
-            while(!isCookieSetYet) {
-                console.log(isCookieSetYet)
-
-                isCookieSetYet = cookie.get('token')
-
-                if(isCookieSetYet) {
-                    navigate('/userpage')
-                }
-            }
-            
+            navigate('/userpage') 
         } catch (error) {
             setLogin(false)
 
