@@ -6,14 +6,14 @@ import adminMiddleware from '../middleware/adminMiddleware.js'
 const userRouter = express()
 
 // Middleware for checking if user is logged in, and is admin
-userRouter.use(authMiddleware, adminMiddleware)
+userRouter.use(authMiddleware)
 
 userRouter.route('/')
     .get(getUsers)
 
 userRouter.route('/:id')
     .get(getUser)
-    .patch(updateUser)
-    .delete(deleteUser)
+    .patch(adminMiddleware, updateUser)
+    .delete(adminMiddleware, deleteUser)
 
 export { userRouter }

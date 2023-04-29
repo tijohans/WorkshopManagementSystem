@@ -79,7 +79,7 @@ const loginUser = async (req: Request, res: Response) => {
     }
 
     // Signing a JWT with the user id, JWT_SECRET, and that it expires in 7 days
-    const token = 'Bearer ' + jwt.sign({sub: user.id}, String(process.env.JWT_SECRET), {expiresIn: '7d'})
+    const token = 'Bearer ' + jwt.sign({sub: user.id, role: user.role}, String(process.env.JWT_SECRET), {expiresIn: '7d'})
     
     // Finally sending the token back to the request origin
     res.status(200).send({token})
