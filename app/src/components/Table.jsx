@@ -40,7 +40,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
 
 
     const getTable = () => {
-        axios.get(`http://localhost:9003/api/${name}`, { token })
+        axios.get(`https://wms-api-ps1s.onrender.com/api/${name}`, { token })
             .then((response) => {
                 tempData = response.data
                 axios.get(`https://wms-api-ps1s.onrender.com/api/locations`, { token })
@@ -65,7 +65,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
 
     // ! Functions for the report table
     const getReportTable = () => {
-        axios.post(`http://localhost:9003/api/report/all`, { token, category: reportCategory, sortType: reportSortType, sortBy: reportSortBy })
+        axios.post(`https://wms-api-ps1s.onrender.com/api/report/all`, { token, category: reportCategory, sortType: reportSortType, sortBy: reportSortBy })
             .then((response) => {
                 setData(response.data)
                 getReportInfo()
@@ -77,7 +77,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
         axios.get(`https://wms-api-ps1s.onrender.com/api/tools`, { token })
             .then((response) => {
                 tempData = response.data
-                axios.get(`http://localhost:9003/api/users`, { token })
+                axios.get(`https://wms-api-ps1s.onrender.com/api/users`, { token })
                     .then((response) => {
                         setTools(tempData)
                         setUsers(response.data)
@@ -93,7 +93,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
     const deleteReport = (id) => {
         if (!confirm('Are you sure you want to delete this report?')) return
         setLoading(true)
-        axios.delete(`http://localhost:9003/api/report/${id}`)
+        axios.delete(`https://wms-api-ps1s.onrender.com/api/report/${id}`)
             .then((response) => {
                 setDeleteResponse(response)
                     .catch(error => console.error("Error: " + error))
