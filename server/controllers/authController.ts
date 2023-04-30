@@ -11,6 +11,8 @@ import 'dotenv/config'
 */
 const registerUser = async (req: Request, res: Response) => {
 
+    console.log(req.body)
+
     const password = await bcrypt
         .genSalt(10)
         .then((salt: string) => {
@@ -22,10 +24,8 @@ const registerUser = async (req: Request, res: Response) => {
         .from('users')
         .select('email')
         .eq('email', req.body.email)
-    
-    console.log(oldUser)
 
-    if(oldUser)
+    if(oldUser && oldUser.data?.length || 0 > 0)
         return res.status(400).json({error: 'User already registered with that email'})
 
     const { data, error } = await supabase
@@ -38,12 +38,11 @@ const registerUser = async (req: Request, res: Response) => {
         }])
         .select()
 
-    if (error) {
-        res.json(error)
-        return
-    }
 
-    res.json(data).status(200)
+    if (error)
+        return res.status(400).json(error)
+
+    res.status(200).json(data)
 }
 
 /*  
@@ -81,7 +80,7 @@ const loginUser = async (req: Request, res: Response) => {
     }
 
     // Signing a JWT with the user id, JWT_SECRET, and that it expires in 7 days
-    const token = 'Bearer ' + jwt.sign({sub: user.id}, String(process.env.JWT_SECRET), {expiresIn: '7d'})
+    const token = 'Bearer ' + jwt.sign({sub: user.id, role: user.role}, String(process.env.JWT_SECRET), {expiresIn: '7d'})
     
     // Finally sending the token back to the request origin
     res.status(200).send({token})

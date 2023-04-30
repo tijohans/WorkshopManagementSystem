@@ -142,7 +142,7 @@ export default function AdminToolEdit(props) {
       .then((response) => {
         console.log(response.data[0]);
         alert(`Tool ${response.data[0].name} updated.`);
-        navigate(`/admin/tool/${id}`);
+        navigate(`/tools`);
       });
   }
 
