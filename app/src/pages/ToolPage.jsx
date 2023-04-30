@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DangerWarning from '../components/Errors/DangerWarning.jsx'
 import { useForm, useWatch } from 'react-hook-form'
 import { AuthContext } from '../context/authContext.jsx'
@@ -23,23 +23,25 @@ export default function ToolPage() {
     const [currentTime, setCurrentTime] = useState()
     let { id } = useParams();
     const { token } = useContext(AuthContext)
-
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        formState: { errors },
         watch
     } = useForm();
+
+
 
     useEffect(() => {
 
         // Getting the tool id from params
         getTool(id);
-        
+
     }, []);
 
     useEffect(() => {
-        if(!token)
+        if (!token)
             return
 
         setUserId(jwt_decode(token).sub)
@@ -49,10 +51,10 @@ export default function ToolPage() {
         await axios
             .get(`https://wms-api-ps1s.onrender.com/api/tools/${id}`)
             .then((response) => {
-                setLoading(false);
-                setTool(response.data[0]);
+                setLoading(false)
+                setTool(response.data[0])
             })
-            .catch((error) => console.error("Error: " + error));
+            .catch((error) => console.error("Error: " + error))
     }
 
     const getTimeSpanInHours = (starttime, endtime) => {
@@ -64,19 +66,39 @@ export default function ToolPage() {
 
         console.log(diffInHours)
 
-        if(diffInHours > 12)
+        if (diffInHours > 12)
             return false
 
         return true
     }
 
+    const getCurrentTime = (type) => {
+
+
+        const now = new Date();
+
+        // If the argument being passed is 'end' extend the hours by 1
+        let hours = String(now.getHours()).padStart(2, '0');
+        if (type === 'end')
+            hours++
+
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const currentTime = `${hours}:${minutes}`;
+
+
+        return currentTime
+    }
+
     const onSubmit = formData => {
 
-        if(!getTimeSpanInHours(formData.booking_start, formData.booking_end)){
+        if (!getTimeSpanInHours(formData.booking_start, formData.booking_end)) {
             console.log('timespan too long')
             return
         }
-        
+
+        if(!window.confirm(`You are about to book ${tool.name} on the ${formData.booking_date}. Please check over you data: start-time: ${formData.booking_start}, end-time: ${formData.booking_end}`))
+            return
+
 
         const bookingData = {
             ...formData,
@@ -89,6 +111,8 @@ export default function ToolPage() {
         axios.post(`https://wms-api-ps1s.onrender.com/api/bookings`, bookingData)
             .then(res => {
                 console.log(res)
+                window.alert('Booking completed, navigating you to the user page')
+                navigate('/userpage')
             }).catch(err => console.warn(err))
 
     }
@@ -113,17 +137,18 @@ export default function ToolPage() {
                             <label
                                 htmlFor="booking_date">Date:</label>
                             <input
-                                {...register('booking_date', 
-                                {
-                                    required: true, 
-                                    /* Setting the minimum date to the current date */
-                                    min: new Date().toISOString().split('T')[0],
+                                {...register('booking_date',
+                                    {
+                                        required: true,
+                                        /* Setting the minimum date to the current date */
+                                        min: new Date().toISOString().split('T')[0],
 
-                                    // Ensuring a user can not book tools more than two weeks in the future
-                                    max: new Date(Date.now() + (14 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]
-                                })}
+                                        // Ensuring a user can not book tools more than two weeks in the future
+                                        max: new Date(Date.now() + (14 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]
+                                    })}
+                                defaultValue={new Date().toISOString().split('T')[0]}
                                 type="date"
-                                min={new Date().toISOString().split('T')[0]} 
+                                min={new Date().toISOString().split('T')[0]}
                                 className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
                                 name="booking_date" />
 
@@ -139,7 +164,8 @@ export default function ToolPage() {
                                 className="min-w-[8ch]"
                                 htmlFor="booking_start">Start time:</label>
                             <input
-                                {...register('booking_start', {required: true})}
+                                {...register('booking_start', { required: true })}
+                                defaultValue={getCurrentTime()}
                                 type="time"
                                 className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
                                 name="booking_start" />
@@ -151,27 +177,25 @@ export default function ToolPage() {
                                 className="min-w-[8ch]"
                                 htmlFor="booking_end">End time:</label>
                             <input
-                                {...register('booking_end', {required: true, min: watch('booking_start')})}
+                                {...register('booking_end', { required: true, min: watch('booking_start') })}
                                 type="time"
-                                // min={watch('booking_start')}
+                                defaultValue={getCurrentTime('end')}
                                 className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
                                 name="booking_end" />
                         </div>
                         {errors.booking_end?.type === 'required' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">End time is required</span>}
                         {errors.booking_end?.type === 'min' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">End time must be later than start time. Please choose a valid end time.</span>}
 
-                        {token ? ( 
+                        {token ? (
                             <input
                                 className="w-40 group shadow-lg h-14  px-5 m-2 rounded-full transition-colors duration-300 ease-in-out  text-white bg-plum hover:delay-50  hover:bg-ghost-white hover:border hover:border-plum  hover:text-plum  focus:outline-none font-medium text-s md:text-2xl w-50 md:w-60 text-center mr-2 mb-2 disabled:bg-slate-400"
                                 type="submit"
                                 value="Book!" />)
-                        : (<>
-                            <p className="font-bold underline underline-offset-2">You must login to start booking tools</p>
-                            
-                            <Button text="Login here" link="/login" />
-                        </>)}
+                            : (<>
+                                <p className="font-bold underline underline-offset-2">You must login to start booking tools</p>
 
-
+                                <Button text="Login here" link="/login" />
+                            </>)}
                     </form>
                 </div>
             )}
