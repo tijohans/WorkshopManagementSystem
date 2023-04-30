@@ -1,9 +1,13 @@
 import 'dotenv/config'
-import express, {Express, Router} from 'express'
+import express, { Express } from 'express'
 import cors from 'cors'
 import { createClient } from '@supabase/supabase-js'
 import { toolRouter } from './routes/toolRouter.js'
 import { userRouter } from './routes/userRouter.js'
+import { locationRouter } from './routes/locationRouter.js'
+import { authRouter } from './routes/authRouter.js'
+import { bookingRouter } from './routes/bookingRouter.js'
+import {reportRouter } from './routes/reportRouter.js'
 
 const app: Express = express()
 
@@ -19,9 +23,15 @@ app.use(express.json())
 app.use(cors())
 
 
+
 // Routes
+app.use('/api', authRouter)
 app.use('/api/tools', toolRouter)
 app.use('/api/users', userRouter)
+app.use('/api/locations', locationRouter)
+app.use('/api/bookings', bookingRouter)
+app.use('/api', authRouter)
+app.use('/api/report', reportRouter)
 
 
 const PORT: Number = Number(process.env.PORT) || 6969

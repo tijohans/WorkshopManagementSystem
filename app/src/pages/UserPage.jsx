@@ -1,18 +1,36 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Button from '../components/Button'
 import UserInfo from '../components/UserInfo'
-import Table from '../components/Table'
+import CheckList from '../components/CheckList'
+import UserTable from '../components/UserTable'
+import CourseTable from '../components/CourseTable'
+import { AuthContext } from '../context/authContext'
 
 export default function UserPage() {
 
+    const { token } = useContext(AuthContext)
+
     return (
+        <>
+            <h1 className="flex  md:flex-column justify-center  text-4xl md:text-5xl font-bold text-eerie-black mb-20">Account information</h1>
+            <div className="md:flex  md:flex-column justify-center  md:space-x-16">
 
-        <div className="md:flex  md:flex-column justify-center items-center md:space-x-4">
-            <UserInfo />
-            <UserInfo /> {/*Denne UserInfo taggen skal erstattes med Table */}
-        </div>
+                <UserInfo />
 
+                <div className="flex justify-center top-15">
+                    <CourseTable />
+                </div>
+
+            </div>
+            <div className="md:flex  md:justify-center">
+                <UserTable />
+
+            </div>
+
+
+            <p className="italic flex justify-center mt-20" >If your account information is incorrect, please contact the page manager. </p>
+        </>
 
     )
 }
