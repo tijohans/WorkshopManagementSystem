@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { supabase } from "../server.js"
+import { log } from "console"
 
 
 /* 
@@ -31,6 +32,7 @@ const getSingleBooking = async (req: Request, res: Response) => {
 
     if (error) {
         res.json(error)
+        
         return
     }
 
@@ -48,6 +50,25 @@ const getUserBookings = async (req: Request, res: Response) => {
         return res.json(error)
 
     res.json(data)
+}
+
+//get the bookings with the name of the tool
+const getBookingsWithToolName = async (req: Request, res: Response) => {
+    const {data: bookingsData, error: bookingsError} = await supabase
+    .from('bookings')
+    .select('bookings.*, tools.name as tool_name')
+    console.log(bookingsData);
+    
+    //unsure if .join will work, can just get the name through the tool id in supabase
+    // .join('tools', { 'bookings.tool_id': 'tools.id' })
+
+    if(bookingsError){
+        console.error(bookingsError)
+        res.status(500).json({error: 'An error occured while fetching bookings'})
+        return
+    }   
+
+    res.json({data: bookingsData})
 }
 
 
@@ -128,6 +149,7 @@ export {
     getAllBookings, 
     getSingleBooking,
     getUserBookings,
+    getBookingsWithToolName,
     createBooking,
     deleteBooking,
     getToolBookingsByDate

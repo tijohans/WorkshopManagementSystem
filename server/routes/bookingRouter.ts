@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllBookings, getSingleBooking, createBooking, deleteBooking, getUserBookings, getToolBookingsByDate } from '../controllers/bookingController.js';
+import { getAllBookings, getSingleBooking, createBooking, getBookingsWithToolName, deleteBooking, getUserBookings, getToolBookingsByDate } from '../controllers/bookingController.js';
 
 const bookingRouter = express()
 
@@ -11,7 +11,10 @@ bookingRouter.route('/:id')
     .get(getSingleBooking)
     .delete(deleteBooking)
 
-bookingRouter.get('/:id/:date', getToolBookingsByDate)
+// bookingRouter.route('/')
+
+
+bookingRouter.get('/:toolid/:date', getToolBookingsByDate)
 
 bookingRouter.get('/user/:userId', getUserBookings)
 
