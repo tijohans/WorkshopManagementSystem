@@ -2,8 +2,6 @@ import { useContext, useState, useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { AuthContext } from './context/authContext'
 
-
-
 const PrivateRoutes = () => {
     const { token } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(true)
