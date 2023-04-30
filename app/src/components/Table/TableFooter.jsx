@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import Button from '../Button';
 
-const TableFooter = ({ range, setPage, page, slice }) => {
+const TableFooter = ({ range, setPage, page, slice, button, buttonLink, buttonText }) => {
     useEffect(() => {
       if (slice.length < 1 && page !== 1) {
         setPage(page - 1);
       }
     }, [slice, page, setPage]);
     return (
-        <nav className="flex items-center justify-between pt-4" aria-label="Table navigation">
+        <nav className={button ? "flex p-4 justify-between" : "flex p-4 justify-end"} aria-label="Table navigation">
+          {button ? <Button size="small" link={buttonLink}>{buttonText}</Button> : null}
+        
         <ul className="cursor-pointer inline-flex items-center -space-x-px">
             {range.map((el, index) => (
             <li key={index}>

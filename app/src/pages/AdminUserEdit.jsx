@@ -99,10 +99,10 @@ export default function AdminUserEdit(props) {
 
   return (
     <div>
-      {loading ? <ReactLoading type='spin' color='#9C528B' /> :
+      {loading ? <div className="flex flex-col justify-center items-center mb-16"><ReactLoading type='spin' color='#9C528B' /></div> :
         <form className="flex flex-col justify-center items-center mb-16">
           <div>
-            {props.edit ? <h1>Edit user:</h1> : <h1>Create a new user:</h1>}
+          <h1 className="text-2xl md:text-3xl">{props.edit ? "Edit user:": "Create a new user:"}</h1>
           </div>
           <div className="mb-6 w-96">
             <label htmlFor="name" className="block mb-2 text-sm font-medium text-eerie-black">First Name:</label>
@@ -140,9 +140,9 @@ export default function AdminUserEdit(props) {
           </div>
 
           <div className="flex flex-col justify-center items-center">
-            <Button text={props.edit ? "Edit" : "Create User"} clickFunction={props.edit ? updateUser : createUser}></Button>
-            <Button text="Cancel" link="/admin"></Button>
-            {props.edit ? <Button text="Delete User" warning={true} clickFunction={deleteUser}></Button> : null}
+            <Button clickFunction={props.edit ? updateUser : createUser}>{props.edit ? "Edit" : "Create User"}</Button>
+            <Button link="/admin">Cancel</Button>
+            {props.edit ? <Button warning={true} clickFunction={deleteUser}>Delete User</Button> : null}
           </div>
 
         </form>

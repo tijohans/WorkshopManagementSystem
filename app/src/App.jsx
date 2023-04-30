@@ -10,6 +10,8 @@ import ToS from './pages/ToS'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminUserEdit from './pages/AdminUserEdit'
 import AdminToolEdit from './pages/AdminToolsEdit'
+import Report from './pages/Report'
+import AdminReports from './components/AdminReports'
 
 import PrivateRoutes from "./PrivateRoutes";
 import Unauthorized from './components/Errors/Unauthorized'
@@ -44,9 +46,17 @@ function App() {
 
                     <Route path='/' element={<Landing />} />
 
+                    <Route path='/report' element={<Report title="Submit a report:" placeholder="Report about..." image={true} />}/>
+                    <Route path='/contact' element={<Report title="Contact us:" placeholder="I need help with..." />}/>
+                    
+                    
+
                     <Route path='/tools'>
                         <Route index element={<ToolsOverview />} />
                         <Route path=':id' element={<ToolPage />} />
+                        <Route path='report'>
+                          <Route path=':id' element={<Report isTool={true} image={true}/>} />
+                        </Route>
                     </Route>
 
                     <Route element={<LoginPage />} path='/login' />
