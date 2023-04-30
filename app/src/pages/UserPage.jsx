@@ -3,7 +3,7 @@ import UserInfo from '../components/UserInfo'
 import UserTable from '../components/UserTable'
 import CourseTable from '../components/CourseTable'
 import { AuthContext } from '../context/authContext'
-
+import BookingsTable from '../components/BookingsTable'
 
 export default function UserPage() {
 
@@ -22,7 +22,7 @@ export default function UserPage() {
 
             </div>
             <div className="md:flex  md:justify-center">
-                <UserTable />
+                <BookingsTable />
 
             </div>
 

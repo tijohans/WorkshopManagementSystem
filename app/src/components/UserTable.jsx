@@ -17,14 +17,15 @@ export default function UserTable() {
     const getUserBooking = () => {
         axios.get(`https://wms-api-ps1s.onrender.com/api/bookings/user/${userId}`, { headers: { "x-access-token": token } })
             .then((response) => {
-                setUserBooking(response.data[0])
+                setUserBooking(response.data)
                 //setLoading(false)
             })
             .catch(error => console.error("Error: " + error))
     }
 
-
     console.log(userBooking)
+
+
   
     return (
 
