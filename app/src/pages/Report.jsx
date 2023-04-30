@@ -19,6 +19,7 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
     const [urgent, setUrgent] = useState(false);
 
     const { token } = useContext(AuthContext)
+    const userId = jwt_decode(token).sub
 
     let kjerring
 
@@ -62,13 +63,13 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
         { isTool ? idToSet = tool.id : idToSet = null }
 
         axios
-            .post(`http://localhost:9003/api/report`, {
+            .post(`https://wms-api-ps1s.onrender.com/api/report`, {
                 title: subject,
                 description: message,
                 important: urgent,
                 imageurl: kjerring,
                 tool_id: idToSet,
-                user_id: 115 // ! Change to token id ! 
+                user_id: userId
             })
             .then((response) => {
                 setLoading(false)
@@ -95,7 +96,7 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
         }
 
         axios
-            .post(`http://localhost:9003/api/report/upload`, formData, {
+            .post(`https://wms-api-ps1s.onrender.com/api/report/upload`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
