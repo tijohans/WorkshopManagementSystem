@@ -1,23 +1,30 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Cookies from 'universal-cookie'
+import { AuthContext } from '../context/authContext'
 
 export default function Header() {
 
-    const cookie = new Cookies()
-
     const [nav, setNav] = useState(true)
     const [pages, setPages] = useState(['home', 'tools', 'login'])
-    const [loggedIn, setLoggedIn] = useState()
-
-    useEffect(() => {
-      setLoggedIn(!!cookie.get('token'))
-    }, [])
+    const { token, userRole } = useContext(AuthContext)
     
 
     const toggleNav = () => {
         setNav(!nav)
     }
+
+    useEffect(() => {
+        setPages(['home', 'tools', 'login'])        
+
+        if(token) 
+            setPages(['home', 'tools', 'userpage', 'logout'])
+
+        console.log(userRole)
+
+        if(userRole === 1)
+            setPages(['home', 'tools', 'userpage', 'admin', 'logout'])
+
+    }, [token, userRole])
 
     // Generates all the list items
     const generateListItems = () => {
@@ -31,7 +38,7 @@ export default function Header() {
             onClick={toggleNav}>
 
                 {/* Could probably find a more elegant solution to this */}
-                {elem == "home" ? <Link to='/'>{elem}</Link> : <Link to={'/' + elem}>{elem}</Link>}
+                {elem == "home" ? <Link to='/' className={currentPath === '/' ? 'underline' : ''} >{elem}</Link> : <Link to={'/' + elem}>{elem}</Link>}
             </li>)
     }
 

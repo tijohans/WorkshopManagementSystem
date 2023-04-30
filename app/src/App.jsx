@@ -14,6 +14,8 @@ import AdminToolEdit from './pages/AdminToolsEdit'
 import PrivateRoutes from "./PrivateRoutes";
 import Unauthorized from './components/Errors/Unauthorized'
 import NotFound from './components/Errors/NotFound'
+import Logout from './components/Logout'
+import CookieConsent from 'react-cookie-consent'
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
 
             {/* To display on all sites */}
             <Header />
+
             <div className="min-h-screen h-full">
 
 
@@ -55,6 +58,7 @@ function App() {
 
                     {/* Login Protected Routes */}
                     <Route element={<UserPage />} path='/userpage' />
+                    <Route element={<Logout />} path='/logout' />
 
 
                     {/* Admin Protected Routes */}
@@ -75,6 +79,21 @@ function App() {
                     <Route path='/unauthorized' element={<Unauthorized />}></Route>
                 </Routes>
             </div>
+
+            <CookieConsent
+                location="bottom"
+                buttonText="Okay!"
+                cookieName="CookieConsent"
+                style={{ background: "#925688" }}
+                acceptOnScroll={true}
+                acceptOnScrollPercentage={10}
+                onAccept={(byScroll) => {
+                    alert('By continuing you are accepting cookies');
+                  }}
+                buttonStyle={{ color: "#FFF", background: "#306339", fontSize: "13px" }}
+            >
+                This website uses cookies to enhance the user experience.
+            </CookieConsent>
 
             <Footer />
         </div>
