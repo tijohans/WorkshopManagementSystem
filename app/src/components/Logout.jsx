@@ -24,8 +24,8 @@ export default function Logout() {
     }
 
     return (
-        <main>
-            <Button clickFunction={terminateLogin} text="Logout"></Button>
+        <main className='w-full h-[80vh] flex justify-center items-center'>
+            <Button clickFunction={terminateLogin}>Logout?</Button>
         </main>
     )
 }
