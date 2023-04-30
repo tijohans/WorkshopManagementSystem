@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import DangerWarning from '../components/Errors/DangerWarning.jsx'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { AuthContext } from '../context/authContext.jsx'
 import jwt_decode from 'jwt-decode'
 import Button from '../components/Button.jsx'
@@ -20,13 +20,15 @@ export default function ToolPage() {
     const [tool, setTool] = useState(defaultTool);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(0)
+    const [currentTime, setCurrentTime] = useState()
     let { id } = useParams();
     const { token } = useContext(AuthContext)
 
     const {
         register,
         handleSubmit,
-        formState: {errors}
+        formState: {errors},
+        watch
     } = useForm();
 
     useEffect(() => {
@@ -53,7 +55,28 @@ export default function ToolPage() {
             .catch((error) => console.error("Error: " + error));
     }
 
+    const getTimeSpanInHours = (starttime, endtime) => {
+
+        const start = new Date(`1970-01-01T${starttime}`);
+        const end = new Date(`1970-01-01T${endtime}`);
+        const diffInMs = end - start;
+        const diffInHours = diffInMs / (1000 * 60 * 60);
+
+        console.log(diffInHours)
+
+        if(diffInHours > 12)
+            return false
+
+        return true
+    }
+
     const onSubmit = formData => {
+
+        if(!getTimeSpanInHours(formData.booking_start, formData.booking_end)){
+            console.log('timespan too long')
+            return
+        }
+        
 
         const bookingData = {
             ...formData,
@@ -90,13 +113,26 @@ export default function ToolPage() {
                             <label
                                 htmlFor="booking_date">Date:</label>
                             <input
-                                {...register('booking_date', {required: true})}
+                                {...register('booking_date', 
+                                {
+                                    required: true, 
+                                    /* Setting the minimum date to the current date */
+                                    min: new Date().toISOString().split('T')[0],
+
+                                    // Ensuring a user can not book tools more than two weeks in the future
+                                    max: new Date(Date.now() + (14 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]
+                                })}
                                 type="date"
+                                min={new Date().toISOString().split('T')[0]} 
                                 className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
                                 name="booking_date" />
 
                         </div>
-                        {errors.booking_date && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Date is required</span>}
+                        {errors.booking_date?.type === 'required' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Date is required</span>}
+
+                        {/* Error handlig if the user removed the min requirement from the html */}
+                        {errors.booking_date?.type === 'min' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Cannot book tools in the past</span>}
+                        {errors.booking_date?.type === 'max' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Cannot book tools more than two weeks into the future</span>}
 
                         <div className="flex gap-2 items-center">
                             <label
@@ -115,12 +151,14 @@ export default function ToolPage() {
                                 className="min-w-[8ch]"
                                 htmlFor="booking_end">End time:</label>
                             <input
-                                {...register('booking_end', {required: true})}
+                                {...register('booking_end', {required: true, min: watch('booking_start')})}
                                 type="time"
+                                // min={watch('booking_start')}
                                 className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
                                 name="booking_end" />
                         </div>
-                        {errors.booking_end && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">End time is required</span>}
+                        {errors.booking_end?.type === 'required' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">End time is required</span>}
+                        {errors.booking_end?.type === 'min' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">End time must be later than start time. Please choose a valid end time.</span>}
 
                         {token ? ( 
                             <input
