@@ -141,8 +141,6 @@ const createBooking = async (req: Request, res: Response) => {
     if (overlapError)
         return res.json(overlapError)
 
-    console.log(overlappingBookings)
-
     if (overlappingBookings.length > 0)
         return res.status(400).json({ 
             error: 'There is already a booking for this tool on the requested date and time.',

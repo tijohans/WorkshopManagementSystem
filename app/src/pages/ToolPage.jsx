@@ -20,8 +20,9 @@ export default function ToolPage() {
     const [tool, setTool] = useState(defaultTool);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(0)
-    const [currentTime, setCurrentTime] = useState()
     const [timeSpanError, setTimeSpanError] = useState(false)
+    const [overlapError, setOverlapError] = useState(false)
+    const [existingBookings, setExistingBookings] = useState(false)
     let { id } = useParams();
     const { token } = useContext(AuthContext)
     const navigate = useNavigate()
@@ -94,7 +95,7 @@ export default function ToolPage() {
             return setTimeSpanError(true)
         }
 
-        if(!window.confirm(`You are about to book ${tool.name} on the ${formData.booking_date}. Please check over you data: start-time: ${formData.booking_start}, end-time: ${formData.booking_end}`))
+        if (!window.confirm(`You are about to book ${tool.name} on the ${formData.booking_date}. Please check over you data: start-time: ${formData.booking_start}, end-time: ${formData.booking_end}`))
             return
 
 
@@ -104,14 +105,14 @@ export default function ToolPage() {
             tool_id: tool.id
         }
 
-        console.log(bookingData)
-
         axios.post(`http://localhost:9003/api/bookings`, bookingData)
             .then(res => {
-                console.log(res)
                 window.alert('Booking completed, navigating you to the user page')
                 navigate('/userpage')
-            }).catch(err => console.warn(err))
+            }).catch(err => {
+                setOverlapError(err.response.data.error)
+                setExistingBookings(err.response.data.overlappingBookings)
+            })
 
     }
 
@@ -185,7 +186,9 @@ export default function ToolPage() {
                         {errors.booking_end?.type === 'min' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">End time must be later than start time. Please choose a valid end time.</span>}
 
                         {timeSpanError && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Timespan cannot exceed 12 hours</span>}
-                            
+                        {overlapError && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">{overlapError}</span>}
+
+                        {existingBookings && <ShowExistingBookings existingBookings={existingBookings} />}
 
                         {token ? (
                             <input
@@ -203,4 +206,27 @@ export default function ToolPage() {
             )}
         </div>
     )
+}
+
+
+// Helper function for rendering out the unavailable times for tools
+function ShowExistingBookings({ existingBookings }) {
+    return (
+        <>
+            <h2>The tool is unavailable at these timeslots: </h2>
+            <ul>
+                {existingBookings.map((booking) => {
+
+                    const startTime = booking.booking_start.split(":").slice(0, 2).join(":");
+                    const endTime = booking.booking_end.split(":").slice(0, 2).join(":");
+
+                    return (
+                        <li key={booking.booking_id}>
+                            {startTime} - {endTime}
+                        </li>
+                    );
+                })}
+            </ul>
+        </>
+    );
 }
