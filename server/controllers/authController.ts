@@ -4,6 +4,7 @@ import { supabase } from '../server.js'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
+
 /* 
     @route  POST /api/users/register
     @desc   creating new user
