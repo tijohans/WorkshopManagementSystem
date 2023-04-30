@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import DangerWarning from '../components/Errors/DangerWarning.jsx'
 import { useForm, useWatch } from 'react-hook-form'
 import { AuthContext } from '../context/authContext.jsx'
@@ -198,6 +198,7 @@ export default function ToolPage() {
                                 <Button text="Login here" link="/login" />
                             </>)}
                     </form>
+                    {token ? <Link className="transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8" to={`/tools/report/${tool.id}`}>Report this tool</Link> : null}
                 </div>
             )}
         </div>

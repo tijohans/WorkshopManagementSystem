@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Cookie from 'universal-cookie'
 import DangerWarning from './Errors/DangerWarning.jsx'
 import { AuthContext } from '../context/authContext.jsx'
@@ -56,7 +56,7 @@ export default function LoginForm() {
             onSubmit={handleSubmit(onSubmit)}
             className="top-1 h-200 flex flex-col justify-center items-center space-y-10"
         >
-            <h2 className="text-3xl font-bold text-eerie-black md:text-5xl ">User Login</h2>
+            <h2 className="text-2xl font-bold text-eerie-black md:text-4xl ">User Login</h2>
             <div className="mb-6 w-11/12 md:w-4/12 ">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-eerie-black ">Your email</label>
                 <input
@@ -89,7 +89,7 @@ export default function LoginForm() {
                 </div>
                 <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-900 ">Remember me</label>
             </div>
-            <p className="">Need help? Contact us blablabla.</p>
+            <p className="">Need help? Contact us <Link to="/contact" className="transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum underline underline-offset-8">here</Link></p>
             <input type="submit" value="login" />
         </form>
     )
