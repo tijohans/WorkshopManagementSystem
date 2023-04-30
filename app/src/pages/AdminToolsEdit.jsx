@@ -25,7 +25,7 @@ export default function AdminToolEdit(props) {
   const [imageSrc, setImageSrc] = useState("");
   const [allLocations, setAllLocations] = useState([]);
 
-  let kjerring
+  let publicImageStorageLink
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -106,7 +106,7 @@ export default function AdminToolEdit(props) {
         },
       })
       .then((res) => {
-        kjerring = res.data.url.data.publicUrl
+        publicImageStorageLink = res.data.url.data.publicUrl
         console.log("Image uploaded successfully");
         if (update){
           updateTool()
@@ -132,7 +132,7 @@ export default function AdminToolEdit(props) {
     axios
       .patch(`https://wms-api-ps1s.onrender.com/api/tools/${id}`, {
         name: name,
-        imageurl: kjerring,
+        imageurl: publicImageStorageLink,
         description: description,
         location_id: location,
         broken: broken,
@@ -165,7 +165,7 @@ export default function AdminToolEdit(props) {
     await axios
       .post(`https://wms-api-ps1s.onrender.com/api/tools/`, {
         name: name,
-        imageurl: kjerring,
+        imageurl: publicImageStorageLink,
         description: description,
         location_id: location,
         broken: broken,
