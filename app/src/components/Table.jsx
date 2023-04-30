@@ -5,7 +5,9 @@ import ReactLoading from 'react-loading'
 import TableFooter from './Table/TableFooter'
 import useTable from './Table/useTable'
 
+
 export default function Table({ name, rowsPerPage }) {
+
 
     const [data, setData] = useState([])
     const [locations, setLocations] = useState([])
@@ -20,6 +22,8 @@ export default function Table({ name, rowsPerPage }) {
         getTable()
     }, []);
 
+
+    
     const getTable = () => {
         axios.get(`https://wms-api-ps1s.onrender.com/api/${name}`)
             .then((response) => {
@@ -128,6 +132,7 @@ export default function Table({ name, rowsPerPage }) {
                     </tr>
                 )
                 break
+                
         }
     })
 

@@ -4,15 +4,17 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookie from 'universal-cookie'
 import DangerWarning from './Errors/DangerWarning.jsx'
+import { AuthContext } from '../context/authContext.jsx'
 
 export default function LoginForm() {
     const [login, setLogin] = useState(true)
+    const {token, setToken} = useContext(AuthContext)
 
     const navigate = useNavigate()
     const {
         register,
         handleSubmit,
-        setError
+        formState: {errors}
     } = useForm();
 
     const onSubmit = async (userData) => {
@@ -24,26 +26,13 @@ export default function LoginForm() {
                 password: userData.password
             })
 
-            const token = response.data.token.split(' ')[1]
+            const responseToken = response.data.token.split(' ')[1]
 
-            const cookie = new Cookie()
-            cookie.set('token', token)
+            setToken(responseToken)
 
             window.alert('You have successfully been logged in!')
             
-            // Making sure the cookie is set before redirecting
-            // ! Not prod safe
-            let isCookieSetYet = false
-            while(!isCookieSetYet) {
-                console.log(isCookieSetYet)
-
-                isCookieSetYet = cookie.get('token')
-
-                if(isCookieSetYet) {
-                    navigate('/userpage')
-                }
-            }
-            
+            navigate('/userpage') 
         } catch (error) {
             setLogin(false)
 
@@ -75,9 +64,10 @@ export default function LoginForm() {
                     id="email"
                     className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
                     placeholder="name@stud.ntnu.no"
-                    required
                     {...register("email", { required: true })} />
+                
             </div>
+                    {errors.email && <span className="m-3 bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Email is missing</span>}
             <div className="mb-6 w-11/12 md:w-4/12">
                 <label
                     htmlFor="password"
@@ -88,9 +78,10 @@ export default function LoginForm() {
                     type="password"
                     id="password"
                     className="bg-white border border-gray-300 text-eerie-black text-sm rounded-lg focus:ring-robin-egg-blue focus:border-robin-egg-blue block w-full p-2.5 "
-                    required
                     {...register("password", { required: true })} />
             </div>
+            {errors.password && <span className="m-3 bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Password is missing</span>}
+
             {!login ? <DangerWarning text="Wrong username or password" /> : ''}
             <div className="flex items-start mb-6">
                 <div className="flex items-center h-5">
