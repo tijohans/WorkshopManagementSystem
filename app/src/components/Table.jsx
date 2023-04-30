@@ -6,7 +6,7 @@ import TableFooter from './Table/TableFooter'
 import useTable from './Table/useTable'
 import { AuthContext } from '../context/authContext'
 
-export default function Table({ name, rowsPerPage, reportCategory, sortByTool, reportSortType, reportSortBy, footerButton, footerButtonText, footerButtonLink}) {
+export default function Table({ name, rowsPerPage, reportCategory, sortByTool, reportSortType, reportSortBy, footerButton, footerButtonText, footerButtonLink }) {
 
     const [data, setData] = useState([])
     const [locations, setLocations] = useState([])
@@ -32,6 +32,8 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
                 setReportTools(true)
             }
             getReportTable()
+        } else if (name === "bookings") {
+            getBookingsTable()
         } else {
             getTable()
         }
@@ -40,6 +42,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
 
 
     const getTable = () => {
+        setLoading(true)
         axios.get(`https://wms-api-ps1s.onrender.com/api/${name}`, { token })
             .then((response) => {
                 tempData = response.data
@@ -62,18 +65,40 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
         }
     }, [reportSortType, reportSortBy, reportCategory, sortByTool])
 
+    useEffect(() => {
+        if (name != "report" && name != "bookings") {
+            getTable()
+        }
 
-    // ! Functions for the report table
+        if (name === "bookings"){
+            getBookingsTable()
+        }
+    }, [name])
+
+
+    // ? Functions for the report table
     const getReportTable = () => {
         axios.post(`https://wms-api-ps1s.onrender.com/api/report/all`, { token, category: reportCategory, sortType: reportSortType, sortBy: reportSortBy })
             .then((response) => {
                 setData(response.data)
-                getReportInfo()
+                getToolsAndUsers()
             })
             .catch(error => console.error("Error: " + error))
     }
+
+    // ? Functions for the bookings table
+    const getBookingsTable = () => {
+        setLoading(true)
+        axios.get(`https://wms-api-ps1s.onrender.com/api/bookings`, { token })
+            .then((response) => {
+                setData(response.data)
+                getToolsAndUsers()
+            })
+            .catch(error => console.error("Error: " + error))
+    }
+
     // ? Get all tool & user info for the reports
-    const getReportInfo = () => {
+    const getToolsAndUsers = () => {
         axios.get(`https://wms-api-ps1s.onrender.com/api/tools`, { token })
             .then((response) => {
                 tempData = response.data
@@ -94,6 +119,17 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
         if (!confirm('Are you sure you want to delete this report?')) return
         setLoading(true)
         axios.delete(`https://wms-api-ps1s.onrender.com/api/report/${id}`)
+            .then((response) => {
+                setDeleteResponse(response)
+                    .catch(error => console.error("Error: " + error))
+            })
+    }
+
+    // ? Delete booking route
+    const deleteBooking = (id) => {
+        if (!confirm('Are you sure you want to delete this booking?')) return
+        setLoading(true)
+        axios.delete(`https://wms-api-ps1s.onrender.com/api/bookings/${id}`)
             .then((response) => {
                 setDeleteResponse(response)
                     .catch(error => console.error("Error: " + error))
@@ -156,17 +192,8 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
 
 
     // Headers
-    if (name != "report") {
-        data.map((item, key) => {
-            if (key === 0) {
-                for (const key in item) {
-                    if (key === "id" || key === "imageurl" || key === 'visible' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
-                    let nukey = key.replace("_"," ")
-                    headers.push(<th scope="col" key={nukey} className="px-6 py-3 ">{nukey}</th>)
-                }
-            }
-        })
-    } else {
+    
+    if (name === "report") {
         // Custom manual headers for report table
         headers.push(<th scope="col" key="Image" className="px-6 py-3 ">Image provided</th>)
         headers.push(<th scope="col" key="Sent by" className="px-6 py-3 ">Sent by</th>)
@@ -175,6 +202,22 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
         headers.push(<th scope="col" key="Description" className="px-6 py-3 ">Message</th>)
         headers.push(<th scope="col" key="Urgent" className="px-6 py-3 ">Urgent?</th>)
         headers.push(<th scope="col" key="Date" className="px-6 py-3 ">Report Sent At</th>)
+    } else if (name === "bookings"){
+        headers.push(<th scope="col" key="Name" className="px-6 py-3 ">Name</th>)
+        headers.push(<th scope="col" key="Tool" className="px-6 py-3 ">Tool</th>)
+        headers.push(<th scope="col" key="Start Time" className="px-6 py-3 ">Start Time</th>)
+        headers.push(<th scope="col" key="End Time" className="px-6 py-3 ">End Time</th>)
+        headers.push(<th scope="col" key="Date" className="px-6 py-3 ">Date</th>)
+    } else {
+        data.map((item, key) => {
+            if (key === 0) {
+                for (const key in item) {
+                    if (key === "id" || key === "imageurl" || key === 'visible' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
+                    let nukey = key.replace("_", " ")
+                    headers.push(<th scope="col" key={nukey} className="px-6 py-3 ">{nukey}</th>)
+                }
+            }
+        })
     }
 
     slice.map((item) => {
@@ -281,6 +324,36 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
                 }
 
                 break
+
+            case "bookings":
+                items.push(
+                    <tr className="bg-white border-b hover:bg-ghost-white  ">
+                        <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
+                            {returnFullName(item.user_id)}
+                        </td>
+
+                        <td className="px-6 py-4">
+                            {returnToolName(item.tool_id)}
+                        </td>
+
+                        <td className="px-6 py-4">
+                            {item.booking_start}
+                        </td>
+
+                        <td className="px-6 py-4">
+                            {item.booking_end}
+                        </td>
+
+                        <td className="px-6 py-4">
+                            {item.booking_date}
+                        </td>
+
+                        <td className="px-6 py-4">
+                        <div className="cursor-pointer font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4" onClick={() => { deleteBooking(item.booking_id) }}>Delete</div>
+                        </td>
+                    </tr>
+                )
+                break
         }
     })
 
@@ -314,10 +387,10 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
                         <tbody className='[&>*:nth-child(even)]:bg-purple-50'>
                             {items}
                         </tbody>
-                        
+
                     </table>
-                    <TableFooter range={range} slice={slice} setPage={setPage} button={footerButton} buttonLink={footerButtonLink} buttonText={footerButtonText}/>
-                    
+                    <TableFooter range={range} slice={slice} setPage={setPage} button={footerButton} buttonLink={footerButtonLink} buttonText={footerButtonText} />
+
                 </div>
             }
 
