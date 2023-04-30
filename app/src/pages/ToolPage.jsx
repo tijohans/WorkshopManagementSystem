@@ -21,6 +21,7 @@ export default function ToolPage() {
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(0)
     const [currentTime, setCurrentTime] = useState()
+    const [timeSpanError, setTimeSpanError] = useState(false)
     let { id } = useParams();
     const { token } = useContext(AuthContext)
     const navigate = useNavigate()
@@ -64,8 +65,6 @@ export default function ToolPage() {
         const diffInMs = end - start;
         const diffInHours = diffInMs / (1000 * 60 * 60);
 
-        console.log(diffInHours)
-
         if (diffInHours > 12)
             return false
 
@@ -92,8 +91,7 @@ export default function ToolPage() {
     const onSubmit = formData => {
 
         if (!getTimeSpanInHours(formData.booking_start, formData.booking_end)) {
-            console.log('timespan too long')
-            return
+            return setTimeSpanError(true)
         }
 
         if(!window.confirm(`You are about to book ${tool.name} on the ${formData.booking_date}. Please check over you data: start-time: ${formData.booking_start}, end-time: ${formData.booking_end}`))
@@ -185,6 +183,9 @@ export default function ToolPage() {
                         </div>
                         {errors.booking_end?.type === 'required' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">End time is required</span>}
                         {errors.booking_end?.type === 'min' && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">End time must be later than start time. Please choose a valid end time.</span>}
+
+                        {timeSpanError && <span className="bg-red-100 p-2 rounded-xl border-red-300 border-2" role="alert">Timespan cannot exceed 12 hours</span>}
+                            
 
                         {token ? (
                             <input
