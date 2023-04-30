@@ -106,7 +106,7 @@ export default function ToolPage() {
 
         console.log(bookingData)
 
-        axios.post(`https://wms-api-ps1s.onrender.com/api/bookings`, bookingData)
+        axios.post(`http://localhost:9003/api/bookings`, bookingData)
             .then(res => {
                 console.log(res)
                 window.alert('Booking completed, navigating you to the user page')
