@@ -7,11 +7,12 @@ bookingRouter.route('/')
     .get(getAllBookings)
     .post(createBooking)
 
+    bookingRouter.route('/bookingwithtoolname')
+    .get(getBookingsWithToolName)
+
 bookingRouter.route('/:id')
     .get(getSingleBooking)
     .delete(deleteBooking)
-
-// bookingRouter.route('/')
 
 
 bookingRouter.get('/:toolid/:date', getToolBookingsByDate)

@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/server.js",
-    "dev": "tsc -w & nodemon ./dist/server.js"
-  },
+    "dev": "tsc -w & nodemon ./dist/server.js",
+    "windows": "start /B cmd /c \"tsc -w\" & start /B cmd /c \"nodemon ./dist/server.js\""  },
   "keywords": [],
   "author": "",
   "license": "ISC",
