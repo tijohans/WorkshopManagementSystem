@@ -21,7 +21,7 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
     const { token } = useContext(AuthContext)
     const userId = jwt_decode(token).sub
 
-    let kjerring
+    let publicImageStorageLink
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -67,7 +67,7 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
                 title: subject,
                 description: message,
                 important: urgent,
-                imageurl: kjerring,
+                imageurl: publicImageStorageLink,
                 tool_id: idToSet,
                 user_id: userId
             })
@@ -102,7 +102,7 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
                 },
             })
             .then((res) => {
-                kjerring = res.data.url.data.publicUrl
+                publicImageStorageLink = res.data.url.data.publicUrl
                 console.log("Image uploaded successfully");
                 createReport()
             })
