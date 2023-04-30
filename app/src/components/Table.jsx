@@ -1,34 +1,49 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import ReactLoading from 'react-loading'
 import TableFooter from './Table/TableFooter'
 import useTable from './Table/useTable'
+import { AuthContext } from '../context/authContext'
 
-
-export default function Table({ name, rowsPerPage }) {
-
+export default function Table({ name, rowsPerPage, reportCategory, sortByTool, reportSortType, reportSortBy, footerButton, footerButtonText, footerButtonLink}) {
 
     const [data, setData] = useState([])
     const [locations, setLocations] = useState([])
     const [loading, setLoading] = useState(true)
     const [page, setPage] = useState(1)
     const { slice, range } = useTable(data, page, rowsPerPage);
+    const { token } = useContext(AuthContext)
 
+    const [tools, setTools] = useState([])
+    const [users, setUsers] = useState([])
+    const [reportTools, setReportTools] = useState(false)
+    const [deleteResponse, setDeleteResponse] = useState([])
     let tempData
     let tempLocations
 
     useEffect(() => {
-        getTable()
+        if (!reportCategory) {
+            reportCategory = "general"
+        }
+
+        if (name === "report") {
+            if (reportCategory === "tools") {
+                setReportTools(true)
+            }
+            getReportTable()
+        } else {
+            getTable()
+        }
+
     }, []);
 
 
-    
     const getTable = () => {
-        axios.get(`https://wms-api-ps1s.onrender.com/api/${name}`)
+        axios.get(`https://wms-api-ps1s.onrender.com/api/${name}`, { token })
             .then((response) => {
                 tempData = response.data
-                axios.get(`https://wms-api-ps1s.onrender.com/api/locations`)
+                axios.get(`https://wms-api-ps1s.onrender.com/api/locations`, { token })
                     .then((response) => {
                         tempLocations = response.data
                         setData(tempData)
@@ -41,12 +56,86 @@ export default function Table({ name, rowsPerPage }) {
             .catch(error => console.error("Error: " + error))
     }
 
+    useEffect(() => {
+        if (name === "report") {
+            getReportTable()
+        }
+    }, [reportSortType, reportSortBy, reportCategory, sortByTool])
+
+
+    // ! Functions for the report table
+    const getReportTable = () => {
+        axios.post(`https://wms-api-ps1s.onrender.com/api/report/all`, { token, category: reportCategory, sortType: reportSortType, sortBy: reportSortBy })
+            .then((response) => {
+                setData(response.data)
+                getReportInfo()
+            })
+            .catch(error => console.error("Error: " + error))
+    }
+    // ? Get all tool & user info for the reports
+    const getReportInfo = () => {
+        axios.get(`https://wms-api-ps1s.onrender.com/api/tools`, { token })
+            .then((response) => {
+                tempData = response.data
+                axios.get(`https://wms-api-ps1s.onrender.com/api/users`, { token })
+                    .then((response) => {
+                        setTools(tempData)
+                        setUsers(response.data)
+                        setLoading(false)
+                    })
+                    .catch(error => console.error("Error: " + error))
+
+            })
+            .catch(error => console.error("Error: " + error))
+    }
+
+    // ? Delete report route
+    const deleteReport = (id) => {
+        if (!confirm('Are you sure you want to delete this report?')) return
+        setLoading(true)
+        axios.delete(`https://wms-api-ps1s.onrender.com/api/report/${id}`)
+            .then((response) => {
+                setDeleteResponse(response)
+                    .catch(error => console.error("Error: " + error))
+            })
+    }
+
+    useEffect(() => {
+        if (deleteResponse < 1) return
+        alert("Report successfully deleted."),
+            setLoading(false)
+        getReportTable()
+
+
+    }, [deleteResponse]);
+
     const returnRole = (role) => {
-        if (role===1){
+        if (role === 1) {
             return "Admin"
         } else {
             return "Maker"
         }
+    }
+
+    const returnFullName = (id) => {
+        for (let i = 0; i < users.length; i++) {
+            if (id === users[i].id) {
+                return users[i].first_name + " " + users[i].last_name
+            }
+        }
+    }
+
+    const returnToolName = (id) => {
+        for (let i = 0; i < tools.length; i++) {
+            if (id === tools[i].id) {
+                return tools[i].name
+            }
+        }
+    }
+
+    const returnReadableDate = (date) => {
+        let nudate = new Date(date)
+        return nudate.toLocaleDateString("no") + " (" + nudate.toLocaleTimeString("no") + ")"
     }
 
 
@@ -55,25 +144,38 @@ export default function Table({ name, rowsPerPage }) {
 
 
     // Check if location_id matches, if so add the location as a name to the data array
-    for (let i = 0; i < data.length; i++) {
-        for (let z = 0; z < locations.length; z++) {
-            if (data[i].location_id === locations[z].location_id) {
-                data[i].location = locations[z].location
+    if (name != "report") {
+        for (let i = 0; i < data.length; i++) {
+            for (let z = 0; z < locations.length; z++) {
+                if (data[i].location_id === locations[z].location_id) {
+                    data[i].location = locations[z].location
+                }
             }
         }
     }
 
+
     // Headers
-    data.map((item, key) => {
-        if (key === 0) {
-            for (const key in item) {
-                if (key === "id" || key === "imageurl" || key === 'visible' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
-
-                headers.push(<th scope="col" key={key} className="px-6 py-3 ">{key}</th>)
-
+    if (name != "report") {
+        data.map((item, key) => {
+            if (key === 0) {
+                for (const key in item) {
+                    if (key === "id" || key === "imageurl" || key === 'visible' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
+                    let nukey = key.replace("_"," ")
+                    headers.push(<th scope="col" key={nukey} className="px-6 py-3 ">{nukey}</th>)
+                }
             }
-        }
-    })
+        })
+    } else {
+        // Custom manual headers for report table
+        headers.push(<th scope="col" key="Image" className="px-6 py-3 ">Image provided</th>)
+        headers.push(<th scope="col" key="Sent by" className="px-6 py-3 ">Sent by</th>)
+        { reportTools ? headers.push(<th scope="col" key="Tool" className="px-6 py-3 ">Tool</th>) : null }
+        headers.push(<th scope="col" key="Title" className="px-6 py-3 ">Subject</th>)
+        headers.push(<th scope="col" key="Description" className="px-6 py-3 ">Message</th>)
+        headers.push(<th scope="col" key="Urgent" className="px-6 py-3 ">Urgent?</th>)
+        headers.push(<th scope="col" key="Date" className="px-6 py-3 ">Report Sent At</th>)
+    }
 
     slice.map((item) => {
         switch (name) {
@@ -132,44 +234,95 @@ export default function Table({ name, rowsPerPage }) {
                     </tr>
                 )
                 break
-                
+
+            case "report":
+                if (!reportTools || sortByTool == 0 || item.tool_id == sortByTool) {
+                    items.push(
+                        <tr className="bg-white border-b hover:bg-ghost-white  ">
+
+                            <td className="px-6 py-4">
+                                {item.imageurl ? <img className="max-w-sm max-h-sm" src={item.imageurl} alt={"Image of " + item.toolname} /> : "None"}
+                            </td>
+
+                            <td className="px-6 py-4">
+                                {returnFullName(item.user_id)}
+                            </td>
+
+                            {
+                                reportTools ?
+                                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
+                                        {returnToolName(item.tool_id)}
+                                    </td>
+                                    :
+                                    null
+                            }
+
+                            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
+                                {item.title}
+                            </td>
+
+                            <td className="px-6 py-4">
+                                {item.description}
+                            </td>
+
+                            <td className="px-6 py-4">
+                                {item.important ? "Yes" : "No"}
+                            </td>
+
+                            <td className="px-6 py-4">
+                                {returnReadableDate(item.created_at)}
+                            </td>
+
+                            <td className="px-6 py-4">
+                                <div className="cursor-pointer font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4" onClick={() => { deleteReport(item.report_id) }}>Delete</div>
+                            </td>
+                        </tr>
+                    )
+                }
+
+                break
         }
     })
 
 
 
 
-headers.push(<th scope="col" className="px-6 py-3">Action</th>)
+    headers.push(<th key="Action" scope="col" className="px-6 py-3">Action</th>)
 
-    if (!page || page < 1){
+    if (!page || page < 1) {
         setPage(1)
     } else {
         //console.log(page)
     }
-        
-    
 
-return (
-    <div className="overflow-x-auto mx-auto my-10 shadow-md sm:rounded-lg md:w-5/6">
-        {loading ? <ReactLoading type='spin' color='#9C528B' /> :
-            <div>
-                <table className="w-full text-sm text-left text-gray-500 ">
-                    <thead className="text-xs text-white uppercase bg-plum ">
-                        <tr>
-                            {headers}
-                        </tr>
-                    </thead>
-                    <tbody className='[&>*:nth-child(even)]:bg-purple-50'>
-                        {items}
-                    </tbody>
 
-                </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} />
-            </div>
-        }
 
-    </div>
-)
+    return (
+        <div className="overflow-x-auto mx-auto my-5 shadow-md sm:rounded-lg md:w-5/6">
+            {loading ?
+                <div className="flex flex-col align-middle justify-center items-center">
+                    <ReactLoading type="spin" color="#9C528B" />
+                </div>
+                :
+                <div>
+                    <table className="w-full text-sm text-left text-gray-500 ">
+                        <thead className="text-xs text-white uppercase bg-plum ">
+                            <tr>
+                                {headers}
+                            </tr>
+                        </thead>
+                        <tbody className='[&>*:nth-child(even)]:bg-purple-50'>
+                            {items}
+                        </tbody>
+                        
+                    </table>
+                    <TableFooter range={range} slice={slice} setPage={setPage} button={footerButton} buttonLink={footerButtonLink} buttonText={footerButtonText}/>
+                    
+                </div>
+            }
+
+        </div>
+    )
 }
 
 

@@ -1,23 +1,28 @@
 import express from 'express'
-import {  getReports,
+import multer from 'multer'
+import {
+    getReports,
     createReport,
     getReport,
-    deleteReport} from '../controllers/reportController.js'
+    deleteReport,
+    uploadImage
+} from '../controllers/reportController.js'
+import authMiddleware from '../middleware/authMiddleware.js'
 
-
+const upload = multer()
 const reportRouter = express()
 
-//createReport, getReport, deleteReport
+reportRouter.route('/all')
+    .post(authMiddleware, getReports)
 
 reportRouter.route('/')
-    .get(getReports)
+    .post(authMiddleware, createReport)
 
-    reportRouter.route('/')
-     .post(createReport)
-
+reportRouter.route('/upload')
+    .post(authMiddleware, upload.single('file'), uploadImage)
 
 reportRouter.route('/:id')
-    .get(getReport)
-   .delete(deleteReport)
+    .get(authMiddleware, getReport)
+    .delete(authMiddleware, deleteReport)
 
 export { reportRouter }

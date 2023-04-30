@@ -10,10 +10,14 @@ import ToS from './pages/ToS'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminUserEdit from './pages/AdminUserEdit'
 import AdminToolEdit from './pages/AdminToolsEdit'
+import Report from './pages/Report'
+import AdminReports from './components/AdminReports'
 
 import PrivateRoutes from "./PrivateRoutes";
 import Unauthorized from './components/Errors/Unauthorized'
 import NotFound from './components/Errors/NotFound'
+import Logout from './components/Logout'
+import CookieConsent from 'react-cookie-consent'
 
 
 function App() {
@@ -22,6 +26,7 @@ function App() {
 
             {/* To display on all sites */}
             <Header />
+
             <div className="min-h-screen h-full">
 
 
@@ -44,9 +49,17 @@ function App() {
 
                     <Route path='/' element={<Landing />} />
 
+                    <Route path='/report' element={<Report title="Submit a report:" placeholder="Report about..." image={true} />}/>
+                    <Route path='/contact' element={<Report title="Contact us:" placeholder="I need help with..." />}/>
+                    
+                    
+
                     <Route path='/tools'>
                         <Route index element={<ToolsOverview />} />
                         <Route path=':id' element={<ToolPage />} />
+                        <Route path='report'>
+                          <Route path=':id' element={<Report isTool={true} image={true}/>} />
+                        </Route>
                     </Route>
 
                     <Route element={<LoginPage />} path='/login' />
@@ -55,6 +68,7 @@ function App() {
 
                     {/* Login Protected Routes */}
                     <Route element={<UserPage />} path='/userpage' />
+                    <Route element={<Logout />} path='/logout' />
 
 
                     {/* Admin Protected Routes */}
@@ -75,6 +89,21 @@ function App() {
                     <Route path='/unauthorized' element={<Unauthorized />}></Route>
                 </Routes>
             </div>
+
+            <CookieConsent
+                location="bottom"
+                buttonText="Okay!"
+                cookieName="CookieConsent"
+                style={{ background: "#925688" }}
+                acceptOnScroll={true}
+                acceptOnScrollPercentage={10}
+                onAccept={(byScroll) => {
+                    alert('By continuing you are accepting cookies');
+                  }}
+                buttonStyle={{ color: "#FFF", background: "#306339", fontSize: "13px" }}
+            >
+                This website uses cookies to enhance the user experience.
+            </CookieConsent>
 
             <Footer />
         </div>

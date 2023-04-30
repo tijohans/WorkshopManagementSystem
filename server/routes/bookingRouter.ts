@@ -14,9 +14,9 @@ bookingRouter.route('/:id')
     .get(getSingleBooking)
     .delete(deleteBooking)
 
+bookingRouter.get('/user/:userId', getUserBookings)
 
 bookingRouter.get('/:toolid/:date', getToolBookingsByDate)
 
-bookingRouter.get('/user/:userId', getUserBookings)
 
 export { bookingRouter }
