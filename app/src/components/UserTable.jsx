@@ -1,12 +1,31 @@
+import React, { ReactNode, useState, useContext, useEffect } from 'react'
+import { AuthContext } from '../context/authContext'
+import jwt_decode from 'jwt-decode'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import ReactLoading from 'react-loading'
-
-
 
 export default function UserTable() {
+    const { token } = useContext(AuthContext)
+    const userId = jwt_decode(token).sub
+    const [userBooking, setUserBooking] = useState([])
 
+
+    useEffect(() => {
+        getUserBooking()
+    }, []);
+
+
+    const getUserBooking = () => {
+        axios.get(`https://wms-api-ps1s.onrender.com/api/bookings/user/${userId}`, { headers: { "x-access-token": token } })
+            .then((response) => {
+                setUserBooking(response.data[0])
+                //setLoading(false)
+            })
+            .catch(error => console.error("Error: " + error))
+    }
+
+
+    console.log(userBooking)
+  
     return (
 
         <div className="overflow-x-auto">
@@ -38,7 +57,7 @@ export default function UserTable() {
                     <tbody>
                         <tr className="bg-white border-b hover:bg-ghost-white  ">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
-                                3D printer
+                             
                             </th>
                             <td className="px-6 py-4">
                                 20.03.23

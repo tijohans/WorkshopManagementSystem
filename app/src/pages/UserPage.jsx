@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
-import axios from 'axios'
-import Button from '../components/Button'
 import UserInfo from '../components/UserInfo'
-import CheckList from '../components/CheckList'
 import UserTable from '../components/UserTable'
 import CourseTable from '../components/CourseTable'
 import { AuthContext } from '../context/authContext'
+
 
 export default function UserPage() {
 
