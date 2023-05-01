@@ -59,37 +59,38 @@ const getUserBookings = async (req: Request, res: Response) => {
 const getBookingsWithToolName = async (req: Request, res: Response) => {
 
     try {
-        // First, retrieve the booking data
-        const { data: bookingsData, error: bookingsError } = await supabase
-            .from('bookings')
-            .select('*')
 
-        if (bookingsError) {
-            console.error(bookingsError)
-            res.status(500).json({ error: 'An error occurred while fetching bookings' })
-            return
-        }
+      // First, retrieve the booking data
+      const { data: bookingsData, error: bookingsError } = await supabase
+        .from('bookings')
+        .select('*')
+  
+      if (bookingsError) {
+        console.error(bookingsError)
+        res.status(500).json({ error: 'An error occurred while fetching bookings' })
+        return
+      }
+  
+      // Then, retrieve the tool data for each booking
+      const toolIds = bookingsData.map((booking) => booking.tool_id)
+      const { data: toolsData, error: toolsError } = await supabase
+        .from('tools')
+        .select('*')
+        .in('id', toolIds)
+  
+      if (toolsError) {
+        console.error(toolsError)
+        res.status(500).json({ error: 'An error occurred while fetching tools' })
+        return
+      }
+  
+      // Combine the booking and tool data into a single response
+      const bookingsWithToolNames = bookingsData.map((booking) => {
+        const toolName = toolsData.find((tool) => tool.id === booking.tool_id)?.name || 'Unknown'
+        return { ...booking, toolName }
+      })
 
-        // Then, retrieve the tool data for each booking
-        const toolIds = bookingsData.map((booking) => booking.tool_id)
-        const { data: toolsData, error: toolsError } = await supabase
-            .from('tools')
-            .select('*')
-            .in('id', toolIds)
-
-        if (toolsError) {
-            console.error(toolsError)
-            res.status(500).json({ error: 'An error occurred while fetching tools' })
-            return
-        }
-
-        // Combine the booking and tool data into a single response
-        const bookingsWithToolNames = bookingsData.map((booking) => {
-            const toolName = toolsData.find((tool) => tool.id === booking.tool_id)?.name || 'Unknown'
-            return { ...booking, toolName }
-        })
-
-        res.json({ data: bookingsWithToolNames })
+        res.json(bookingsWithToolNames)
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'An error occurred while fetching bookings with tool names' })

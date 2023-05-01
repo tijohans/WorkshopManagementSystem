@@ -212,7 +212,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
         data.map((item, key) => {
             if (key === 0) {
                 for (const key in item) {
-                    if (key === "id" || key === "imageurl" || key === 'visible' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
+                    if (key === "id" || key === "imageurl" || key === 'visible' || key === 'course_id_string' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
                     let nukey = key.replace("_", " ")
                     headers.push(<th scope="col" key={nukey} className="px-6 py-3 ">{nukey}</th>)
                 }
@@ -234,11 +234,11 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
                         </td>
 
                         <td className="px-6 py-4">
-                            {String(item.broken)}
+                            {item.broken ? "Yes" : ""}
                         </td>
 
                         <td className="px-6 py-4">
-                            {item.dangerous ? <><img className='inline' src='/icons/alert-triangle.svg' /><p>Yes</p></> : ''}
+                            {item.dangerous ? <><img className='inline' src='/icons/alert-triangle.svg' />Yes</> : ''}
                         </td>
 
                         <td className="px-6 py-4">
@@ -309,7 +309,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
                             </td>
 
                             <td className="px-6 py-4">
-                                {item.important ? "Yes" : "No"}
+                                {item.important ? "Yes" : ""}
                             </td>
 
                             <td className="px-6 py-4">
