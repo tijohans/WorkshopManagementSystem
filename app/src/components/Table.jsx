@@ -234,11 +234,11 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
                         </td>
 
                         <td className="px-6 py-4">
-                            {String(item.broken)}
+                            {item.broken ? "Yes" : ""}
                         </td>
 
                         <td className="px-6 py-4">
-                            {item.dangerous ? <><img className='inline' src='/icons/alert-triangle.svg' /><p>Yes</p></> : ''}
+                            {item.dangerous ? <><img className='inline' src='/icons/alert-triangle.svg' />Yes</> : ''}
                         </td>
 
                         <td className="px-6 py-4">
@@ -309,7 +309,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
                             </td>
 
                             <td className="px-6 py-4">
-                                {item.important ? "Yes" : "No"}
+                                {item.important ? "Yes" : ""}
                             </td>
 
                             <td className="px-6 py-4">
