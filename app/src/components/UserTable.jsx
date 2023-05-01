@@ -2,11 +2,13 @@ import React, { ReactNode, useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../context/authContext'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
+import ReactLoading from "react-loading";
 
 export default function UserTable() {
     const { token } = useContext(AuthContext)
     const userId = jwt_decode(token).sub
     const [userBooking, setUserBooking] = useState([])
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -23,8 +25,23 @@ export default function UserTable() {
             .catch(error => console.error("Error: " + error))
     }
 
-    
-  console.log(userBooking)
+
+    const deleteBooking = async (id) => {
+        setLoading(true);
+        if (id) {
+          await axios.delete(`https://wms-api-ps1s.onrender.com/api/bookings/${id}`)
+            .then((response) => {
+              console.log(response.data);
+              alert(`booking is now completed, make sure you put the tool where it is supposed to be`);
+              setLoading(false);
+            setUserBooking(userBooking.filter((item) => item.booking_id !== id));
+        
+            })
+            .catch((error) => console.error("Error: " + error));
+        } else {
+          console.error("Error: Booking ID is null or undefined");
+        }
+      }
 
   
     return (
@@ -82,7 +99,7 @@ export default function UserTable() {
                             </td>
 
                             <td className="px-6 py-4">
-                                <a href="#" className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4">Remove</a>
+                                <a onClick={() => deleteBooking(item.booking_id)} className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4">Return tool</a>
                             </td>
                         </tr>
                          ))} 
