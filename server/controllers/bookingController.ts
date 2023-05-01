@@ -88,8 +88,10 @@ const getBookingsWithToolName = async (req: Request, res: Response) => {
         const toolName = toolsData.find((tool) => tool.id === booking.tool_id)?.name || 'Unknown'
         return { ...booking, toolName }
       })
-  
-      res.json({ data: bookingsWithToolNames })
+
+        res.json(bookingsWithToolNames)
+
+
     } catch (error) {
       console.error(error)
       res.status(500).json({ error: 'An error occurred while fetching bookings with tool names' })
