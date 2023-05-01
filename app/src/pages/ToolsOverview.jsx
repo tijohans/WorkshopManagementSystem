@@ -33,7 +33,7 @@ export default function ToolsOverview() {
     return (
 
         <div className="flex flex-wrap flex-col justify-center items-center gap-4 min-h-full">
-            <Button text='Toggle View' clickFunction={toggle} />
+            <Button clickFunction={toggle}>Toggle View</Button>
             <Button size="small" link="/admin/tool">Create Tool</Button>
             {toggleView === 'table' ? <Table name="tools" rowsPerPage={15} /> : <ToolCards />}
         </div>
