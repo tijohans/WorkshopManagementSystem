@@ -32,14 +32,14 @@ export default function AdminReports() {
                 :
                 <>
 
-                    <section className="flex flex-row align-middle text-right justify-around">
-                        <div className="pr-96">
+                    <section className="flex justify-center items-center flex-col md:flex-row md:align-center md:text-right md:justify-around">
+                        <div className="md:flex md:flex-start flex-col ml-5">
                             <Button size="small" clickFunction={() => { setShowTools(false) }} >General Reports</Button>
                             <Button size="small" clickFunction={() => { setShowTools(true) }} >Tool Reports</Button>
                         </div>
 
                         <div>
-                            <form className="flex flex-row">
+                            <form className="flex flex-row max-w-full md:flex-end md:mr-3 ">
                                 <div className="flex flex-col mr-3">
                                     <label className="mb-2" htmlFor="sortType">Sort by:</label>
                                     <select
