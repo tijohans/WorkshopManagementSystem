@@ -52,8 +52,12 @@ const getUserBookings = async (req: Request, res: Response) => {
     res.json(data)
 }
 
-//get the bookings with the name of the tool
+/* 
+    @route  GET /api/bookings/getbookingwithtoolname
+    @desc   Get all bookings for a specific tool
+*/
 const getBookingsWithToolName = async (req: Request, res: Response) => {
+
     try {
       // First, retrieve the booking data
       const { data: bookingsData, error: bookingsError } = await supabase
@@ -93,7 +97,6 @@ const getBookingsWithToolName = async (req: Request, res: Response) => {
       res.status(500).json({ error: 'An error occurred while fetching bookings with tool names' })
     }
   }
-  
   
 
 

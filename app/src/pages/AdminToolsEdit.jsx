@@ -25,7 +25,7 @@ export default function AdminToolEdit(props) {
   const [imageSrc, setImageSrc] = useState("");
   const [allLocations, setAllLocations] = useState([]);
 
-  let kjerring
+  let publicImageStorageLink
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -106,7 +106,7 @@ export default function AdminToolEdit(props) {
         },
       })
       .then((res) => {
-        kjerring = res.data.url.data.publicUrl
+        publicImageStorageLink = res.data.url.data.publicUrl
         console.log("Image uploaded successfully");
         if (update){
           updateTool()
@@ -132,7 +132,7 @@ export default function AdminToolEdit(props) {
     axios
       .patch(`https://wms-api-ps1s.onrender.com/api/tools/${id}`, {
         name: name,
-        imageurl: kjerring,
+        imageurl: publicImageStorageLink,
         description: description,
         location_id: location,
         broken: broken,
@@ -165,7 +165,7 @@ export default function AdminToolEdit(props) {
     await axios
       .post(`https://wms-api-ps1s.onrender.com/api/tools/`, {
         name: name,
-        imageurl: kjerring,
+        imageurl: publicImageStorageLink,
         description: description,
         location_id: location,
         broken: broken,
@@ -186,11 +186,11 @@ export default function AdminToolEdit(props) {
   return (
     <div>
       {loading ? (
-        <ReactLoading type="spin" color="#9C528B" />
+        <div className="flex flex-col justify-center items-center mb-16"><ReactLoading type='spin' color='#9C528B' /></div>
       ) : (
         <form className="flex flex-col justify-center items-center mb-16 max-w-full">
           <div>
-            {props.edit ? <h1>Edit tool:</h1> : <h1>Create a new tool:</h1>}
+            <h1 className="text-2xl md:text-3xl">{props.edit ? "Edit tool:": "Create a new tool:"}</h1>
           </div>
           <label
             htmlFor="file"
@@ -315,17 +315,15 @@ export default function AdminToolEdit(props) {
           </div>
           <div className="flex flex-col justify-center items-center">
             <Button
-              text="Submit"
               clickFunction={props.edit ? updateToolFixed : createToolFixed}
               disabled={loading ? true : false}
-            ></Button>
-            <Button text="Cancel" link="/tools"></Button>
+            >Edit</Button>
+            <Button link="/tools">Cancel</Button>
             {props.edit ? (
               <Button
-                text="Delete Tool"
                 warning={true}
                 clickFunction={deleteTool}
-              ></Button>
+              >Delete Tool</Button>
             ) : null}
           </div>
         </form>

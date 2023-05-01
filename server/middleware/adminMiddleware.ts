@@ -3,8 +3,25 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import 'dotenv/config'
 import { supabase } from "../server.js";
 
-const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
+interface RequestWithToken extends Request {
+    body: {
+        token?: string
+    }
+
+    query: {
+        token?: string
+    }
+
+    verified?: string | JwtPayload
+}
+
+const verifyToken = async (req: RequestWithToken, res: Response, next: NextFunction) => {
+    const errorMessage = {error: "Not authorized to access this content"}
+
+    // Checking for JWT in any of these three locations
     const token = req.body.token || req.query.token || req.headers["x-access-token"];
+
+    console.log(token)
 
     const decoded = jwt.verify(String(token), String(process.env.JWT_SECRET));
 
