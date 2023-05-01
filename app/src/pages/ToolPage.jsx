@@ -97,6 +97,9 @@ export default function ToolPage() {
         if(!window.confirm(`You are about to book ${tool.name} on the ${formData.booking_date}. Please check over you data: start-time: ${formData.booking_start}, end-time: ${formData.booking_end}`))
             return
 
+        if(!window.confirm(`Remember you need the appropriate HMS course to book this tool. If you book this tool without the course, it can lead to suspension, or a ban for the workshop. This tool requires the course: ${tool.course_id_string}. By continuing you confirm you have taken this course`))
+            return
+
 
         const bookingData = {
             ...formData,
@@ -124,6 +127,9 @@ export default function ToolPage() {
                     <img className="w-64 h-48 p-2 rounded-2xl" src={tool.imageurl} />
                     <h1 className="text-3xl font-bold ">{tool.name}</h1>
                     <p>{tool.description}</p>
+
+                    {tool.course_id && <h3 className="m-2 font-bold">Required HMS Course(s): {tool.course_id_string}</h3>}
+
 
                     {tool.dangerous ? <DangerWarning text="Potentially dangerous tool, use caution" /> : ''}
 
