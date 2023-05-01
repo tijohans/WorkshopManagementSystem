@@ -188,6 +188,24 @@ const deleteBooking = async (req: Request, res: Response) => {
     res.json(data)
 }
 
+/* 
+    @route  GET /bookings/all/:toolid
+    @desc   Route for mapping out historic booking data in a chart
+*/
+const getAllBookingsByToolId = async (req: Request, res: Response) => {
+    const toolId = req.params.toolId
+
+    const { data: data, error } = await supabase
+        .from('booking_log')
+        .select('*')
+        .eq('tool_id', toolId)
+
+    if (error)
+        return res.json(error)
+
+    res.json(data)
+}
+
 export {
     getAllBookings,
     getSingleBooking,
@@ -195,5 +213,6 @@ export {
     getBookingsWithToolName,
     createBooking,
     deleteBooking,
-    getToolBookingsByDate
+    getToolBookingsByDate,
+    getAllBookingsByToolId
 }
