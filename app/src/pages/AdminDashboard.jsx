@@ -1,4 +1,3 @@
-import UserForm from "../components/RegisterUser"
 import Table from "../components/Table"
 import Button from "../components/Button"
 import React, { useState } from 'react'

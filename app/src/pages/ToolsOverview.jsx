@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Table from '../components/Table'
 import Button from '../components/Button'
 import ToolCards from '../components/ToolOverview/ToolCards'
 import CreateToolButton from '../components/CreateToolButton'
 import Cookies from 'universal-cookie'
+import { AuthContext } from '../context/authContext'
 
 export default function ToolsOverview() {
     const cookie = new Cookies()
     const [toggleView, setToggleView] = useState('gallery')
+    const { userRole } = useContext(AuthContext)
 
     const toggle = () => {
         if(toggleView === 'gallery') {
@@ -34,7 +36,7 @@ export default function ToolsOverview() {
 
         <div className="flex flex-wrap flex-col justify-center items-center gap-4 min-h-full">
             <Button clickFunction={toggle}>Toggle View</Button>
-            <Button size="small" link="/admin/tool">Create Tool</Button>
+            {userRole === 1 ? <Button size="small" link="/admin/tool">Create Tool</Button> : null}
             {toggleView === 'table' ? <Table name="tools" rowsPerPage={15} /> : <ToolCards />}
         </div>
     )
