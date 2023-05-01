@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import ReactLoading from "react-loading";
 import { AuthContext } from "../context/authContext";
+import jwt_decode from "jwt-decode";
 
 
 export default function Report({ isTool, title, placeholder, hasImageUpload }) {
@@ -19,7 +20,7 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
     const [urgent, setUrgent] = useState(false);
 
     const { token } = useContext(AuthContext)
-    const userId = jwt_decode(token).sub
+    const [userId, setUserId] = useState()
 
     let publicImageStorageLink
 
@@ -37,17 +38,22 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
     let { id } = useParams();
 
     useEffect(() => {
-        {
-            isTool ? getTool(id) : setLoading(false);
-        }
+        isTool ? getTool(id) : setLoading(false);
     }, []);
+
+    useEffect(() => {
+        if(!token) 
+            return
+        
+        setUserId(jwt_decode(token).sub)
+    }, [token])
 
     const getTool = (id) => {
         // Setting loading to true when button is clicked
         setLoading(true);
 
         axios
-            .get(`https://wms-api-ps1s.onrender.com/api/tools/${id}`)
+            .get(`http://localhost:9003/api/tools/${id}`, {token})
             .then((response) => {
                 setTool(response.data[0]);
                 // Setting loading to false when request is read
@@ -63,7 +69,8 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
         { isTool ? idToSet = tool.id : idToSet = null }
 
         axios
-            .post(`https://wms-api-ps1s.onrender.com/api/report`, {
+            .post(`http://localhost:9003/api/report`, {
+                token: token,
                 title: subject,
                 description: message,
                 important: urgent,
@@ -96,9 +103,10 @@ export default function Report({ isTool, title, placeholder, hasImageUpload }) {
         }
 
         axios
-            .post(`https://wms-api-ps1s.onrender.com/api/report/upload`, formData, {
+            .post(`http://localhost:9003/api/report/upload`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    "token": token
                 },
             })
             .then((res) => {

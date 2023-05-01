@@ -10,10 +10,11 @@ import ToS from './pages/ToS'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminUserEdit from './pages/AdminUserEdit'
 import AdminToolEdit from './pages/AdminToolsEdit'
-import Report from './pages/Report'
 import AdminReports from './components/AdminReports'
+import AdminRoutes from './PrivateRouter/AdminRoutes'
+import Report from './pages/Report'
 
-import PrivateRoutes from "./PrivateRoutes";
+import PrivateRoutes from "./PrivateRouter/PrivateRoutes";
 import Unauthorized from './components/Errors/Unauthorized'
 import NotFound from './components/Errors/NotFound'
 import Logout from './components/Logout'
@@ -29,64 +30,58 @@ function App() {
 
             <div className="min-h-screen h-full">
 
-
+                {/* Defining all routes for application */}
                 <Routes>
-                    <Route element={<PrivateRoutes />}>
-                        <Route element={<UserPage />} path="/userpage" />
-                        <Route element={<AdminDashboard />} path='/admin' />
-
-                        <Route path='/admin/user'>
-                            <Route index element={<AdminUserEdit />} />
-                            <Route path=':id' element={<AdminUserEdit edit="true" />} />
-                        </Route>
-
-                        <Route path='/admin/tool'>
-                            <Route index element={<AdminToolEdit />} />
-                            <Route path=':id' element={<AdminToolEdit edit="true" />} />
-                        </Route>
-                    </Route>
-
-
                     <Route path='/' element={<Landing />} />
-
-                    <Route path='/report' element={<Report title="Submit a report:" placeholder="Report about..." image={true} />}/>
-                    <Route path='/contact' element={<Report title="Contact us:" placeholder="I need help with..." />}/>
+                    <Route element={<LoginPage />} path='/login' />
+                    <Route element={<ToS />} path='/termsofservice' />
                     
                     
-
+                    {/* Tool routes */}
                     <Route path='/tools'>
                         <Route index element={<ToolsOverview />} />
                         <Route path=':id' element={<ToolPage />} />
+
                         <Route path='report'>
                           <Route path=':id' element={<Report isTool={true} image={true}/>} />
                         </Route>
                     </Route>
 
-                    <Route element={<LoginPage />} path='/login' />
-                    <Route element={<ToS />} path='/termsofservice' />
-                    <Route path='/unauthorized' element={<Unauthorized />}></Route>
 
                     {/* Login Protected Routes */}
-                    <Route element={<UserPage />} path='/userpage' />
-                    <Route element={<Logout />} path='/logout' />
+                    <Route element={<PrivateRoutes />}>
 
+                        {/* Genereal user protected routes */}
+                        <Route element={<UserPage />} path="/userpage" />
+                        <Route element={<Logout />} path='/logout' />
 
-                    {/* Admin Protected Routes */}
-                    <Route element={<AdminDashboard />} path='/admin' />;
+                        {/* Report routes */}
+                        <Route path='/report' element={<Report title="Submit a report:" placeholder="Report about..." image={true} />}/>
+                        <Route path='/contact' element={<Report title="Contact us:" placeholder="I need help with..." />}/>
 
-                    <Route path='/admin/user'>
-                        <Route index element={<AdminUserEdit />} />
-                        <Route path=':id' element={<AdminUserEdit edit="true" />} />
+                        
+
+                        {/* Admin protected routes */}
+                        <Route element={<AdminRoutes />}>
+                            <Route element={<AdminDashboard />} path='/admin' />
+                
+                            <Route path='/admin/user'>
+                                <Route index element={<AdminUserEdit />} />
+                                <Route path=':id' element={<AdminUserEdit edit="true" />} />
+                            </Route>
+
+                            <Route path='/admin/tool'>
+                                <Route index element={<AdminToolEdit />} />
+                                <Route path=':id' element={<AdminToolEdit edit="true" />} />
+                            </Route> 
+                        </Route>
                     </Route>
 
-                    <Route path='/admin/tool'>
-                        <Route index element={<AdminToolEdit />} />
-                        <Route path=':id' element={<AdminToolEdit edit="true" />} />
-                    </Route>
+
 
                     {/* Error Routes */}
-                    <Route path='*' element={<NotFound />}></Route>
                     <Route path='/unauthorized' element={<Unauthorized />}></Route>
+                    <Route path='*' element={<NotFound />}></Route>
                 </Routes>
             </div>
 
