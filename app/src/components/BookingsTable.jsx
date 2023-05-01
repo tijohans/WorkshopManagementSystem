@@ -3,45 +3,60 @@ import { AuthContext } from '../context/authContext'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 
-export default function UserTable() {
-    const { token } = useContext(AuthContext)
-    const userId = jwt_decode(token).sub
-    const [userBooking, setUserBooking] = useState([])
+export default function BookingsTable() {
+
+    const [booking, setBooking] = useState([])
+    const [data] = useState([])
+
 
 
     useEffect(() => {
-        getUserBooking()
+        getBooking()
     }, []);
 
 
-    const getUserBooking = () => {
-        axios.get(`https://wms-api-ps1s.onrender.com/api/bookings/user/${userId}`, { headers: { "x-access-token": token } })
+
+    const getBooking = () => {
+        axios.get(`http://localhost:9003/api/bookings/bookingwithtoolname`)
             .then((response) => {
-                setUserBooking(response.data)
-                //setLoading(false)
+
+                console.log(response.data)
+                setBooking(response.data)
+
             })
             .catch(error => console.error("Error: " + error))
     }
 
-    
-  console.log(userBooking)
+    console.log(booking)
 
-  
+
+
     return (
 
-        <div className="overflow-x-auto">
 
-            
 
+
+        <div className="relative overflow-x-auto  ">
+
+
+            {/* {booking.map((item) => (
+
+
+                <p>{item.booking_start}</p>
+            ))} */}
 
             <h2 className="text-2xl font-bold text-eerie-black flex flex-col justify-center items-center">My bookings</h2>
-            <div className="overflow-x-auto shadow-md sm:rounded-lg mt-6">
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
                 <table className="w-full text-sm text-left text-gray-500  ">
                     <thead className="text-xs text-white uppercase bg-plum ">
                         <tr >
                             <th scope="col" className="px-6 py-3">
                                 Booked tool ID
                             </th>
+                            <th scope="col" className="px-6 py-3">
+                                User ID
+                            </th>
+
                             <th scope="col" className="px-6 py-3">
                                 Date
                             </th>
@@ -53,39 +68,32 @@ export default function UserTable() {
                             <th scope="col" className="px-6 py-3">
                                 End time
                             </th>
-
-                            <th scope="col" className="px-6 py-3">
-                                Change booking
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                    {userBooking.map((item) => (  
                         <tr className="bg-white border-b hover:bg-ghost-white  ">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
-                            
-                            <td className="px-6 py-4">
-                                {item.booking_id}
-                            </td> 
+
                             </th>
                             <td className="px-6 py-4">
-                                {item.booking_date}
+
                             </td>
 
                             <td className="px-6 py-4">
-                            {item.booking_start}
+
                             </td>
 
 
                             <td className="px-6 py-4">
-                            {item.booking_end}
+
                             </td>
 
                             <td className="px-6 py-4">
-                                <a href="#" className="font-medium text-plum transition ease-in-out hover:delay-50 duration-500 hover:underline hover:text-eerie-black underline-offset-4">Remove</a>
+
                             </td>
+
+
                         </tr>
-                         ))} 
                     </tbody>
                 </table>
             </div>
@@ -94,8 +102,7 @@ export default function UserTable() {
 
         </div>
 
-    );
 
 
-
+    )
 }
