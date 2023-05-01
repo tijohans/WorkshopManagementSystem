@@ -50,8 +50,8 @@ export default function FrequencyChart({ toolId }) {
           {
             label: 'Historic frequency of bookings',
             data: dayOfWeekFrequency ? Object.values(dayOfWeekFrequency) : [],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(156, 82, 139, 0.2)',
+            borderColor: 'rgba(156, 82, 139, 1)',
             borderWidth: 1
           }
         ]
