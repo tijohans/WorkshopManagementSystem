@@ -2,11 +2,13 @@ import React, { ReactNode, useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../context/authContext'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
+import ReactLoading from 'react-loading'
 
 export default function UserInfo() {
     const { token } = useContext(AuthContext)
     const userId = jwt_decode(token).sub
     const [user, setUser] = useState([])
+    const [loading, setLoading] = useState(true)
 
 
 
@@ -19,7 +21,7 @@ export default function UserInfo() {
         axios.get(`https://wms-api-ps1s.onrender.com/api/users/${userId}`, { headers: { "x-access-token": token } })
             .then((response) => {
                 setUser(response.data[0])
-                //setLoading(false)
+                setLoading(false)
             })
             .catch(error => console.error("Error: " + error))
     }
@@ -27,6 +29,11 @@ export default function UserInfo() {
 
     return (
         <>
+        {loading ? (
+            <div className="flex justify-center mt-20">
+            <ReactLoading type="spin" color="#9C528B" />
+            </div>
+            ) : (
 
 <div className="bg-white px-9 shadow-md rounded-lg h-max pb-8">
             <h3 className="text-2xl font-bold text-eerie-black flex flex-col justify-center items-center mt-5"> </h3>
@@ -45,7 +52,7 @@ export default function UserInfo() {
 
                   
 
-
+            )}
 
      
         </>
