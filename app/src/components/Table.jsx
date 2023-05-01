@@ -212,7 +212,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
         data.map((item, key) => {
             if (key === 0) {
                 for (const key in item) {
-                    if (key === "id" || key === "imageurl" || key === 'visible' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
+                    if (key === "id" || key === "imageurl" || key === 'visible' || key === 'course_id_string' || key === 'location_id' || key === 'bookable' || key === 'course_id' || key === 'password') continue
                     let nukey = key.replace("_", " ")
                     headers.push(<th scope="col" key={nukey} className="px-6 py-3 ">{nukey}</th>)
                 }
