@@ -6,6 +6,7 @@ import { useForm, useWatch } from 'react-hook-form'
 import { AuthContext } from '../context/authContext.jsx'
 import jwt_decode from 'jwt-decode'
 import Button from '../components/Button.jsx'
+import FrequencyChart from "../components/FrequencyChart.jsx";
 
 const defaultTool = {
     id: "loading",
@@ -210,6 +211,8 @@ export default function ToolPage() {
                     {token ? <Link className="transition ease-in-out hover:transition-delay-50 duration-300 hover:text-plum hover:underline underline-offset-8" to={`/tools/report/${tool.id}`}>Report this tool</Link> : null}
                 </div>
             )}
+
+            <FrequencyChart toolId={id} />
         </div>
     )
 }
