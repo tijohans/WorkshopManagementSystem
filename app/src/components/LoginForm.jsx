@@ -93,7 +93,7 @@ export default function LoginForm() {
             <input 
                 className="w-40 group shadow-lg h-14  px-5 m-2 rounded-full transition-colors duration-300 ease-in-out  text-white bg-plum hover:delay-50  hover:bg-ghost-white hover:border hover:border-plum  hover:text-plum  focus:outline-none font-medium text-s md:text-2xl w-50 md:w-60 text-center mr-2 mb-2 disabled:bg-slate-400"
                 type="submit" 
-                value="login" />
+                value="Login" />
         </form>
     )
 }
