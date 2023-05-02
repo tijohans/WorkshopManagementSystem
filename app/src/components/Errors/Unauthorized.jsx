@@ -8,7 +8,7 @@ export default function Unauthorized() {
         <div className='[&>*]:m-3'>
             <h1 className='text-4xl font-bold'>401 Unauthorized</h1>
             <p>You do not have access to this site</p>
-            <Button text="Login?" link="/login"></Button>
+            <Button link="/login">Login?</Button>
         </div>
     </div>
   )
