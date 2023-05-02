@@ -371,14 +371,14 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
 
 
     return (
-        <div className="overflow-x-auto mx-auto my-5 shadow-md sm:rounded-lg md:w-5/6">
+        <div className="overflow-x-auto max-w-full mx-auto my-5 shadow-md sm:rounded-lg md:w-5/6">
             {loading ?
                 <div className="flex flex-col align-middle justify-center items-center">
                     <ReactLoading type="spin" color="#9C528B" />
                 </div>
                 :
                 <div>
-                    <table className="w-full text-sm text-left text-gray-500 ">
+                    <table className="w-full text-sm text-left text-gray-500">
                         <thead className="text-xs text-white uppercase bg-plum ">
                             <tr>
                                 {headers}
