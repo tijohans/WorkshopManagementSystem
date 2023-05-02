@@ -16,7 +16,7 @@ reportRouter.route('/all')
     .post(authMiddleware, getReports)
 
 reportRouter.route('/')
-    .post(authMiddleware, createReport)
+    .post(createReport)
 
 reportRouter.route('/upload')
     .post(authMiddleware, upload.single('file'), uploadImage)
