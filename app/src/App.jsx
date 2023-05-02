@@ -35,7 +35,7 @@ function App() {
                     <Route path='/' element={<Landing />} />
                     <Route element={<LoginPage />} path='/login' />
                     <Route element={<ToS />} path='/termsofservice' />
-                    
+                    <Route path='/contact' element={<Report title="Contact us:" placeholder="I need help with..." />}/>
                     
                     {/* Tool routes */}
                     <Route path='/tools'>
@@ -57,8 +57,6 @@ function App() {
 
                         {/* Report routes */}
                         <Route path='/report' element={<Report title="Submit a report:" placeholder="Report about..." image={true} />}/>
-                        <Route path='/contact' element={<Report title="Contact us:" placeholder="I need help with..." />}/>
-
                         
 
                         {/* Admin protected routes */}
