@@ -44,11 +44,11 @@ export default function AdminDashboard() {
             </header>
 
             <section className="flex justify-center align-middle items-center flex-col md:flex-row m-5">
-                <hr class="w-full md:w-96 h-px my-3 bg-gray-300 border-0" />
+                <hr className="w-full md:w-96 h-px my-3 bg-gray-300 border-0" />
                 <Button size="small" clickFunction={() => { setSelect("reports")}}>Reports</Button>
                 <Button size="small" clickFunction={() => { setSelect("users")}}>Users</Button>
                 <Button size="small" clickFunction={() => { setSelect("bookings")}}>Bookings</Button>
-                <hr class="w-full md:w-96 h-px my-3 bg-gray-300 border-0" />
+                <hr className="w-full md:w-96 h-px my-3 bg-gray-300 border-0" />
             </section>
 
             <RenderDashboard select={select}/>
