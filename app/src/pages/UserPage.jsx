@@ -3,7 +3,6 @@ import UserInfo from "../components/UserInfo";
 import UserTable from "../components/UserTable";
 import CourseTable from "../components/CourseTable";
 import { AuthContext } from "../context/authContext";
-import BookingsTable from "../components/BookingsTable";
 import Table from "../components/Table";
 
 export default function UserPage() {

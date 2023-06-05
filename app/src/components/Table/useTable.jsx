@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
-const calculateRange = (data, rowsPerPage) => {
+const findPages = (data) => {
     const range = [];
+    const rowsPerPage = 5;
     const num = Math.ceil(data.length / rowsPerPage);
     let i = 1;
     for (let i = 1; i <= num; i++) {
@@ -10,16 +11,18 @@ const calculateRange = (data, rowsPerPage) => {
     return range;
 };
 
-const sliceData = (data, page, rowsPerPage) => {
+const sliceData = (data, page) => {
+    const rowsPerPage = 5;
     return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 };
+
 
 const useTable = (data, page, rowsPerPage) => {
     const [tableRange, setTableRange] = useState([]);
     const [slice, setSlice] = useState([]);
 
     useEffect(() => {
-        const range = calculateRange(data, rowsPerPage);
+        const range = findPages(data, rowsPerPage);
         setTableRange([...range]);
 
         const slice = sliceData(data, page, rowsPerPage);
