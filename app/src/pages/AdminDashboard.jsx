@@ -51,7 +51,7 @@ export default function AdminDashboard() {
                 <hr class="w-full md:w-96 h-px my-3 bg-gray-300 border-0" />
             </section>
 
-            <RenderDashboard select={select}/>
+            <RenderDashboard select={select}/>®
 
         </>
     )
