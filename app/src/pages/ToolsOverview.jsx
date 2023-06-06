@@ -37,7 +37,7 @@ export default function ToolsOverview() {
         <div className="flex flex-wrap flex-col justify-center items-center gap-4 min-h-full">
             <Button clickFunction={toggle}>Toggle View</Button>
             {userRole === 1 ? <Button size="small" link="/admin/tool">Create Tool</Button> : null}
-            {toggleView === 'table' ? <Table name="tools" rowsPerPage={15} /> : <ToolCards />}
+            {toggleView === 'table' ? <Table name="tools" pageRows={15} /> : <ToolCards />}
         </div>
     )
 }

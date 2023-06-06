@@ -1,10 +1,12 @@
+// Reference used to accomplish this : https://dev.to/franciscomendes10866/how-to-create-a-table-with-pagination-in-react-4lpd 
+
 import { useEffect } from 'react'
 import Button from '../Button';
 
 const TableFooter = ({ range, setPage, page, slice, button, buttonLink, buttonText }) => {
     useEffect(() => {
       if (slice.length < 1 && page !== 1) {
-        setPage(page - 1);
+        setPage(page - 1); //Watch the array start, subtract one
       }
     }, [slice, page, setPage]);
     return (
