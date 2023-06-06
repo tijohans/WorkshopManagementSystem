@@ -35,7 +35,7 @@ const getReports = async (req: Request, res: Response) => {
     }
 
     if (category === "tools") {
-        data = await supabase.from('report').select('*').not('tool_id', 'is', null).order(sortBy, { ascending: asc }) // Match reposupabarts that have a tool_id
+        data = await supabase.from('report').select('*').not('tool_id', 'is', null).order(sortBy, { ascending: asc }) // Match reports that have a tool_id
     } else if (category === "general") {
         data = await supabase.from('report').select('*').is('tool_id', null).order(sortBy, { ascending: asc }) // Match reports that do not have a tool_id
     } else {

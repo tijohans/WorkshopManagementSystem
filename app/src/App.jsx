@@ -43,7 +43,7 @@ function App() {
                         <Route path=':id' element={<ToolPage />} />
 
                         <Route path='report'>
-                          <Route path=':id' element={<Report isTool={true} image={true}/>} />
+                          <Route path=':id' element={<Report isTool={true} hasImageUpload={true}/>} />
                         </Route>
                     </Route>
 
@@ -56,7 +56,7 @@ function App() {
                         <Route element={<Logout />} path='/logout' />
 
                         {/* Report routes */}
-                        <Route path='/report' element={<Report title="Submit a report:" placeholder="Report about..." image={true} />}/>
+                        <Route path='/report' element={<Report title="Submit a report:" placeholder="Report about..." hasImageUpload={true} />}/>
                         
 
                         {/* Admin protected routes */}
