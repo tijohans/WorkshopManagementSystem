@@ -78,7 +78,7 @@ export default function Table({ name, rowsPerPage, reportCategory, sortByTool, r
 
     // ? Functions for the report table
     const getReportTable = () => {
-        axios.post(`https://wms-api-ps1s.onrender.com/api/report/all`, { token }, {category: reportCategory, sortType: reportSortType, sortBy: reportSortBy })
+        axios.post(`https://wms-api-ps1s.onrender.com/api/report/all`, {category: reportCategory, sortType: reportSortType, sortBy: reportSortBy })
             .then((response) => {
                 setData(response.data)
                 getToolsAndUsers()
