@@ -13,7 +13,7 @@ const upload = multer()
 const reportRouter = express()
 
 reportRouter.route('/all')
-    .post(authMiddleware, getReports)
+    .post(getReports)
 
 reportRouter.route('/')
     .post(createReport)
