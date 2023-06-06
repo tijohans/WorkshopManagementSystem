@@ -21,7 +21,7 @@ export default function LoginForm() {
         setLogin(true)
 
         try {
-            const response = await axios.post('http://localhost:9003/api/login', {
+            const response = await axios.post('https://wms-api-ps1s.onrender.com/api/login', {
                 email: userData.email,
                 password: userData.password
             })
