@@ -95,11 +95,11 @@ export default function AdminReports() {
                     <section className="flex justify-center text-center align-middle items-center flex-col">
                         {showTools ?
                             <>
-                                <Table name="report" rowsPerPage={8} reportCategory="tools" sortByTool={toolId} reportSortType={sortType} reportSortBy={reportSortBy} />
+                                <Table name="report" pageRows={8} reportCategory="tools" sortByTool={toolId} reportSortType={sortType} reportSortBy={reportSortBy} />
                             </>
 
                             :
-                            <Table name="report" rowsPerPage={8} reportCategory="general" reportSortType={sortType} reportSortBy={reportSortBy} />
+                            <Table name="report" pageRows={8} reportCategory="general" reportSortType={sortType} reportSortBy={reportSortBy} />
 
 
                         }

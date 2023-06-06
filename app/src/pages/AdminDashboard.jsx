@@ -9,7 +9,7 @@ const RenderDashboard = ({select}) => {
             return (
                 <section className="flex justify-center align-middle items-center flex-col m-2">
                     <h1 className=" text-2xl md:text-3xl">Registered users:</h1>
-                    <Table name="users" rowsPerPage={15} footerButton={true} footerButtonLink={"/admin/user"} footerButtonText={"Create new user"} />
+                    <Table name="users" pageRows={15} footerButton={true} footerButtonLink={"/admin/user"} footerButtonText={"Create new user"} />
                 </section>
             )
 
@@ -25,7 +25,7 @@ const RenderDashboard = ({select}) => {
             return (
                 <section className="flex justify-center align-middle items-center flex-col m-2">
                     <h1 className=" text-2xl md:text-3xl">Current bookings:</h1>
-                    <Table name="bookings" rowsPerPage={15} />
+                    <Table name="bookings" pageRows={15} />
                 </section>
             )
     }
